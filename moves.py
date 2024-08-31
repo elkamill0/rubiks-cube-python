@@ -1,159 +1,108 @@
-import copy
-
+import moves_py
 
 class Moves:
     def __init__(self, cube):
         self.cube = cube
-        self.cube_backup = copy.deepcopy(cube)
 
     def R(self):
-        for i in [2, 5, 8]:
-            self.cube[0][i], self.cube[2][i], self.cube[5][i], self.cube[4][8 - i] = \
-                self.cube[2][i], self.cube[5][i], self.cube[4][8 - i], self.cube[0][i]
-        self._flip(self.cube[3])
+        moves_py.R(self.cube)
 
     def Rp(self):
-        for i in [2, 5, 8]:
-            self.cube[0][i], self.cube[2][i], self.cube[4][8 - i], self.cube[5][i] = \
-                self.cube[4][8 - i], self.cube[0][i], self.cube[5][i], self.cube[2][i]
-        self._flipp(self.cube[3])
+        moves_py.Rp(self.cube)
 
     def R2(self):
-        self.R()
-        self.R()
-        # self._flip2(self.cube[3])
+        moves_py.R2(self.cube)
 
     def L(self):
-        for i in [0, 3, 6]:
-            self.cube[0][i], self.cube[2][i], self.cube[5][i], self.cube[4][8 - i] = \
-                self.cube[4][8 - i], self.cube[0][i], self.cube[2][i], self.cube[5][i]
-        self._flip(self.cube[1])
+        moves_py.L(self.cube)
 
     def Lp(self):
-        for i in [0, 3, 6]:
-            self.cube[0][i], self.cube[2][i], self.cube[5][i], self.cube[4][8 - i] = \
-                self.cube[2][i], self.cube[5][i], self.cube[4][8 - i], self.cube[0][i]
-        self._flipp(self.cube[1])
+        moves_py.Lp(self.cube)
 
     def L2(self):
-        self.L()
-        self.L()
-        # self._flip2(self.cube[1])
+        moves_py.L2(self.cube)
 
     def U(self):
-        for i in range(3):
-            self.cube[1][i], self.cube[2][i], self.cube[3][i], self.cube[4][i] = \
-                self.cube[2][i], self.cube[3][i], self.cube[4][i], self.cube[1][i]
-        self._flip(self.cube[0])
+        moves_py.U(self.cube)
 
     def Up(self):
-        for i in range(3):
-            self.cube[1][i], self.cube[2][i], self.cube[3][i], self.cube[4][i] = \
-                self.cube[4][i], self.cube[1][i], self.cube[2][i], self.cube[3][i]
-        self._flipp(self.cube[0])
+        moves_py.Up(self.cube)
 
     def U2(self):
-        self.U()
-        self.U()
-        # self._flip2(self.cube[0])
+        moves_py.U2(self.cube)
 
     def D(self):
-        for i in range(6, 9):
-            self.cube[1][i], self.cube[2][i], self.cube[3][i], self.cube[4][i] = \
-                self.cube[4][i], self.cube[1][i], self.cube[2][i], self.cube[3][i]
-        self._flip(self.cube[5])
+        moves_py.D(self.cube)
 
     def Dp(self):
-        for i in range(6, 9):
-            self.cube[1][i], self.cube[2][i], self.cube[3][i], self.cube[4][i] = \
-                self.cube[2][i], self.cube[3][i], self.cube[4][i], self.cube[1][i]
-        self._flipp(self.cube[5])
+        moves_py.Dp(self.cube)
 
     def D2(self):
-        self.D()
-        self.D()
-        # self._flip2(self.cube[5])
+        moves_py.D2(self.cube)
 
     def F(self):
-        for i in range(3):
-            self.cube[0][6 + i], self.cube[3][i * 3], self.cube[5][2 - i], self.cube[1][8 - i * 3] = \
-                self.cube[1][8 - i * 3], self.cube[0][6 + i], self.cube[3][i * 3], self.cube[5][2 - i]
-        self._flip(self.cube[2])
+        moves_py.F(self.cube)
 
     def Fp(self):
-        for i in range(3):
-            self.cube[0][6 + i], self.cube[3][i * 3], self.cube[5][2 - i], self.cube[1][8 - i * 3] = \
-                self.cube[3][i * 3], self.cube[5][2 - i], self.cube[1][8 - i * 3], self.cube[0][6 + i]
-        self._flipp(self.cube[2])
+        moves_py.Fp(self.cube)
 
     def F2(self):
-        self.F()
-        self.F()
-        # self._flip2(self.cube[2])
+        moves_py.F2(self.cube)
 
     def B(self):
-        for i in range(3):
-            self.cube[0][i], self.cube[3][i * 3 + 2], self.cube[5][8 - i], self.cube[1][6 - i * 3] = \
-                self.cube[3][i * 3 + 2], self.cube[5][8 - i], self.cube[1][6 - i * 3], self.cube[0][i]
-        self._flip(self.cube[4])
+        moves_py.B(self.cube)
 
     def Bp(self):
-        for i in range(3):
-            self.cube[0][i], self.cube[3][i * 3 + 2], self.cube[5][8 - i], self.cube[1][6 - i * 3] = \
-                self.cube[1][6 - i * 3], self.cube[0][i], self.cube[3][i * 3 + 2], self.cube[5][8 - i]
-        self._flipp(self.cube[4])
+        moves_py.Bp(self.cube)
 
     def B2(self):
-        self.B()
-        self.B()
-        # self._flip2(self.cube[4])
+        moves_py.B2(self.cube)
 
-    @staticmethod
-    def _flip(layer_name):
-        layer_name[0], layer_name[2], layer_name[6], layer_name[8] = \
-            layer_name[6], layer_name[0], layer_name[8], layer_name[2]
-        layer_name[1], layer_name[3], layer_name[5], layer_name[7] = \
-            layer_name[3], layer_name[7], layer_name[1], layer_name[5]
+    def x(self):
+        moves_py.x(self.cube)
 
-    @staticmethod
-    def _flipp(layer_name):
-        layer_name[0], layer_name[2], layer_name[6], layer_name[8] = layer_name[2], layer_name[8], layer_name[0], \
-            layer_name[6]
-        layer_name[1], layer_name[3], layer_name[5], layer_name[7] = layer_name[5], layer_name[1], layer_name[7], \
-            layer_name[3]
+    def xp(self):
+        moves_py.xp(self.cube)
 
-    @staticmethod
-    def _flip2(layer_name):
-        layer_name[0], layer_name[8] = layer_name[8], layer_name[0]
-        layer_name[2], layer_name[6] = layer_name[6], layer_name[2]
-        layer_name[1], layer_name[7] = layer_name[7], layer_name[1]
-        layer_name[3], layer_name[5] = layer_name[5], layer_name[3]
+    def x2(self):
+        moves_py.x2(self.cube)
 
-    def move_mapping(self):
+    def y(self):
+        moves_py.y(self.cube)
+
+    def yp(self):
+        moves_py.yp(self.cube)
+
+    def y2(self):
+        moves_py.y2(self.cube)
+
+    def z(self):
+        moves_py.z(self.cube)
+
+    def zp(self):
+        moves_py.zp(self.cube)
+
+    def z2(self):
+        moves_py.z2(self.cube)
+
+    def convert_moves_to_numbers(self):
         return {
-            "R": lambda: self.R(),
-            "R'": lambda: self.Rp(),
-            "R2": lambda: self.R2(),
-            "L": lambda: self.L(),
-            "L'": lambda: self.Lp(),
-            "L2": lambda: self.L2(),
-            "U": lambda: self.U(),
-            "U'": lambda: self.Up(),
-            "U2": lambda: self.U2(),
-            "D": lambda: self.D(),
-            "D'": lambda: self.Dp(),
-            "D2": lambda: self.D2(),
-            "F": lambda: self.F(),
-            "F'": lambda: self.Fp(),
-            "F2": lambda: self.F2(),
-            "B": lambda: self.B(),
-            "B'": lambda: self.Bp(),
-            "B2": lambda: self.B2()
+            "R": 0,
+            "R2": 1,
+            "R'": 2,
+            "L": 3,
+            "L2": 4,
+            "L'": 5,
+            "U": 6,
+            "U2": 7,
+            "U'": 8,
+            "D": 9,
+            "D2": 10,
+            "D'": 11,
+            "F": 12,
+            "F2": 13,
+            "F'": 14,
+            "B": 15,
+            "B2": 16,
+            "B'": 17
         }
-
-    def reset(self, cube_backup=None):
-        if cube_backup:
-            self.cube = cube_backup
-            return cube_backup
-        self.cube = [[0] * 9, [1] * 9, [2] * 9, [3] * 9, [4] * 9, [5] * 9]
-        return self.cube
