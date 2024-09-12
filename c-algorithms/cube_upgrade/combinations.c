@@ -3,10 +3,8 @@
 #include </usr/include/python3.10/Python.h>
 
 
-
 const char* int_to_moves(int move){
     switch(move){
-
         case 0:
             return "R ";
         case 1:
@@ -48,17 +46,13 @@ const char* int_to_moves(int move){
     }
 }
 
-
 char* combination_list[10000];
 int combination_iterator = 0;
-void loop(int depth, int* current_combination, int current_length, int* cube) {
-    
+void loop(int depth, int* current_combination, int current_length, struct element cube[]) {
     int ignored_move = current_combination[current_length - 1]/3;
     int opposite_move = current_combination[current_length - 2]/3; 
-    
-    
+
     if(check_cross(cube)){
-        // print_combination(current_combination, current_length);
         char final[22] = "";
         for (int i = 0; i < current_length ; ++i) {
             strncat(final, int_to_moves(current_combination[i]), sizeof(final) - strlen(final) - 1);
@@ -66,7 +60,6 @@ void loop(int depth, int* current_combination, int current_length, int* cube) {
 
         combination_list[combination_iterator] = malloc(strlen(final) + 1);
         strcpy(combination_list[combination_iterator], final);
-        // printf("%s\n", final);
 
         combination_iterator++;
         return;  
@@ -85,9 +78,10 @@ void loop(int depth, int* current_combination, int current_length, int* cube) {
         }
         moving[i](cube);
     }
+    
 }
 
-PyObject* combinations_c(int* cube, int length){
+PyObject* combinations_c(struct element *cube, int length){
     int initial_combination[length];
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 3; ++j){
@@ -107,7 +101,6 @@ PyObject* combinations_c(int* cube, int length){
         }
         moving[i](cube);
     }
-    printf("exact moves: %d\n", combination_iterator);
     PyObject *py_list = PyList_New(combination_iterator);
 
     if (!py_list) {
@@ -118,9 +111,7 @@ PyObject* combinations_c(int* cube, int length){
         str = PyUnicode_FromString(combination_list[i]);
         PyList_SET_ITEM(py_list, i, str);
     }
-    // printf("found solutions: %d\n", combination_iterator);
 
     return py_list;
     
 }
-

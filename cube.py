@@ -1,6 +1,7 @@
 from cross import Cross
 import scramble
 import f2l
+import cube_upgrade
 
 
 class Cube(Cross):

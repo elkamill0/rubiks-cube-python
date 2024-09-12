@@ -74,6 +74,12 @@ static PyObject* sequence(PyObject* self, PyObject* args){
     Py_RETURN_NONE;
 }
 
+static PyObject* f2l(PyObject* self, PyObject* args){
+    
+}
+
+
+
 static PyMethodDef ScrambleMethods[] = {
     {"combinations", combinations, METH_VARARGS, "show combinations"},
     {"print_cube_py", print_cube_py, METH_VARARGS, "map numbers to moves"},
@@ -93,4 +99,3 @@ static struct PyModuleDef scramblemodule = {
 PyMODINIT_FUNC PyInit_scramble(void) {
     return PyModule_Create(&scramblemodule);
 }
-
