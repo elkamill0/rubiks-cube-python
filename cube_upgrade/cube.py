@@ -6,10 +6,9 @@ from cross import Cross
 class Cube(Cross):
     def __init__(self, moves: str = None):
         if moves:
-            self.cube = cube_upgrade.init(list(map(lambda move: self.convert_moves_to_numbers().get(move), moves.split())))
+            self.cube, self.cube_copy = cube_upgrade.init(list(map(lambda move: self.convert_moves_to_numbers().get(move), moves.split())))
         else:
-            self.cube = cube_upgrade.init()
-
+            self.cube, self.cube_copy = cube_upgrade.init()
     def print_cube(self):
         cube_upgrade.print_cube(self.cube)
 

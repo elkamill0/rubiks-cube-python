@@ -48,11 +48,11 @@ const char* int_to_moves(int move){
 
 char* combination_list[10000];
 int combination_iterator = 0;
-void loop(int depth, int* current_combination, int current_length, struct element cube[]) {
+void loop(int depth, int* current_combination, int current_length, struct element *cube, struct element *cube_copy) {
     int ignored_move = current_combination[current_length - 1]/3;
     int opposite_move = current_combination[current_length - 2]/3; 
 
-    if(check_cross(cube)){
+    if(check_cross(cube, cube_copy)){
         char final[22] = "";
         for (int i = 0; i < current_length ; ++i) {
             strncat(final, int_to_moves(current_combination[i]), sizeof(final) - strlen(final) - 1);
@@ -74,14 +74,14 @@ void loop(int depth, int* current_combination, int current_length, struct elemen
         for (int j = 0; j < 3; ++j){
             moving[i](cube);
             current_combination[current_length] = i*3+j;
-            loop(depth - 1, current_combination, current_length + 1, cube);
+            loop(depth - 1, current_combination, current_length + 1, cube, cube_copy);
         }
         moving[i](cube);
     }
     
 }
 
-PyObject* combinations_c(struct element *cube, int length){
+PyObject* combinations_c(struct element *cube, struct element *cube_copy, int length){
     int initial_combination[length];
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 3; ++j){
@@ -94,7 +94,7 @@ PyObject* combinations_c(struct element *cube, int length){
                 for (int l = 0; l < 3; ++l){
                     moving[k](cube);
                     initial_combination[1] = k*3+l;
-                    loop(length - 2, initial_combination, 2, cube);
+                    loop(length - 2, initial_combination, 2, cube, cube_copy);
                 }
                 moving[k](cube);
             }

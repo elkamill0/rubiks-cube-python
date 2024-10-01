@@ -1,8 +1,9 @@
 import moves_upgrade_py
 
 class Moves:
-    def __init__(self, cube):
+    def __init__(self, cube, cube_copy):
         self.cube = cube
+        self.cube_copy = cube_copy
 
     def R(self):
         moves_upgrade_py.R(self.cube)
@@ -86,31 +87,31 @@ class Moves:
         moves_upgrade_py.S2(self.cube)
 
     def x(self):
-        moves_upgrade_py.x(self.cube)
+        moves_upgrade_py.x(self.cube, self.cube_copy)
 
     def xp(self):
-        moves_upgrade_py.xp(self.cube)
+        moves_upgrade_py.xp(self.cube, self.cube_copy)
 
     def x2(self):
-        moves_upgrade_py.x2(self.cube)
+        moves_upgrade_py.x2(self.cube, self.cube_copy)
 
     def y(self):
-        moves_upgrade_py.y(self.cube)
+        moves_upgrade_py.y(self.cube, self.cube_copy)
 
     def yp(self):
-        moves_upgrade_py.yp(self.cube)
+        moves_upgrade_py.yp(self.cube, self.cube_copy)
 
     def y2(self):
-        moves_upgrade_py.y2(self.cube)
+        moves_upgrade_py.y2(self.cube, self.cube_copy)
 
     def z(self):
-        moves_upgrade_py.z(self.cube)
+        moves_upgrade_py.z(self.cube, self.cube_copy)
 
     def zp(self):
-        moves_upgrade_py.zp(self.cube)
+        moves_upgrade_py.zp(self.cube, self.cube_copy)
 
     def z2(self):
-        moves_upgrade_py.z2(self.cube)
+        moves_upgrade_py.z2(self.cube, self.cube_copy)
 
     def convert_moves_to_numbers(self):
         return {

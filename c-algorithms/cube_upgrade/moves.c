@@ -32,6 +32,15 @@ void swap270(struct element* a, struct element* b, struct element* c, struct ele
     *d = buff;
 }
 
+void flip_edges(struct element* a, struct element* b, struct element* c, struct element* d){
+    a->orientation = a->orientation ^ 1;
+    b->orientation = b->orientation ^ 1;
+    c->orientation = c->orientation ^ 1;
+    d->orientation = d->orientation ^ 1;
+
+}
+
+
 void R_e(struct element cube[]){
     swap90(&cube[3], &cube[19], &cube[11], &cube[21]);
 }
@@ -121,8 +130,9 @@ void B2_e(struct element cube[]){
     swap180(&cube[1], &cube[17], &cube[13], &cube[19]);
 }
 
-bool check_cross(struct element cube[]){
-    if(cube[9].index == 9 && cube[11].index == 11 && cube[13].index == 13 && cube[15].index == 15 && 
+bool check_cross(struct element cube[], struct element cube_copy[]){
+    if(cube[9].index == cube_copy[9].index && cube[11].index == cube_copy[11].index && 
+        cube[13].index == cube_copy[13].index && cube[15].index == cube_copy[15].index && 
         cube[9].orientation && cube[11].orientation && cube[13].orientation && cube[15].orientation){
             return true;
     }
@@ -137,7 +147,6 @@ void rotate_corner(struct element *c1, struct element *c2, struct element *c3, s
     c3->orientation = (++c3->orientation % 3 + 3) % 3;
     c4->orientation = (--c4->orientation % 3 + 3) % 3;
 }
-
 
 void R(struct element cube[]){
     rotate_corner(&cube[4], &cube[2], &cube[12], &cube[10]);
@@ -237,111 +246,247 @@ void B2(struct element cube[]){
     B2_e(cube);
 }
 
-void M(struct element cube[]){
+void M_move_change_orientation_M(struct element* e){
+    if (e->index != 1 && e->index != 5 && e->index != 9 && e->index != 13){
+        e->orientation ^= 1;
+    }
+}
+
+void M_move_change_orientation_RL(struct element* e){
+    if (e->index == 1 || e->index == 5 || e->index == 9 || e->index == 13){
+        e->orientation ^= 1;
+    }
+}
+
+void E_move_change_orientation_E(struct element* e){
+    if (e->index != 17 && e->index != 19 && e->index != 21 && e->index != 23){
+        e->orientation ^= 1;
+    }
+}
+
+void E_move_change_orientation_UD(struct element* e){
+    if (e->index == 17 || e->index == 19 || e->index == 21 || e->index == 23){
+        e->orientation ^= 1;
+    }
+}
+
+void M(struct element cube[], struct element cube_copy[]){
     swap90(&cube[1], &cube[5], &cube[9], &cube[13]);
     swap90(&cube[16], &cube[20], &cube[25], &cube[24]);
+    swap90(&cube_copy[1], &cube_copy[5], &cube_copy[9], &cube_copy[13]); // swap without centers
+    M_move_change_orientation_M(&cube[1]);
+    M_move_change_orientation_RL(&cube[3]);
+    M_move_change_orientation_M(&cube[5]);
+    M_move_change_orientation_RL(&cube[7]);
+    M_move_change_orientation_M(&cube[9]);
+    M_move_change_orientation_RL(&cube[11]);
+    M_move_change_orientation_M(&cube[13]);
+    M_move_change_orientation_RL(&cube[15]);
+    M_move_change_orientation_RL(&cube[17]);
+    M_move_change_orientation_RL(&cube[19]);
+    M_move_change_orientation_RL(&cube[21]);
+    M_move_change_orientation_RL(&cube[23]);
+    
 }
 
-void Mp(struct element cube[]){
+void Mp(struct element cube[], struct element cube_copy[]){
     swap270(&cube[1], &cube[5], &cube[9], &cube[13]);
     swap270(&cube[16], &cube[20], &cube[25], &cube[24]);
+    swap270(&cube_copy[1], &cube_copy[5], &cube_copy[9], &cube_copy[13]); // swap without centers
+    
+    M_move_change_orientation_M(&cube[1]);
+    M_move_change_orientation_RL(&cube[3]);
+    M_move_change_orientation_M(&cube[5]);
+    M_move_change_orientation_RL(&cube[7]);
+    M_move_change_orientation_M(&cube[9]);
+    M_move_change_orientation_RL(&cube[11]);
+    M_move_change_orientation_M(&cube[13]);
+    M_move_change_orientation_RL(&cube[15]);
+    M_move_change_orientation_RL(&cube[17]);
+    M_move_change_orientation_RL(&cube[19]);
+    M_move_change_orientation_RL(&cube[21]);
+    M_move_change_orientation_RL(&cube[23]);
+
 }
 
-void M2(struct element cube[]){
+void M2(struct element cube[], struct element cube_copy[]){
     swap180(&cube[1], &cube[5], &cube[9], &cube[13]);
     swap180(&cube[16], &cube[20], &cube[25], &cube[24]);
+    swap180(&cube_copy[1], &cube_copy[5], &cube_copy[9], &cube_copy[13]); // swap without centers
 }
 
-void E(struct element cube[]){
+void E(struct element cube[], struct element cube_copy[]){
     swap90(&cube[23], &cube[21], &cube[19], &cube[17]);
     swap90(&cube[20], &cube[22], &cube[24], &cube[18]);
+    swap90(&cube_copy[23], &cube_copy[21], &cube_copy[19], &cube_copy[17]); // swap without centers
+
+    E_move_change_orientation_UD(&cube[1]);
+    E_move_change_orientation_UD(&cube[3]);
+    E_move_change_orientation_UD(&cube[5]);
+    E_move_change_orientation_UD(&cube[7]);
+    E_move_change_orientation_UD(&cube[9]);
+    E_move_change_orientation_UD(&cube[11]);
+    E_move_change_orientation_UD(&cube[13]);
+    E_move_change_orientation_UD(&cube[15]);
+    E_move_change_orientation_E(&cube[17]);
+    E_move_change_orientation_E(&cube[19]);
+    E_move_change_orientation_E(&cube[21]);
+    E_move_change_orientation_E(&cube[23]);  
 }   
 
-void Ep(struct element cube[]){
+void Ep(struct element cube[], struct element cube_copy[]){
     swap270(&cube[23], &cube[21], &cube[19], &cube[17]);
     swap270(&cube[20], &cube[22], &cube[24], &cube[18]);
+    swap270(&cube_copy[23], &cube_copy[21], &cube_copy[19], &cube_copy[17]); // swap without centers
+
+    E_move_change_orientation_UD(&cube[1]);
+    E_move_change_orientation_UD(&cube[3]);
+    E_move_change_orientation_UD(&cube[5]);
+    E_move_change_orientation_UD(&cube[7]);
+    E_move_change_orientation_UD(&cube[9]);
+    E_move_change_orientation_UD(&cube[11]);
+    E_move_change_orientation_UD(&cube[13]);
+    E_move_change_orientation_UD(&cube[15]);
+    E_move_change_orientation_E(&cube[17]);
+    E_move_change_orientation_E(&cube[19]);
+    E_move_change_orientation_E(&cube[21]);
+    E_move_change_orientation_E(&cube[23]);
 }   
 
-void E2(struct element cube[]){
+void E2(struct element cube[], struct element cube_copy[]){
     swap180(&cube[23], &cube[21], &cube[19], &cube[17]);
     swap180(&cube[20], &cube[22], &cube[24], &cube[18]);
+    swap180(&cube_copy[23], &cube_copy[21], &cube_copy[19], &cube_copy[17]); // swap without centers
+
+    E_move_change_orientation_UD(&cube[1]);
+    E_move_change_orientation_UD(&cube[3]);
+    E_move_change_orientation_UD(&cube[5]);
+    E_move_change_orientation_UD(&cube[7]);
+    E_move_change_orientation_UD(&cube[9]);
+    E_move_change_orientation_UD(&cube[11]);
+    E_move_change_orientation_UD(&cube[13]);
+    E_move_change_orientation_UD(&cube[15]);
+    E_move_change_orientation_E(&cube[17]);
+    E_move_change_orientation_E(&cube[19]);
+    E_move_change_orientation_E(&cube[21]);
+    E_move_change_orientation_E(&cube[23]);
+
 }  
 
-void S(struct element cube[]){
+void S(struct element cube[], struct element cube_copy[]){
     swap90(&cube[7], &cube[3], &cube[11], &cube[15]);
     swap90(&cube[16], &cube[22], &cube[25], &cube[18]);
+    swap90(&cube_copy[7], &cube_copy[3], &cube_copy[11], &cube_copy[15]); // swap without centers
+    
 }   
 
-void Sp(struct element cube[]){
+void Sp(struct element cube[], struct element cube_copy[]){
     swap270(&cube[7], &cube[3], &cube[11], &cube[15]);
     swap270(&cube[16], &cube[22], &cube[25], &cube[18]);
+    swap270(&cube_copy[7], &cube_copy[3], &cube_copy[11], &cube_copy[15]); // swap without centers
+
 }   
 
-void S2(struct element cube[]){
+void S2(struct element cube[], struct element cube_copy[]){
     swap180(&cube[7], &cube[3], &cube[11], &cube[15]);
     swap180(&cube[16], &cube[22], &cube[25], &cube[18]);
+    swap180(&cube_copy[7], &cube_copy[3], &cube_copy[11], &cube_copy[15]);
+
 }  
 
-void x(struct element cube[]){
+void x(struct element cube[], struct element cube_copy[]){
     swap90(&cube[4], &cube[2], &cube[12], &cube[10]);   // R
     R_e(cube);
-    Mp(cube);
+    R_e(cube_copy);
+    Mp(cube, cube_copy);
     swap270(&cube[0], &cube[6], &cube[8], &cube[14]); // Lp
+    Lp_e(cube);
+    Lp_e(cube_copy);
+}
+
+void xp(struct element cube[], struct element cube_copy[]){
+    swap270(&cube[4], &cube[2], &cube[12], &cube[10]); // Rp
+    Rp_e(cube);
+    Rp_e(cube_copy);
+    M(cube, cube_copy);
+    swap90(&cube[0], &cube[6], &cube[8], &cube[14]); // L
+    L_e(cube);
     Lp_e(cube);
 }
 
-void xp(struct element cube[]){
-    swap270(&cube[4], &cube[2], &cube[12], &cube[10]); // Rp
-    Rp_e(cube);
-    M(cube);
-    swap90(&cube[0], &cube[6], &cube[8], &cube[14]); // L
-    L_e(cube);
-}
-
-void x2(struct element cube[]){
+void x2(struct element cube[], struct element cube_copy[]){
     R2(cube);
-    M2(cube);
+    R2(cube_copy);
+    M2(cube, cube_copy);
     L2(cube);
+    L2(cube_copy);
 }
 
-void y(struct element cube[]){
+void y(struct element cube[], struct element cube_copy[]){
     U(cube);
-    Ep(cube);
-    Dp(cube);
+    U(cube_copy);
+    Ep(cube, cube_copy);
+    Dp(cube_copy);
+    Dp(cube);  
 }
 
-void yp(struct element cube[]){
+void yp(struct element cube[], struct element cube_copy[]){
     Up(cube);
-    E(cube);
+    Up(cube_copy);
+    E(cube, cube_copy);
     D(cube);
+    D(cube_copy);
+    
+    E_move_change_orientation_UD(&cube[1]);
+    E_move_change_orientation_UD(&cube[3]);
+    E_move_change_orientation_UD(&cube[5]);
+    E_move_change_orientation_UD(&cube[7]);
+    E_move_change_orientation_UD(&cube[9]);
+    E_move_change_orientation_UD(&cube[11]);
+    E_move_change_orientation_UD(&cube[13]);
+    E_move_change_orientation_UD(&cube[15]);
+    E_move_change_orientation_E(&cube[17]);
+    E_move_change_orientation_E(&cube[19]);
+    E_move_change_orientation_E(&cube[21]);
+    E_move_change_orientation_E(&cube[23]);  
 }
 
-void y2(struct element cube[]){
+void y2(struct element cube[], struct element cube_copy[]){
     U2(cube);
-    E2(cube);
+    U2(cube_copy);
+    E2(cube, cube_copy);
     D2(cube);
+    D2(cube_copy);
 }
 
-void z(struct element cube[]){
+void z(struct element cube[], struct element cube_copy[]){
     swap270(&cube[0], &cube[14], &cube[12], &cube[2]); // Bp
     swap270(&cube[1], &cube[17], &cube[13], &cube[19]); // Bp_e
-    S(cube);
+    swap270(&cube_copy[1], &cube_copy[17], &cube_copy[13], &cube_copy[19]); // Bp_e - move edges without centers
+    S(cube, cube_copy);
     swap90(&cube[6], &cube[4], &cube[10], &cube[8]); // F
     swap90(&cube[5], &cube[21], &cube[9], &cube[23]); // F_e
+    swap90(&cube_copy[5], &cube_copy[21], &cube_copy[9], &cube_copy[23]); // F_e - move edges without centers
+
 }
 
-void zp(struct element cube[]){
+void zp(struct element cube[], struct element cube_copy[]){
     swap90(&cube[0], &cube[14], &cube[12], &cube[2]); // B
     swap90(&cube[1], &cube[17], &cube[13], &cube[19]); // B_e
-    Sp(cube);
+    swap90(&cube_copy[1], &cube_copy[17], &cube_copy[13], &cube_copy[19]); // B_e - move edges without centers
+    Sp(cube, cube_copy);
     swap270(&cube[6], &cube[4], &cube[10], &cube[8]); // Fp
     swap270(&cube[5], &cube[21], &cube[9], &cube[23]); // Fp_e
+    swap270(&cube_copy[5], &cube_copy[21], &cube_copy[9], &cube_copy[23]); // Fp_e - move edges without centers
+
 }
 
-void z2(struct element cube[]){
+void z2(struct element cube[], struct element cube_copy[]){
     B2(cube);
-    S2(cube);
+    B2(cube_copy);
+    S2(cube, cube_copy);
     F2(cube);
+    F2(cube_copy);
 }
 
 

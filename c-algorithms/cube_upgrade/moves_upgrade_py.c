@@ -3,218 +3,326 @@
 #include "utils.c"
 
 static PyObject* R_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     R(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* R2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     R2(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* Rp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     Rp(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* L_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     L(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* L2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     L2(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* Lp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     Lp(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* U_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     U(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* U2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     U2(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* Up_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     Up(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* D_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     D(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* D2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     D2(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* Dp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     Dp(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* F_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     F(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* F2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     F2(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* Fp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     Fp(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* B_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     B(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* B2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     B2(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* Bp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
+    struct element* cube = decapsulation(self, args, "CubeArray");
     Bp(cube);
     Py_RETURN_NONE;
 }
 
 static PyObject* M_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    M(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    M(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* Mp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    Mp(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    Mp(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* M2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    M2(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    M2(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* E_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    E(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    E(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* Ep_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    Ep(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    Ep(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* E2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    E2(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    E2(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* S_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    S(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    S(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* Sp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    Sp(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    Sp(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* S2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    S2(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    S2(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* x_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    x(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    x(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* xp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    xp(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    xp(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* x2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    x2(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    x2(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* y_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    y(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    y(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* yp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    yp(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    yp(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* y2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    y2(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    y2(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* z_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    z(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    z(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* zp_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    zp(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    zp(cube, cube_copy);
     Py_RETURN_NONE;
 }
 
 static PyObject* z2_move_export(PyObject* self, PyObject* args){
-    struct element* cube = decapsulation(self, args);
-    z2(cube);
+    PyObject* capsule;
+    PyObject* capsule2;
+    if (!PyArg_ParseTuple(args, "OO", &capsule, &capsule2)) {
+        return NULL;
+    }
+    struct element* cube = PyCapsule_GetPointer(capsule, "CubeArray");
+    struct element* cube_copy = PyCapsule_GetPointer(capsule2, "CubeArrayCopy");
+    z2(cube, cube_copy);
     Py_RETURN_NONE;
 }
 

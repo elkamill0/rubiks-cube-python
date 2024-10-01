@@ -6,6 +6,7 @@
 #include <string.h>
 
 struct element{
+    int default_index;
     int index;
     int orientation;
 };
@@ -50,25 +51,25 @@ void F2(struct element cube[]);
  void B(struct element cube[]);
 void Bp(struct element cube[]);
 void B2(struct element cube[]);
-void M(struct element cube[]);
-void Mp(struct element cube[]);
-void M2(struct element cube[]);
-void E(struct element cube[]);
-void Ep(struct element cube[]);
-void E2(struct element cube[]);
-void S(struct element cube[]);
-void Sp(struct element cube[]);
-void S2(struct element cube[]);
-void x(struct element cube[]);
-void xp(struct element cube[]);
-void x2(struct element cube[]);
-void y(struct element cube[]);
-void yp(struct element cube[]);
-void y2(struct element cube[]);
-void z(struct element cube[]);
-void zp(struct element cube[]);
-void z2(struct element cube[]);
-bool check_cross(struct element cube[]);
+void M(struct element cube[], struct element cube_copy[]);
+void Mp(struct element cube[], struct element cube_copy[]);
+void M2(struct element cube[], struct element cube_copy[]);
+void E(struct element cube[], struct element cube_copy[]);
+void Ep(struct element cube[], struct element cube_copy[]);
+void E2(struct element cube[], struct element cube_copy[]);
+void S(struct element cube[], struct element cube_copy[]);
+void Sp(struct element cube[], struct element cube_copy[]);
+void S2(struct element cube[], struct element cube_copy[]);
+void x(struct element cube[], struct element cube_copy[]);
+void xp(struct element cube[], struct element cube_copy[]);
+void x2(struct element cube[], struct element cube_copy[]);
+void y(struct element cube[], struct element cube_copy[]);
+void yp(struct element cube[], struct element cube_copy[]);
+void y2(struct element cube[], struct element cube_copy[]);
+void z(struct element cube[], struct element cube_copy[]);
+void zp(struct element cube[], struct element cube_copy[]);
+void z2(struct element cube[], struct element cube_copy[]);
+bool check_cross(struct element cube[], struct element cube_copy[]);
 extern void (*moving[])(struct element cube[]);
 void print_cube(struct element cube[]);
 
