@@ -575,23 +575,6 @@ void print_cube(struct element cube[]){
     printf("    %d%d%d\n", corners[12], edges[8], corners[15]);
     printf("    %d%d%d\n", edges[14], cube[25].index, edges[10]);
     printf("    %d%d%d\n\n\n", corners[21], edges[12], corners[18]);
-
-    printf("    %d %d %d\n", cube[0].index, cube[1].index, cube[2].index);
-    printf("    %d    %d\n", cube[7].index, cube[3].index);
-    printf("    %d %d %d\n\n", cube[6].index, cube[5].index, cube[4].index);
-    printf("%d   %d   %d   %d\n\n", cube[17].index, cube[19].index, cube[21].index, cube[23].index);
-    printf("    %d %d %d\n", cube[8].index, cube[9].index, cube[10].index);
-    printf("    %d    %d\n", cube[15].index, cube[11].index);
-    printf("    %d %d %d\n\n\n", cube[14].index, cube[13].index, cube[12].index);
-
-    printf("    %d %d %d\n", cube[0].orientation, cube[1].orientation, cube[2].orientation);
-    printf("    %d   %d\n", cube[7].orientation, cube[3].orientation);
-    printf("    %d %d %d\n\n", cube[6].orientation, cube[5].orientation, cube[4].orientation);
-    printf("%d   %d   %d   %d\n\n", cube[17].orientation, cube[19].orientation, cube[21].orientation, cube[23].orientation);
-    printf("    %d %d %d\n", cube[8].orientation, cube[9].orientation, cube[10].orientation);
-    printf("    %d   %d\n", cube[15].orientation, cube[11].orientation);
-    printf("    %d %d %d\n\n\n", cube[14].orientation, cube[13].orientation, cube[12].orientation);
-
     
 }
 
