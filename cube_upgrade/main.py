@@ -1,9 +1,8 @@
 from cube import Cube
 
 ### CROSS LIST
-a = Cube("F2 U D2 L2 R2 B' D2 L2 F' D2 R2 U2 F L' U R' D R2 B' U'")
-# a = Cube()
+a = Cube("R2 F' L2 B2 D' R2 F2 D' L2 U2 F2 L2 D B L2 R D R U L D2")
+a.xp()
 a.print_cube()
-a.x()
 crosses = a.find_cross(6)
-print(crosses)
+print(crosses[0])

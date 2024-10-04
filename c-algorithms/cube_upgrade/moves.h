@@ -6,8 +6,8 @@
 #include <string.h>
 
 struct element{
-    int default_index;
     int index;
+    // int orientation_to_print;
     int orientation;
 };
 
