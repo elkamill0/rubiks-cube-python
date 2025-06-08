@@ -50,7 +50,11 @@ const char* int_to_moves(int move){
     }
 }
 
-bool check_slot(int* cube){
+bool check_slot(int* cube){ 
+    /*
+        sprawdza, slot znajduje się na swoim miejscu (w tym przypadku w LF)
+        TODO: zroić do wszystkich
+    */
     if(cube[13] == cube[14] && cube[16] == cube[17] && cube[21] == cube[22] && cube[24] == cube[25] & check_cross(cube)){
         return true;
     }
@@ -58,10 +62,10 @@ bool check_slot(int* cube){
 }
 
 
-char* combination_list[10000];
-int combination_iterator = 0;
+char* combination_list[10000]; // lista kombinacji, która będzie przechowywana
+int combination_iterator = 0; 
 void loop(int depth, int* current_combination, int current_length, int* cube) {
-    int ignored_move = current_combination[current_length - 1]/3;
+    int ignored_move = current_combination[current_length - 1]/3; // ruchy które 
     int opposite_move = current_combination[current_length - 2]/3; 
     
     

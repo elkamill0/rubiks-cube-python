@@ -10,8 +10,9 @@ typedef struct {
 
 // Method to initialize the Cube object
 static int Cube_init(CubeObject *self, PyObject *args, PyObject *kwds) {
-    static char *kwlist[] = {"moves", NULL};
+    static char *kwlist[] = {"moves", "state", NULL};
     char *moves = NULL;
+    // char *state = NULL;
     
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|s", kwlist, &moves)) {
         return -1;

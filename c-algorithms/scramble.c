@@ -39,17 +39,32 @@ static PyObject* print_cube_py(PyObject* self, PyObject* args){
 
 static PyObject* init(PyObject* self, PyObject* args){
     PyObject* list = NULL;
-    if (!PyArg_ParseTuple(args, "|O", &list)){
+    if (!PyArg_ParseTuple(args, "|O", &list)){ // 
         return NULL;
     }
     int* cube = memcpy(malloc(54 * sizeof(int)), (int[]){0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5}, 54 * sizeof(int));
     if (list != NULL) {     // set cube from user input scramble
         Py_ssize_t size = PyList_Size(list);   
-        PyObject* item;
-        for (Py_ssize_t i = 0; i < size; i++){
-            item = PyList_GetItem(list, i);
-            long value = PyLong_AsLong(item);
-            input_scramble(cube, value);
+        
+        if (size == 54) {
+            // Użytkownik podał stan kostki jako lista kolorów
+            for (Py_ssize_t i = 0; i < 54; i++) {
+                PyObject* item = PyList_GetItem(list, i);
+                long value = PyLong_AsLong(item);
+                if (value < 0 || value > 5) {
+                    PyErr_SetString(PyExc_ValueError, "Each color must be in range 0-5");
+                    free(cube);
+                    return NULL;
+                }
+                cube[i] = (int)value;
+            }
+        } else {
+            // Można tu nadal wywołać np. input_scramble() jeśli chcesz
+            for (Py_ssize_t i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(list, i);
+                long move = PyLong_AsLong(item);
+                input_scramble(cube, move);  // jak w Twoim oryginale
+            }
         }
     }
     PyObject* capsule = PyCapsule_New((void*)cube, "CubeArray", cube_destructor);

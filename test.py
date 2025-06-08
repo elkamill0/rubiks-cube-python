@@ -1,5 +1,0 @@
-import kociemba
-
-a = kociemba.solve('DRLUUBFBRBLURRLRUBLRDDFDLFUFUFFDBRDUBRUFLLFDDBFLUBLRBD')
-
-print(a)
