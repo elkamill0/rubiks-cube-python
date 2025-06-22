@@ -1,8 +1,7 @@
 import moves
-# from cube import Cube  # ✅ nowa nazwa pliku
 import numpy as np
 
-move_to_int = {
+notation_to_int = {
     "R": 0,
     "R2": 1,
     "R'": 2,
@@ -23,7 +22,7 @@ move_to_int = {
     "B'": 17
 }
 
-int_to_move = {
+int_to_notation = {
     0: "R",
     1: "R2",
     2: "R'",
@@ -44,7 +43,7 @@ int_to_move = {
     17: "B'"
 }
 
-def notation_to_moves(moves: str, cube):
+def sequence_to_moves(moves: str, cube):
 
     move_map = {
         'R': cube.R,

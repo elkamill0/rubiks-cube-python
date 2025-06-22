@@ -4,11 +4,13 @@ import scramble
 import convert
 import visualization
 
+
+
 class Cube(Moves):
     def __init__(self, notation: str = None, state: str = None):
         self.reset()
         if notation: 
-            convert.notation_to_moves(moves=notation, cube=self)
+            convert.sequence_to_moves(moves=notation, cube=self)
         elif state:
             self.corners, self.edges, self.centers = visualization.state_to_cube(state=state)
 
@@ -16,7 +18,7 @@ class Cube(Moves):
         return visualization.cube_to_color(self.corners, self.edges, self.centers, show=True)
     
     def move(self, notation: str) -> None:
-        convert.notation_to_moves(notation, self)
+        convert.sequence_to_moves(notation, self)
 
     def get_state(self):
         return convert.cube_to_color(self.corners, self.edges, self.centers, show=False)
@@ -41,13 +43,3 @@ if __name__ == "__main__":
     print(cube.get_state())
     # cube.R()
     print(cube)
-    # cube = Cube(notation=notation)
-    # state = cube.get_state()
-
-    # # print(cube)
-    # state = "313001155410413322433423540254230204025241130151554205"
-    # # state = "132412043154230545220030134201435351114054231542553020"
-    # cube1 = Cube(state=state)
-    # print(cube1)
-    # # cube1.R()
-    # # print(cube1)

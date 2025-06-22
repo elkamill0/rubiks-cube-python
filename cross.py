@@ -1,8 +1,21 @@
 from cube import Cube
 import numpy as np
-from convert import notation_to_moves, int_to_move
+from convert import sequence_to_moves, int_to_notation
 from moves.moves import Moves
+from time import time
+from itertools import product
 
+
+def map_move_from_numbers(cube: Cube, move_as_int):
+    moves_map = {
+        0: cube.R(),
+        1: cube.L(),
+        2: cube.U(),
+        3: cube.D(),
+        4: cube.F(),
+        5: cube.B()
+    }
+    return moves_map[move_as_int]
 
 
 def find_cross(length):
@@ -10,68 +23,75 @@ def find_cross(length):
     combination_list = np.array()
 
 
-def check_cross(self, cube: Cube):
+def check_cross(cube: Cube):
     if cube.edges[4] == [4,0] and cube.edges[5] == [5,0] and cube.edges[6] == [6,0] and cube.edges[7] == [7,0]:
         return True
     return False
 
+def generate_numpy_combinations(n, limit):
+    grid = np.indices((limit,) * n)
+    combinations = grid.reshape(n, -1).T
+    return combinations
 
-def _loop(self, depth: int, current_combination: list[int], cube: Cube):
-    if len(current_combination) >= 2:
-        ignored_move = current_combination[-1] // 3
-        opposite_move = current_combination[-2] // 3
-    else:
-        ignored_move = opposite_move = -1
+def generate_combinations(n, limit):
+    ranges = [range(limit) for _ in range(n)]
+    return product(*ranges)  # to jest generator
 
-    if check_cross(self.cube):
-        move_sequence = ''.join(notation_to_moves(move, cube) for move in current_combination)
-        return move_sequence
 
-    if depth == 0:
-        return
+def is_invalid(one, two, three):
+    return True if (three == one) and ((two^1) == one) else False
 
+def is_repeat(one, two):
+    return True if two == one else False
+
+def combinations():
+    cube = Cube()
+    iterator = 0
     for i in range(6):
-        if ignored_move == i or (opposite_move == i and ignored_move == (i ^ 1)):
-            continue
-        for j in range(3):
-            move_index = i * 3 + j
-
-            # Zapisz stan przed ruchem
-            cube_copy = cube.copy()
-
-            # Wykonaj ruch
-            notation_to_moves(int_to_move(move_index))                        
-
-            # Rekurencja
-            _loop(depth - 1, current_combination + [move_index], cube)
-
-            # Cofnij stan
-            cube[:] = cube_copy
-
-def combinations(cube: np.ndarray, length: int) -> list[str]:
-    combination_list.clear()
-
-    for i in range(6):
-        for j in range(3):
-            move_index_1 = i * 3 + j
-            cube_copy_1 = cube.copy()
-            moving[i](cube, j)
-
-            for k in range(6):
-                if i == k:
+        for _ in range(3):
+            map_move_from_numbers(cube,i)
+            for j in range(6):
+                if i == j:
                     continue
-                for l in range(3):
-                    move_index_2 = k * 3 + l
-                    cube_copy_2 = cube.copy()
-                    moving[k](cube, l)
+                for _ in range(3):
+                    map_move_from_numbers(cube,j)
+                    for k in range(6):
+                        if is_invalid(k, j, i) or j == k:
+                            continue
+                        for _ in range(3):
+                            map_move_from_numbers(cube,k)
+                            for l in range(6):
+                                if is_invalid(l, k, j) or k == l:
+                                    continue
+                                for _ in range(3):
+                                    map_move_from_numbers(cube,l)
+                                    # for m in range(6):
+                                    #     if is_invalid(m, l, k) or l == m:
+                                    #         continue
+                                    #     for _ in range(3):
+                                    #         map_move_from_numbers(cube,m)
+                                    #         # print(i,j,k,l,m)
+                                    iterator += 1
+                                map_move_from_numbers(cube,l)
+                        map_move_from_numbers(cube, k)
+                map_move_from_numbers(cube,j)
+        map_move_from_numbers(cube,i)
 
-                    _loop(length - 2, [move_index_1, move_index_2], cube)
+    print(iterator)
 
-                    cube[:] = cube_copy_2
-            cube[:] = cube_copy_1
+    
+if __name__ == "__main__":
+    a=6
+    b=15
 
-    print(f"exact moves: {len(combination_list)}")
-    return combination_list
+    # start = time()
+    # generate_combinations(a,15)
+    # end = time()
+    # print(end-start)
 
 
-
+    start = time()
+    combinations()
+    # generated = generate_numpy_combinations(a,15)
+    end = time()
+    print(end-start)
