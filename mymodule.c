@@ -1,33 +1,52 @@
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <Python.h>
+#include <numpy/arrayobject.h>
 
-// Definicja funkcji add(a, b)
-static PyObject* mymodule_add(PyObject* self, PyObject* args) {
-    int a, b;
-    // Parsujemy argumenty: oczekujemy dwóch intów
-    if (!PyArg_ParseTuple(args, "ii", &a, &b)) {
-        return NULL;  // jeśli błędne argumenty, zwracamy NULL (wyjątek)
+// Funkcja mnożąca każdy element przez 2
+static PyObject* double_array(PyObject* self, PyObject* args) {
+    PyArrayObject *input_array;
+
+    // Parsowanie argumentu: jedna tablica NumPy
+    if (!PyArg_ParseTuple(args, "O!", &PyArray_Type, &input_array)) {
+        return NULL;
     }
-    int result = a + b;
-    // Zwracamy wynik jako Pythonowy int
-    return PyLong_FromLong(result);
+
+    // Upewniamy się, że to tablica 1D typu float64
+    if (PyArray_NDIM(input_array) != 1 || PyArray_TYPE(input_array) != NPY_DOUBLE) {
+        PyErr_SetString(PyExc_TypeError, "Expected a 1D NumPy array of float64");
+        return NULL;
+    }
+
+    npy_intp size = PyArray_SIZE(input_array);
+    double *data = (double *)PyArray_DATA(input_array);
+
+    // Tworzymy nową tablicę do zwrócenia
+    PyArrayObject *result = (PyArrayObject *)PyArray_SimpleNew(1, &size, NPY_DOUBLE);
+    if (!result) return NULL;
+
+    double *result_data = (double *)PyArray_DATA(result);
+
+    for (npy_intp i = 0; i < size; ++i) {
+        result_data[i] = data[i] * 2.0;
+    }
+
+    return (PyObject *)result;
 }
 
-// Definicja metod modułu
-static PyMethodDef MyModuleMethods[] = {
-    {"add", mymodule_add, METH_VARARGS, "Add two integers"},
+static PyMethodDef Methods[] = {
+    {"double_array", double_array, METH_VARARGS, "Double each element in a NumPy array"},
     {NULL, NULL, 0, NULL}
 };
 
-// Definicja modułu
 static struct PyModuleDef mymodule = {
     PyModuleDef_HEAD_INIT,
-    "mymodule",    // nazwa modułu
-    "Example module that adds two numbers",  // dokumentacja modułu
+    "mymodule",
+    "Example NumPy C extension",
     -1,
-    MyModuleMethods
+    Methods
 };
 
-// Funkcja inicjująca moduł
 PyMODINIT_FUNC PyInit_mymodule(void) {
+    import_array();  // bardzo ważne!
     return PyModule_Create(&mymodule);
 }
