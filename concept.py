@@ -1,6 +1,8 @@
 from cube import Cube
 import numpy as np
 from typing import List
+from functools import reduce
+import operator
 
 class BinaryRepresentation:
     def __init__(self, cube: Cube):
@@ -18,30 +20,6 @@ class BinaryRepresentation:
             9: 33,
             10: 17,
             11: 18,
-            # (0, 0): 36,
-            # (0, 1): -36,
-            # (1, 0): 5,
-            # (1, 1): -5,
-            # (2, 0): 20,
-            # (2, 1): -20,
-            # (3, 0): 6,
-            # (3, 1): -6,
-            # (4, 0): 40,
-            # (4, 1): -40,
-            # (5, 0): 9,
-            # (5, 1): -9,
-            # (6, 0): 24,
-            # (6, 1): -24,
-            # (7, 0): 10,
-            # (7, 1): -10,
-            # (8, 0): 34,
-            # (8, 1): -34,
-            # (9, 0): 33,
-            # (9, 1): -33,
-            # (10, 0): 17,
-            # (10, 1): -17,
-            # (11, 0): 18,
-            # (11, 1): -18
         }
 
     def find_cross_blocks(self, cube: Cube):
@@ -65,52 +43,6 @@ class BinaryRepresentation:
         
     
     
-
-class Cross:
-    def __init__(self, cross_slots):
-        self.cross_slots = cross_slots
-
-    # def combinations(cross_slots):
-    #     iterator = 0
-    #     for i in range(x.bit_length()):
-
-            
-    #         if (x >> i) & 1:
-    #             self.map_moves[i]()  # wywołaj tylko jeśli bit == 1
-    #         for _ in range(3):
-    #             map_move_from_numbers(cube,i)
-    #             for j in range(6):
-    #                 if i == j:
-    #                     continue
-    #                 for _ in range(3):
-    #                     map_move_from_numbers(cube,j)
-    #                     for k in range(6):
-    #                         if is_invalid(k, j, i) or j == k:
-    #                             continue
-    #                         for _ in range(3):
-    #                             map_move_from_numbers(cube,k)
-    #                             for l in range(6):
-    #                                 if is_invalid(l, k, j) or k == l:
-    #                                     continue
-    #                                 for _ in range(3):
-    #                                     map_move_from_numbers(cube,l)
-    #                                     # for m in range(6):
-    #                                     #     if is_invalid(m, l, k) or l == m:
-    #                                     #         continue
-    #                                     #     for _ in range(3):
-    #                                     #         map_move_from_numbers(cube,m)
-    #                                     #         # print(i,j,k,l,m)
-    #                                     iterator += 1
-    #                                 map_move_from_numbers(cube,l)
-    #                         map_move_from_numbers(cube, k)
-    #                 map_move_from_numbers(cube,j)
-    #         map_move_from_numbers(cube,i)
-
-    #     print(iterator)
-
-
-
-
 class CubeMoves:
     def __init__(self, cross: List, final_state: List):
         self.cross = cross
@@ -172,70 +104,52 @@ class CubeMoves:
 
     def is_solved(self, layer):
         self.process_moves[layer]()
-        if self.check_cross():
-            print("cross_solved")
-        
+        print(layer)
 
-    def combinations(self):
-        iterator = 0
+
+    def combinations(self, depth):
+        def recurse(path):
+            if len(path) == depth:
+                return
+
+            for i in range(0, path[-1]):
+                if len(path) >= 2 and self.is_invalid(i, path[-1], path[-2]):
+                    continue
+
+                if not bool(reduce(operator.or_, self.cross) & pow(2,i)):
+                    continue
+
+                for _ in range(3):
+                    self.is_solved(i)
+                    recurse(path + [i])
+                    self.is_solved(i)
+
+            for i in range(path[-1]+1, 6):
+
+                if len(path) >= 2 and self.is_invalid(i, path[-1], path[-2]):
+                    continue
+
+                if not bool(reduce(operator.or_, self.cross) & pow(2,i)):
+                    continue
+
+                for _ in range(3):
+                    self.is_solved(i)
+                    recurse(path + [i])
+                    self.is_solved(i)
+
         for i in range(6):
             for _ in range(3):
                 self.is_solved(i)
-                for j in range(6):
-                    if i == j:
-                        continue
-                    for _ in range(3):
-                        self.is_solved(j)
-                        for k in range(6):
-                            if self.is_invalid(k, j, i) or j == k:
-                                continue
-                            for _ in range(3):
-                                self.is_solved(k)
-                                for l in range(6):
-                                    if self.is_invalid(l, k, j) or k == l:
-                                        continue
-                                    for _ in range(3):
-                                        self.is_solved(l)
-                                        # for m in range(6):
-                                        #     if is_invalid(m, l, k) or l == m:
-                                        #         continue
-                                        #     for _ in range(3):
-                                        #         self.process_moves[m)
-                                        #         # print(i,j,k,l,m)
-                                        iterator += 1
-                                    self.is_solved(l)
-                            self.is_solved(k)
-                    self.is_solved(j)
-            self.is_solved(i)
+                recurse([i])
+                self.is_solved(i)
+        # recurse([])
 
 
 if __name__ == "__main__":
-    # cube = Cube("L2 B2 L2 U' B2 L2 U' R2 D' L2 U B2 R B' D F L F2 D F2")
-    # b = BinaryRepresentation(cube)
-    # print(b.cross)
-    # conversion = b.conversion(b.cross)
-    # print(bin(b.binary_or_number(conversion)))
-
-    # moves = Moves()
-    # x = 36
-    # print(bin(x))
-    # x = moves.U(x)
-    # print(bin(x))
-
-
     cube = Cube("R")
     b = BinaryRepresentation(cube)
     conversion = b.conversion(b.cross)
     print(conversion)
-    # print(bin(b.binary_or_number(conversion)))
-
-    # moves = Moves()
-    # x = 36
-    # print(bin(x))
-    # x = moves.U(x)
-    # print(bin(x))
-
-    # Przykład użycia:
 
 
     from time import time
@@ -243,21 +157,11 @@ if __name__ == "__main__":
     cube = CubeMoves(conversion, [40, 9, 24, 10])
     cube1 = Cube()
     cube1 = Cube("L2 B2 L2 U' B2 L2 U' R2 D' L2 U B2 R B' D F L F2 D F2")
-    start = time()
-
-    cube.combinations()
-    print(cube.final_state)
-
-    # cube.apply_list(cube.F)
-    # print(cube.cross)
-    # for i in range(1000000):
-    #     cube.apply_list(cube.R)
-    # end = time()
-    # print(end - start)
-
-    # start = time()
-    # for i in range(400):
-    #     cube1.R()
-    # end = time()
-    # print(end - start)
-
+    sum = 0
+    times = 3
+    for i in range(times):
+        start = time()
+        cube.combinations(1)
+        end = time()
+        sum += end-start
+    print(sum/times)
