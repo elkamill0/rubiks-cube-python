@@ -1,8 +1,6 @@
 from cube import Cube
 import numpy as np
 from typing import List
-from functools import reduce
-import operator
 
 class BinaryRepresentation:
     def __init__(self, cube: Cube):
@@ -47,7 +45,7 @@ class CubeMoves:
     def __init__(self, cross: List, final_state: List):
         self.cross = cross
         self.final_state = final_state
-        self.sum = reduce(operator.or_, self.cross)
+        self.sum = self.calc_or(self.cross)
 
         def m(pairs):
             return {x: y for x, y in pairs}
@@ -85,6 +83,13 @@ class CubeMoves:
             5: lambda: self.apply_list(self.B)
         }
     
+    def calc_or(self, list: List):
+        total = 0
+        for x in list:
+            total |= x
+        return total
+
+
     def apply_list(self, move_map: List):
         for i in range(len(self.cross)):
             diff = move_map.get(self.cross[i],self.cross[i])
@@ -92,7 +97,7 @@ class CubeMoves:
             if self.cross[i] != diff:
                 self.cross[i] = diff
                 # print(self.cross)
-                self.sum = reduce(operator.or_, self.cross)
+                self.sum = self.calc_or(self.cross)
                 # self.sum = (-self.cross[i]+diff)
                 # print("sum:", self.sum)
         # cube.cross = [move_map.get(x, x) for x in self.cross]
@@ -118,7 +123,7 @@ class CubeMoves:
                 if len(path) >= 2 and self.is_invalid(i, path[-1], path[-2]):
                     continue
 
-                if not bool(self.sum & pow(2,i)):
+                if not bool(self.sum & (1 << i)):
                     continue
 
                 for _ in range(3):
@@ -132,7 +137,7 @@ class CubeMoves:
                 if len(path) >= 2 and self.is_invalid(i, path[-1], path[-2]):
                     continue
 
-                if not bool(self.sum & pow(2,i)):
+                if not bool(self.sum & (1 << i)):
                     continue
 
                 for _ in range(3):
@@ -162,10 +167,10 @@ if __name__ == "__main__":
     cube1 = Cube()
     cube1 = Cube("L2 B2 L2 U' B2 L2 U' R2 D' L2 U B2 R B' D F L F2 D F2")
     sum = 0
-    times = 10
+    times = 3
     for i in range(times):
         start = time()
-        cube.combinations(5)
+        cube.combinations(6)
         end = time()
         sum += end-start
     print(sum/times)
