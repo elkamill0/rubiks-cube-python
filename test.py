@@ -1,3 +1,8 @@
-import test
+# import test
 
-print(test.add(3,4))
+# print(test.add(3,4))
+
+
+i = 14
+
+print(i//3)

@@ -1,6 +1,8 @@
 from cube import Cube
 import numpy as np
 from typing import List
+from collections import deque
+import psutil, os
 
 class BinaryRepresentation:
     def __init__(self, cube: Cube):
@@ -40,12 +42,15 @@ class BinaryRepresentation:
 
         
     
-    
+
+
+
 class CubeMoves:
-    def __init__(self, cross: List, final_state: List):
-        self.cross = cross
-        self.final_state = final_state
-        self.sum = self.calc_or(self.cross)
+    def __init__(self, state: List, final_state: List):
+        self.state = bytes(state)
+        self.final_state = bytes(final_state)
+        self.fifo = deque()
+        self.min = 0
 
         def m(pairs):
             return {x: y for x, y in pairs}
@@ -75,83 +80,68 @@ class CubeMoves:
         self.B2 = m([(36, 40), (40, 36), (34, 33), (33, 34), (100, 104), (104, 100), (98, 97), (97, 98)])
 
         self.process_moves = {
-            0: lambda: self.apply_list(self.R),
-            1: lambda: self.apply_list(self.L),
-            2: lambda: self.apply_list(self.U),
-            3: lambda: self.apply_list(self.D),
-            4: lambda: self.apply_list(self.F),
-            5: lambda: self.apply_list(self.B)
+             0: lambda state: self.apply_list(state, self.R),
+             1: lambda state: self.apply_list(state, self.R2),
+             2: lambda state: self.apply_list(state, self.Rp),
+             3: lambda state: self.apply_list(state, self.L),
+             4: lambda state: self.apply_list(state, self.L2),
+             5: lambda state: self.apply_list(state, self.Lp),
+             6: lambda state: self.apply_list(state, self.U),
+             7: lambda state: self.apply_list(state, self.U2),
+             8: lambda state: self.apply_list(state, self.Up),
+             9: lambda state: self.apply_list(state, self.D),
+            10: lambda state: self.apply_list(state, self.D2),
+            11: lambda state: self.apply_list(state, self.Dp),
+            12: lambda state: self.apply_list(state, self.F),
+            13: lambda state: self.apply_list(state, self.F2),
+            14: lambda state: self.apply_list(state, self.Fp),
+            15: lambda state: self.apply_list(state, self.B),
+            16: lambda state: self.apply_list(state, self.B2),
+            17: lambda state: self.apply_list(state, self.Bp),
         }
-    
-    def calc_or(self, list: List):
-        total = 0
-        for x in list:
-            total |= x
-        return total
-
-
-    def apply_list(self, move_map: List):
-        for i in range(len(self.cross)):
-            diff = move_map.get(self.cross[i],self.cross[i])
-            # print(self.cross[i], diff)
-            if self.cross[i] != diff:
-                self.cross[i] = diff
-                # print(self.cross)
-                self.sum = self.calc_or(self.cross)
-                # self.sum = (-self.cross[i]+diff)
-                # print("sum:", self.sum)
-        # cube.cross = [move_map.get(x, x) for x in self.cross]
 
     def check_cross(self):
-        return self.cross == self.final_state
+        return self.state == self.final_state
+    
+    def apply_list(self, state: List, move_map: List):
+        return bytes([move_map.get(x, x) for x in state])
 
     def is_invalid(self, one, two, three):
         return True if (three == one) and ((two^1) == one) else False
 
-    def is_solved(self, layer):
-        self.process_moves[layer]()
-        # print(layer)
-
-
     def combinations(self, depth):
-        def recurse(path):
-            if len(path) == depth:
-                return
-
-            for i in range(0, path[-1]):
-                # print("actual move:", i)
-                if len(path) >= 2 and self.is_invalid(i, path[-1], path[-2]):
+        for i in range(0, 18, 3):
+            state = bytes(self.process_moves[i](self.state))
+            if not (state == self.state):
+                self.fifo.append(SearchCube(state=state, path=[i]))
+                for j in range(1,3):
+                    self.fifo.append(SearchCube(state=bytes(self.process_moves[i+j](self.state)), path=[i+j]))
+        
+        while self.fifo:
+            node = self.fifo.popleft()
+            # print(node.path)
+            mem = round(psutil.Process(os.getpid()).memory_info().rss / 1024**2, 2)
+            if mem > self.min:
+                self.min = mem
+                print(mem)
+            if len(node.path) == depth:
+                continue
+            for i in range(0, 18, 3):
+                if (i//3 == node.path[-1]//3):
                     continue
-
-                if not bool(self.sum & (1 << i)):
+                if len(node.path) > 2 and self.is_invalid(i//3, node.path[-1]//3, node.path[-2]//3):
                     continue
+                state = bytes(self.process_moves[i](node.state))
+                if not (state == node.state):
+                    self.fifo.append(SearchCube(state=bytes(state), path=node.path+(i,)))
+                    for j in range(1,3):
+                        self.fifo.append(SearchCube(state=bytes(self.process_moves[i+j](node.state)), path=node.path+(i+j,)))
 
-                for _ in range(3):
-                    self.is_solved(i)
-                    recurse(path + [i])
-                    self.is_solved(i)
 
-            for i in range(path[-1]+1, 6):
-                # print("actual move:", i)
-
-                if len(path) >= 2 and self.is_invalid(i, path[-1], path[-2]):
-                    continue
-
-                if not bool(self.sum & (1 << i)):
-                    continue
-
-                for _ in range(3):
-                    self.is_solved(i)
-                    recurse(path + [i])
-                    self.is_solved(i)
-
-        for i in range(6):
-            for _ in range(3):
-                # print("actual move:", i)
-                self.is_solved(i)
-                recurse([i])
-                self.is_solved(i)
-        # recurse([])
+class SearchCube:
+    def __init__(self, state: bytearray, path: List[int]):
+        self.state = bytes(state)
+        self.path = tuple(path)
 
 
 if __name__ == "__main__":
@@ -159,19 +149,24 @@ if __name__ == "__main__":
     b = BinaryRepresentation(cube)
     conversion = b.conversion(b.cross)
     print(conversion)
+    print("---------------")
 
 
     from time import time
 
-    cube = CubeMoves(conversion, [40, 9, 24, 10])
+    cube = CubeMoves(bytes(conversion), bytes((40, 9, 24, 10)))
     cube1 = Cube()
     cube1 = Cube("L2 B2 L2 U' B2 L2 U' R2 D' L2 U B2 R B' D F L F2 D F2")
-    sum = 0
-    times = 100
-    for i in range(times):
-        start = time()
-        cube.combinations(1)
-        end = time()
-        sum += end-start
-    print(sum/times)
-    # cube.combinations(1)
+    # sum = 0
+    # times = 3
+    # for i in range(times):
+    #     start = time()
+    #     cube.combinations(6)
+    #     end = time()
+    #     sum += end-start
+    # print(round(sum/times,4))
+    start = time()
+    cube.combinations(2)
+    stop = time()
+    print(stop-start)
+    # print(round(psutil.Process(os.getpid()).memory_info().rss / 1024**2,2))
