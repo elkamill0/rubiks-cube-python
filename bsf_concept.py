@@ -3,6 +3,7 @@ import numpy as np
 from typing import List
 from collections import deque
 import psutil, os
+import struct
 
 class BinaryRepresentation:
     def __init__(self, cube: Cube):
@@ -28,7 +29,9 @@ class BinaryRepresentation:
 
     def conversion(self, numbers):
         # print(numbers)
-        return [self.color_to_binary[n[0]]*(-1 if n[1] else 1) for n in numbers]
+        # return [self.color_to_binary[n[0]]*(-1 if n[1] else 1) for n in numbers]
+        return [self.color_to_binary[n[0]]+(64 if n[1] else 0) for n in numbers]
+
 
     def binary_or_number(self, list_of_biaries):
         result = list_of_biaries[0]
@@ -113,39 +116,52 @@ class CubeMoves:
         for i in range(0, 18, 3):
             state = bytes(self.process_moves[i](self.state))
             if not (state == self.state):
-                self.fifo.append(SearchCube(state=state, path=[i]))
+                self.fifo.append(SearchCube(state=state, path=i, parent=None, depth=1))
                 for j in range(1,3):
-                    self.fifo.append(SearchCube(state=bytes(self.process_moves[i+j](self.state)), path=[i+j]))
+                    self.fifo.append(SearchCube(state=bytes(self.process_moves[i+j](self.state)), path=i+j, parent=None, depth=1))
         
         while self.fifo:
+
             node = self.fifo.popleft()
+            # if node.state == self.final_state:
+            #     while node.parent != None:
+            #         print(node.path)
+            #         node = node.parent
+            #     print(node.path)
+            #     print("-------")
+            #     continue
             # print(node.path)
-            mem = round(psutil.Process(os.getpid()).memory_info().rss / 1024**2, 2)
-            if mem > self.min:
-                self.min = mem
-                print(mem)
-            if len(node.path) == depth:
+            # mem = round(psutil.Process(os.getpid()).memory_info().rss / 1024**2, 2)
+            # if mem > self.min:
+            #     self.min = mem
+            #     print(mem)
+            if node.depth == depth:
                 continue
             for i in range(0, 18, 3):
-                if (i//3 == node.path[-1]//3):
+                if (i//3 == node.path//3):
                     continue
-                if len(node.path) > 2 and self.is_invalid(i//3, node.path[-1]//3, node.path[-2]//3):
+                if node.parent and self.is_invalid(i//3, node.path//3, node.parent.path//3):
                     continue
                 state = bytes(self.process_moves[i](node.state))
                 if not (state == node.state):
-                    self.fifo.append(SearchCube(state=bytes(state), path=node.path+(i,)))
+                    self.fifo.append(SearchCube(state=bytes(state), path=i, parent=node, depth=node.depth+1))
                     for j in range(1,3):
-                        self.fifo.append(SearchCube(state=bytes(self.process_moves[i+j](node.state)), path=node.path+(i+j,)))
+                        self.fifo.append(SearchCube(state=bytes(self.process_moves[i+j](node.state)), path=i+j, parent=node, depth=node.depth+1))
 
 
 class SearchCube:
-    def __init__(self, state: bytearray, path: List[int]):
+    __slots__ = ('state', 'path', 'parent', 'depth')
+
+    def __init__(self, state: bytes, path: int, parent, depth: int):
         self.state = bytes(state)
-        self.path = tuple(path)
+        self.path = path
+        self.parent = parent
+        self.depth = depth
 
 
 if __name__ == "__main__":
-    cube = Cube("R")
+    # cube = Cube("R U F B")
+    cube = Cube("L D' L D R F R L2 B R2 D2 R2 F2 U2 B R2 B L2 F D'")
     b = BinaryRepresentation(cube)
     conversion = b.conversion(b.cross)
     print(conversion)
@@ -157,16 +173,16 @@ if __name__ == "__main__":
     cube = CubeMoves(bytes(conversion), bytes((40, 9, 24, 10)))
     cube1 = Cube()
     cube1 = Cube("L2 B2 L2 U' B2 L2 U' R2 D' L2 U B2 R B' D F L F2 D F2")
-    # sum = 0
-    # times = 3
-    # for i in range(times):
-    #     start = time()
-    #     cube.combinations(6)
-    #     end = time()
-    #     sum += end-start
-    # print(round(sum/times,4))
-    start = time()
-    cube.combinations(2)
-    stop = time()
-    print(stop-start)
+    sum = 0
+    times = 2
+    for i in range(times):
+        start = time()
+        cube.combinations(6)
+        end = time()
+        sum += end-start
+    print(round(sum/times,4))
+    # start = time()
+    # cube.combinations(1)
+    # stop = time()
+    # print(stop-start)
     # print(round(psutil.Process(os.getpid()).memory_info().rss / 1024**2,2))
