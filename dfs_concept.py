@@ -176,14 +176,14 @@ if __name__ == "__main__":
     cube = CubeMoves(bytes(conversion), bytes((40, 9, 24, 10)))
     cube1 = Cube()
     cube1 = Cube("L2 B2 L2 U' B2 L2 U' R2 D' L2 U B2 R B' D F L F2 D F2")
-    sum = 0
-    times = 2
-    for i in range(times):
-        start = time()
-        cube.combinations(7)
-        end = time()
-        sum += end-start
-    print(round(sum/times,4))
+    # sum = 0
+    # times = 2
+    # for i in range(times):
+    #     start = time()
+    #     cube.combinations(7)
+    #     end = time()
+    #     sum += end-start
+    # print(round(sum/times,4))
     start = time()
     cube.combinations(6)
     stop = time()
