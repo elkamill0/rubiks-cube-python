@@ -163,7 +163,8 @@ class SearchCube:
 if __name__ == "__main__":
     # cube = Cube("R U F B")
     # cube = Cube("R U")
-    cube = Cube("L D' L D R F R L2 B R2 D2 R2 F2 U2 B R2 B L2 F D'")
+    # cube = Cube("L D' L D R F R L2 B R2 D2 R2 F2 U2 B R2 B L2 F D'")
+    cube = Cube("D2 F U2 F2 R2 D2 R' U2 B2 U2 R2 U2 L2 B U F D L2 U2 R2")
     # cube = Cube("R")
     b = BinaryRepresentation(cube)
     conversion = b.conversion(b.cross)
@@ -184,8 +185,10 @@ if __name__ == "__main__":
     #     end = time()
     #     sum += end-start
     # print(round(sum/times,4))
-    start = time()
-    cube.combinations(6)
-    stop = time()
-    print(stop-start)
+    # start = time()
+    # cube.combinations(6)
+    # stop = time()
+    # print(stop-start)
+    
+    numbers = ""
     print(round(psutil.Process(os.getpid()).memory_info().rss / 1024**2,2))

@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: cross_find_c
+Version: 1.0
+Summary: Example C extension
+Dynamic: summary
