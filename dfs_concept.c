@@ -6,20 +6,13 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <sys/resource.h>
+// #include "dfs_concept.h"
 
-#define MAX_DEPTH 7
-#define MOVE_COUNT 18
 
 int map_R(int i) {
     switch(i) {
-        case 5: return 33;
-        case 9: return 17; 
-        case 17: return 5;
-        case 33: return 9; 
-        case 69: return 97; 
-        case 73: return 81; 
-        case 81: return 69;
-        case 97: return 73; 
+        case 5: return 33; case 9: return 17; case 17: return 5; case 33: return 9; 
+        case 69: return 97; case 73: return 81; case 81: return 69; case 97: return 73; 
         default: return i;
     }
 }
@@ -160,6 +153,7 @@ int map_B2(int i) {
     }
 }
 
+
 typedef struct SearchCube {
     int* state;
     int path;
@@ -263,6 +257,8 @@ SearchCube* createNode(int *state, int path, SearchCube* parent, int depth){
     return cube;
 }
 
+
+
 // int casesCounter = 0;
 
 void printSolution(SearchCube* node){
@@ -276,7 +272,47 @@ void printSolution(SearchCube* node){
     // free(node);
 }
 
-bool lastLoop(SearchCube* node, int* finalState){
+void printSolutionLast(SearchCube* node, int lastMove){
+    printf("%d ", lastMove);
+    while (node->parent != NULL){
+        printf("%d ", node->path);
+        node = node->parent;
+    }
+    printf("%d\n", node->path);
+    printf("----------\n");
+    // casesCounter++;
+    // free(node);
+}
+
+int* saveSolution(SearchCube* node){
+    int* sol = malloc(sizeof(int) * (node->depth+1));
+    sol[node->depth] = -1;
+    
+    SearchCube* current = node;
+    while (current->parent != NULL){
+        sol[current->depth-1] = current->path;
+        current = current->parent;
+    }
+    sol[0] = current->path;
+    return sol;
+}
+
+int* saveSolutionLast(SearchCube* node, int lastMove){
+    int* sol = malloc(sizeof(int) * (node->depth+1));
+    sol[node->depth] = -1;
+    sol[node->depth-1] = lastMove;
+    SearchCube* current = node;
+    while (current->parent != NULL){
+        sol[current->depth-2] = current->path;
+        current = current->parent;
+    }
+    sol[0] = current->path;
+    return sol;
+}
+
+
+
+bool lastLoop(SearchCube* node, int* finalState, int** solutions, int *solution_count){
     for (int i = 0; i < 18; i+=3){
 
         if (i/3 == node->path / 3){
@@ -289,8 +325,9 @@ bool lastLoop(SearchCube* node, int* finalState){
         int* state = move_cube(i, node->state);
         if (!equal_arrays(state, node->state)){
             if(equal_arrays(state, finalState)){
-                printf("%d ", i);
-                printSolution(node);
+                
+                solutions[(*solution_count)++] = saveSolutionLast(node, i);
+                // printSolutionLast(node, i);
                 free(state);
                 return true;
             }
@@ -299,8 +336,8 @@ bool lastLoop(SearchCube* node, int* finalState){
             for (int j=1; j<3; j++){
                 int* state = move_cube(i+j, node->state);
                 if (equal_arrays(state, finalState)){
-                    printf("%d ", i+j);
-                    printSolution(node);
+                    solutions[(*solution_count)++] = saveSolutionLast(node, i+j);
+                    // printSolutionLast(node, i+j);
                     free(state);
                     return true;
                 }
@@ -328,7 +365,10 @@ int missingCrossSlotsCounter(int *a, int *b){
 }
 
 
-void combinations(int depth, int* start_state, int* final_state){
+int** combinations(int depth, int* start_state, int* final_state){
+    int** solutions = malloc(sizeof(int*) * 10000);
+    int solution_count = 0;
+    
     Stack s;
     initStack(&s);
     for (int i = 0; i < 18; i+=3)
@@ -352,7 +392,8 @@ void combinations(int depth, int* start_state, int* final_state){
         while (!isEmpty(&s)){
             SearchCube* node = pop(&s);
             if (equal_arrays(node->state, final_state)){
-                printSolution(node);
+                solutions[solution_count++] = saveSolution(node);
+                // printSolution(node);
             }
             free(node->state);
             free(node);
@@ -367,14 +408,14 @@ void combinations(int depth, int* start_state, int* final_state){
         // printStack(&s);
         SearchCube* node = pop(&s);
         if (equal_arrays(node->state, final_state)){
-            printSolution(node);
+            saveSolution(node);
             free(node->state);
             free(node);
             continue;
         }
 
         if (node->depth == depth){
-            lastLoop(node, final_state);
+            lastLoop(node, final_state, solutions, &solution_count);
             free(node->state);
             free(node);
             continue;
@@ -410,10 +451,11 @@ void combinations(int depth, int* start_state, int* final_state){
         }
         free(node->state);
     }
+    solutions = realloc(solutions, sizeof(int*) * (solution_count + 1));
+    solutions[solution_count] = NULL;
+    return solutions;
     // printf("cases counter: %d", casesCounter);
 }
-
-// extern void combinations(int n, int* start_state, int* final_state);
 
 double get_memory_usage_mb() {
     struct rusage usage;
@@ -437,11 +479,19 @@ int main() {
     // printf("%.4f sekund\n", total_time / times);
 
     clock_t start = clock();
-    combinations(8, start_state, final_state);
+    int** solutions = combinations(7, start_state, final_state);
     clock_t stop = clock();
     double elapsed_time = (double)(stop - start) / CLOCKS_PER_SEC;
     printf("Czas dla combinations: %.4f sekund\n", elapsed_time);
     printf("Zużycie pamięci: %.2f MB\n", get_memory_usage_mb());
+
+    for (int i = 0; solutions[i] != NULL; i++) {
+        printf("Solution %d: ", i);
+        for (int j = 0; solutions[i][j] != -1; j++) {
+            printf("%d ", solutions[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 // 16

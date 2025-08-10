@@ -156,6 +156,7 @@ class CubeMoves:
 
 if __name__ == "__main__":
     cube = Cube("R")
+    # cube = Cube("L2 B2 L2 U' B2 L2 U' R2 D' L2 U B2 R B' D F L F2 D F2")
     b = BinaryRepresentation(cube)
     conversion = b.conversion(b.cross)
     print(conversion)

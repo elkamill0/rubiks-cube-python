@@ -9,7 +9,7 @@ import sysconfig
 # module5 = Extension('cube_upgrade', sources=['c-algorithms/cube_upgrade/cube-upgrade.c', 'c-algorithms/cube_upgrade/moves.c'])
 # module6 = Extension('moves_upgrade_py', sources=['c-algorithms/cube_upgrade/moves_upgrade_py.c', 'c-algorithms/cube_upgrade/moves.c'])
 # module7 = Extension('python_extension_test', sources=['c-algorithms/cube_upgrade/python_extension_test.c'])
-module8 = Extension("cube_solver", sources=["cube_solver_wrapper.c", "dfs_concept.c"], extra_compile_args=["-O3"])
+module8 = Extension("cube_solver", sources=["dfs_concept_wrapper.c", "dfs_concept.c"], extra_compile_args=["-O3"])
 # module = Extension('test', sources=['test.c'])
 
 setup(

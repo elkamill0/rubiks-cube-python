@@ -1,12 +1,12 @@
 import cube_solver
-from time import time
+from convert import int_to_notation
 
-# print(cube_solver.__file__)
 
-start = [104, 100, 98, 70]
-end = [40, 9, 24, 10]
-depth = 8
-startt = time()
-cube_solver.combinations(depth, start, end)
-endt = time()
-print(endt-startt)
+# start_state = [104, 100, 98, 70]
+start_state = [20, 74, 100, 40]
+final_state = [40, 9, 24, 10]
+
+solutions = cube_solver.combinations(8, start_state, final_state)
+for sol in solutions:
+    print([int_to_notation[x] for x in sol])
+

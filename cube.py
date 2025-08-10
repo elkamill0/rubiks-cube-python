@@ -37,7 +37,7 @@ class Cube(Moves):
     #     return f2l.check_f2l_pair(length, self.cube)
 
 if __name__ == "__main__":
-    print(scramble.generate_scramble(10))
+    # print(scramble.generate_scramble(10))
     notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"
     cube = Cube(notation=notation)
     print(cube.get_state())
