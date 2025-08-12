@@ -3,6 +3,7 @@ from moves.moves import Moves
 import scramble
 import convert
 import visualization
+from cross import Cross
 
 
 
@@ -22,7 +23,7 @@ class Cube(Moves):
 
     def get_state(self):
         return convert.cube_to_color(self.corners, self.edges, self.centers, show=False)
-    
+
     # def get_cube(self):
         # return kk
 
@@ -37,9 +38,11 @@ class Cube(Moves):
     #     return f2l.check_f2l_pair(length, self.cube)
 
 if __name__ == "__main__":
-    # print(scramble.generate_scramble(10))
+    print(scramble.generate_scramble(10))
     notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"
     cube = Cube(notation=notation)
-    print(cube.get_state())
-    # cube.R()
+    cross = Cross(cube).find_cross(6)
+    print(cross)
+    cube.move(cross[0])
     print(cube)
+    # print(cross)

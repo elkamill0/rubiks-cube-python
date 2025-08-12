@@ -1,7 +1,7 @@
 import cube_upgrade
 import time
-import moves_upgrade_py
-from cross import Cross
+# import moves_upgrade_py
+from archive.cross import Cross
 
 class Cube(Cross):
     def __init__(self, moves: str = None):

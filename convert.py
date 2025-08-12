@@ -203,6 +203,27 @@ def state_to_cube(state: str):
 
     return mapped_corners, mapped_edges, color_to_centers
 
+def cube_to_binary_cross(cube):
+    color_to_binary = {
+        0: 36,  1: 5,   2: 20,  3: 6,
+        4: 40,  5: 9,   6: 24,  7: 10,
+        8: 34,  9: 33, 10: 17, 11: 18,
+    }
+
+    target_values = [4, 5, 6, 7]
+    cross = [
+        (np.where(cube.edges == val)[0][0],
+         cube.edges[np.where(cube.edges == val)[0][0]][1])
+        for val in target_values
+    ]
+    return [color_to_binary[n[0]]+(64 if n[1] else 0) for n in cross]
+
+
+
+def cross_to_binary(cube) -> list[int]:
+    return 
+
+
 
 if __name__ == "__main__":
     corners = np.zeros((8, 2), dtype=np.int8)
