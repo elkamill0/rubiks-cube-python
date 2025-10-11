@@ -1,6 +1,6 @@
 from cube import Cube
 import numpy as np
-from convert import sequence_to_moves, int_to_notation
+from convert import notation_to_moves, int_to_notation
 from moves.moves import Moves
 from time import time
 from itertools import product

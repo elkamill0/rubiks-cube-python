@@ -5,9 +5,9 @@ from typing import List
 class Cross:
     def __init__(self, cube):
         self.cube = cube
-        self.start_state = convert.cube_to_binary_cross(self.cube)
+        self.start_state = convert.edges_to_binary(self.cube, [4,5,6,7])
         from cube import Cube
-        self.end_state = convert.cube_to_binary_cross(Cube())
+        self.end_state = convert.edges_to_binary(Cube(), [4,5,6,7])
 
     def find_cross(self, length: int) -> List[str]:
         solutions = self.__find_solutions(length)

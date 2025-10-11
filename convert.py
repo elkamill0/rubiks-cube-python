@@ -43,7 +43,7 @@ int_to_notation = {
     17: "B'"
 }
 
-def sequence_to_moves(moves: str, cube):
+def notation_to_moves(moves: str, cube):
 
     move_map = {
         'R': cube.R,
@@ -203,14 +203,14 @@ def state_to_cube(state: str):
 
     return mapped_corners, mapped_edges, color_to_centers
 
-def cube_to_binary_cross(cube):
+def edges_to_binary(cube, target_values):
     color_to_binary = {
         0: 36,  1: 5,   2: 20,  3: 6,
         4: 40,  5: 9,   6: 24,  7: 10,
         8: 34,  9: 33, 10: 17, 11: 18,
     }
 
-    target_values = [4, 5, 6, 7]
+    # target_values = [4, 5, 6, 7]
     cross = [
         (np.where(cube.edges == val)[0][0],
          cube.edges[np.where(cube.edges == val)[0][0]][1])
@@ -218,11 +218,19 @@ def cube_to_binary_cross(cube):
     ]
     return [color_to_binary[n[0]]+(64 if n[1] else 0) for n in cross]
 
+def corners_to_binary(cube, target_values):
+    color_to_binary = {
+        0: 38,  1: 37,  2: 21,  3: 22,
+        4: 42,  5: 41,  6: 25,  7: 26
+    }
 
-
-def cross_to_binary(cube) -> list[int]:
-    return 
-
+    # target_values = [4, 5, 6, 7]
+    cross = [
+        (int(np.where(cube.corners == val)[0][0]),
+         int(cube.corners[np.where(cube.corners == val)[0][0]][1]))
+        for val in target_values
+    ]
+    return [color_to_binary[n[0]]+(n[1] * 64) for n in cross]
 
 
 if __name__ == "__main__":

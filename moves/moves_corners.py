@@ -15,22 +15,22 @@ class MovesCorners:
 
     def R(self) -> None:
         self.corners[[1,2,6,5]] = self.corners[[2,6,5,1]]
-        self.__rotate_corner([1,2,6,5], clockwise=True)
+        MovesCorners.__rotate_corner(self, [1,2,6,5], clockwise=True)
         
     def Rp(self) -> None:
         self.corners[[1,2,6,5]] = self.corners[[5,1,2,6]]
-        self.__rotate_corner([1,2,6,5], clockwise=True)
+        MovesCorners.__rotate_corner(self, [1,2,6,5], clockwise=True)
 
     def R2(self) -> None:
         self.corners[[1,2,6,5]] = self.corners[[6,5,1,2]]
 
     def L(self) -> None:
         self.corners[[0,3,7,4]] = self.corners[[4,0,3,7]]
-        self.__rotate_corner([0,3,7,4], clockwise=False)
+        MovesCorners.__rotate_corner(self, [0,3,7,4], clockwise=False)
         
     def Lp(self) -> None:
         self.corners[[0,3,7,4]] = self.corners[[3,7,4,0]]
-        self.__rotate_corner([0,3,7,4], clockwise=False)
+        MovesCorners.__rotate_corner(self, [0,3,7,4], clockwise=False)
 
     def L2(self) -> None:
         self.corners[[0,3,7,4]] = self.corners[[7,4,0,3]]
@@ -55,26 +55,71 @@ class MovesCorners:
 
     def F(self) -> None:
         self.corners[[3,2,6,7]] = self.corners[[7,3,2,6]]
-        self.__rotate_corner([3,2,6,7], clockwise=False)
+        MovesCorners.__rotate_corner(self, [3,2,6,7], clockwise=False)
         
     def Fp(self) -> None:
         self.corners[[3,2,6,7]] = self.corners[[2,6,7,3]]
-        self.__rotate_corner([3,2,6,7], clockwise=False)
+        MovesCorners.__rotate_corner(self, [3,2,6,7], clockwise=False)
 
     def F2(self) -> None:
         self.corners[[3,2,6,7]] = self.corners[[6,7,3,2]]
 
     def B(self) -> None:
         self.corners[[0,4,5,1]] = self.corners[[1,0,4,5]]
-        self.__rotate_corner([0,4,5,1], clockwise=True)
+        MovesCorners.__rotate_corner(self, [0,4,5,1], clockwise=True)
         
     def Bp(self) -> None:
         self.corners[[0,4,5,1]] = self.corners[[4,5,1,0]]
-        self.__rotate_corner([0,4,5,1], clockwise=True)
+        MovesCorners.__rotate_corner(self, [0,4,5,1], clockwise=True)
 
     def B2(self) -> None:
         self.corners[[0,4,5,1]] = self.corners[[5,1,0,4]]
+
+    def y(self) -> None:
+        MovesCorners.U(self)
+        MovesCorners.Dp(self)
+
+    def yp(self) -> None:
+        MovesCorners.Up(self)
+        MovesCorners.D(self)
     
+    def y2(self) -> None:
+        MovesCorners.U2(self)
+        MovesCorners.D2(self)
+
+    def x(self) -> None:
+        a1 = [0,2,5,7]
+        a2 = [1,3,4,6]
+        for i,c in enumerate(self.corners):
+            if c[0] in a1:
+                if i in a2:
+                    c[1] = (c[1] - 1) % 3
+            else:
+                if i in a1:
+                    c[1] = (c[1] + 1) % 3
+
+        MovesCorners.R(self)
+        MovesCorners.Lp(self)
+
+    # def xp(self) -> None:
+    #     MovesCorners.Rp(self)
+    #     MovesCorners.L(self)
+
+    # def x2(self) -> None:
+    #     MovesCorners.R2(self)
+    #     MovesCorners.L2(self)
+
+    # def z(self) -> None:
+    #     MovesCorners.F(self)
+    #     MovesCorners.Bp(self)
+
+    # def zp(self) -> None:
+    #     MovesCorners.Fp(self)
+    #     MovesCorners.B(self)
+
+    # def z2(self) -> None:
+    #     MovesCorners.F2(self)
+    #     MovesCorners.B2(self)
 
 if __name__ == "__main__":
     corners = np.zeros((8, 2), dtype=np.int8)

@@ -1,9 +1,12 @@
 import numpy as np
 from moves.moves import Moves
+from pll import PLL
 import scramble
 import convert
 import visualization
 from cross import Cross
+from f2l import F2L
+from oll import OLL
 
 
 
@@ -11,15 +14,15 @@ class Cube(Moves):
     def __init__(self, notation: str = None, state: str = None):
         self.reset()
         if notation: 
-            convert.sequence_to_moves(moves=notation, cube=self)
+            convert.notation_to_moves(moves=notation, cube=self)
         elif state:
-            self.corners, self.edges, self.centers = visualization.state_to_cube(state=state)
+            self.corners, self.edges, self.centers = convert.state_to_cube(state=state)
 
     def __str__(self):
-        return visualization.cube_to_color(self.corners, self.edges, self.centers, show=True)
+        return convert.cube_to_color(self.corners, self.edges, self.centers, show=True)
     
     def move(self, notation: str) -> None:
-        convert.sequence_to_moves(notation, self)
+        convert.notation_to_moves(notation, self)
 
     def get_state(self):
         return convert.cube_to_color(self.corners, self.edges, self.centers, show=False)
@@ -34,15 +37,46 @@ class Cube(Moves):
         self.edges[:, 0] = np.arange(12)
         self.centers = np.arange(6, dtype=np.uint8)
 
+
     # def f2l(self, length):
     #     return f2l.check_f2l_pair(length, self.cube)
 
 if __name__ == "__main__":
-    print(scramble.generate_scramble(10))
-    notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"
+    # print(scramble.generate_scramble(10))
+    # notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"
+    notation="F' R2 F' U2 F R2 F' U2 R2 F U2 R U F L2 B D' B' R"
+    # notation="F' B2 L F2 L D2 L2 U2 R D2 B2 L D' B2 F L' B L2 D U'"
+    # notation = "R U R' L D2 F' B U' R2 L' F2 D' B2 U2 L2 D B' F"
+    # notation = "U2 R' F D B2 L U' R2 F' D' L2 B U L' D2 R F2 B' U'"
+    # notation = "L "#D2 B' R U2 F' L' B2 U R' D F2 L2 U' B R2 F D' U B'"
+
     cube = Cube(notation=notation)
+    # f2l.prepare_algs("f2l1.json")
+
     cross = Cross(cube).find_cross(6)
-    print(cross)
-    cube.move(cross[0])
-    print(cube)
     # print(cross)
+    print(notation)
+    print(cross[0])
+    cube.move(cross[0])
+    
+    # print(cube)
+    f2l = F2L(cube, Cube()).solve(verbose=True)
+    # print(f2l)
+    [cube.move(i) for i in f2l]
+    # print(cube)
+
+    oll = OLL(cube).solve()
+    print(oll)
+    cube.move(oll)
+    
+    pll = PLL(cube).solve()
+    print(pll)
+    cube.move(pll)
+
+    print(cube)
+    print(cube.get_state())
+
+
+
+
+    
