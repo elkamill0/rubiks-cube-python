@@ -55,6 +55,59 @@ class F2L:
             (153, 17): "R U' R' U R U2 R' U R U' R'", #F2L 39
             (89, 81): "F' L' U2 L F R U R'", #F2L 40
             (153, 81): "R U' R' F' L' U2 L F", #F2L 41
+            (149, 84): "R U' R' U R' F R F' R U' R' ", #F2L 42
+            # aF2L
+            (90, 20): "L' U' L U R U' R' ", #F2L 1
+            (106, 6): "L U' L' U' R U' R' ", #F2L 2
+            (105, 36): "R' U' R2 U2 R' ", #F2L 3
+            (154, 20): "U2 L' U L U' R U R' ", #F2L 4
+            (170, 6): "L U L' U R U R' ", #F2L 5
+            (169, 36): "U2 R' U R U R U R' ", #F2L 6
+            (26, 20): "U' L' U L R U' R' ", #F2L 7
+            (42, 6): "R D' R' U R U D R' ", #F2L 8
+            (41, 36): "U R' U2 R U' R U R' ", #F2L 9
+            (150, 18): "U' F U F2 U' F ", #F2L 10
+            (166, 34): "U' L U' L' R U' R' ", #F2L 11
+            (165, 33): "U2 R U2 R2 U' R2 U R'", #F2L 12
+            (22, 82): "U' L F' L2 U L U2 F ", #F2L 13
+            (38, 34): "U2 R2 D B2 D' R2 ", #F2L 14
+            # (25, 17): "", #F2L 15
+            (150, 82): "U' R' D' F' D R ", #F2L 16
+            (166, 98): "U2 L F' U' F L' ", #F2L 17
+            (165, 97): "U R' U2 R F' U' F ", #F2L 18
+            (86, 82): "U' F U2 F' R U R' ", #F2L 19
+            (102, 34): "U L U L' R U R' ", #F2L 20
+            (101, 97): "U F D R D' F' ", #F2L 21
+            (22, 18): "R L' U2 L R' ", #F2L 22
+            (38, 98): "F' L U' L' F", #F2L 23
+            (37, 33): "R' U R2 U' R' ", #F2L 24
+            (26, 82): "R' F R2 U' R2 F' R ", #F2L 25
+            (42, 34): "R L U2 L' R' ", #F2L 26
+            (41, 97): "F' R' U2 R U' F ", #F2L 27
+            (90, 18): "L' U L U R U R' U R U' R'", #F2L 28
+            (105, 33): "R' U R U' R U R' U R U' R' ", #F2L 29
+            (154, 18): "R' F R U' R' F' R2 U R' U R U R' ", #F2L 30
+            (170, 98): "L U' L' F' L F' L' F2 ", #F2L 31
+            (169, 33): "R' U R U R' U R2 U R' ", #F2L 32
+            (90, 82): "F U' R U' R' F' R U' R' U' R U R' ", #F2L 33
+            (106, 34): "L U' L' U' L U L' R U' R' ", #F2L 34
+            (105, 97): "R' U R2 U' R2 F R F' R U' R' ", #F2L 35
+            (154, 82): "F U2 R U' R' F' U R U R' ", #F2L 36
+            (170, 34): "L U' L' U' R U2 R' U R U' R' ", #F2L 37
+            (169, 97): "R' U R L F' R' F R F L' ", #F2L 38
+            (26, 18): "F2 R' F2 D' R U' R' D R ", #F2L 39
+            (42, 98): "L U L' R U2 R' U F' U' F ", #F2L 40
+            (41, 33): "R' U R2 U2 R' U R' F R F' ", #F2L 41
+            (90, 70): "L' U' L F' U' F ", #F2L 42
+            (106, 100): "L' B L B' R U2 R' ", #F2L 43
+            (105, 69): "B' R B R' U2 R U' R' ", #F2L 44
+            (154, 84): "U L' U L U' F R' F' R ", #F2L 45
+            (170, 70): "U L U L' F' U F ", #F2L 46
+            (169, 100): "U R' U R F' U F", #F2L 47
+            (26, 84): "L F L' F L F' L' ", #F2L 48
+            (42, 70): "U2 L U' L' F' U2 F", #F2L 49
+            (150, 82): "U' F U' F' U R U' R' ", #F2L 50
+            (166, 98): "U' L U L' U' F' U' F ", #F2L 51
         },
         {
             (150, 84): "F' L F L'", #F2L 1
@@ -98,6 +151,61 @@ class F2L:
             (154, 18): "L' U' L U L' U2 L U L' U' L ", #F2L 39
             (90, 82): "L' U L F R U2 R' F' ", #F2L 40
             (154, 82): "F R U2 R' F' L' U' L ", #F2L 41
+            # aF2L
+            (106, 70): "L U' L' F U' F' ", #F2L 1
+            (105, 100): "F R' U2 R F' ", #F2L 2
+            (89, 69): "R U' R' U F' L F L' ", #F2L 3
+            (170, 70): "B L' B' L U L' U2 L ", #F2L 4
+            (169, 100): "U2 R' U R U2 F U F' ", #F2L 5
+            (153, 69): "R U R' F U F' ", #F2L 6
+            # (26, 18): "", #F2L 7
+            (41, 100): "U' R' U R F U2 F' ", #F2L 8
+            (25, 69): "U R' F' R F' R' F R ", #F2L 9
+            (166, 34): "U' L U L2 U' L ", #F2L 10
+            (165, 33): "U' R' U' R L' U' L ", #F2L 11
+            (149, 17): "U2 R U R' L' U L ", #F2L 12
+            # (26, 18): "", #F2L 13
+            (37, 33): "U2 L2 D' B2 D L2 ", #F2L 14
+            (21, 81): "U R' F R2 U' R' U2 F' ", #F2L 15
+            (166, 98): "U' L U' L' F' L F L' ", #F2L 16
+            (165, 97): "U2 F U' R' U R F' ", #F2L 17
+            (149, 81): "U F' U2 F L' U' L ", #F2L 18
+            (102, 98): "U' L U2 L' F U F' ", #F2L 19
+            (101, 33): "U R' U R L' U L ", #F2L 20
+            (85, 81): "U R F U F' R' ", #F2L 21
+            (38, 34): "L U' L2 U L ", #F2L 22
+            (37, 97): "F R' U R F' ", #F2L 23
+            (21, 17): "R U' R' U2 L' U L ", #F2L 24
+            (42, 98): "L U L' F U2 F' ", #F2L 25
+            (41, 33): "R' U' R U2 L' U L ", #F2L 26
+            (25, 81): "R' F R2 U R' F' ", #F2L 27
+            (106, 34): "L U' L2 U' L U' L' U' L ", #F2L 28
+            (105, 97): "R' U R F R' F R F2 ", #F2L 29
+            (89, 17): "R U' R' U' L' U L U L' U' L ", #F2L 30
+            (170, 34): "L U' L' U L' U' L U' L' U L ", #F2L 31
+            # (26, 18): "", #F2L 32
+            (153, 17): "R U' R' U' L' U' L U' L' U L ", #F2L 33
+            (106, 98): "L U' L' U' L U L' F' L F L' ", #F2L 34
+            (105, 33): "R' U R U L' U2 L U' L' U L ", #F2L 35
+            (89, 81): "R' F R2 U' R' U' R U R' U2 F' ", #F2L 36
+            # (26, 18): "", #F2L 37
+            (169, 33): "R' U' R U' L' U2 L U L' U' L ", #F2L 38
+            (153, 81): "R U R' L' U L U' L F' L' F L' U L ", #F2L 39
+            (42, 34): "L U' L2 U2 L U2 L' U L ", #F2L 40
+            (41, 97): "R' U' R L' U2 L U' F U F' ", #F2L 41
+            (25, 17): "R U' R' U2 L' U2 L U2 L' U L ", #F2L 42
+            # (26, 18): "", #F2L 43
+            (105, 5): "R' U' R U' L' U' L ", #F2L 44
+            (89, 20): "R' F R2 U' R' U F' ", #F2L 45
+            (170, 6): "U L U L2 U2 L ", #F2L 46
+            (169, 36): "U R' U R L' U2 L ", #F2L 47
+            (153, 5): "U R L' U L R' ", #F2L 48
+            (42, 6): "L U2 L' U L' U' L ", #F2L 49
+            (41, 36): "U L' D L U' L' U' D' L ", #F2L 50
+            (25, 5): "U2 R U' R' L' U L ", #F2L 51
+            (166, 98): "U' F' D' L' D F ", #F2L 52
+            # (26, 18): "", #F2L 53
+            (149, 81): "U' R U' R' F U2 F' ", #F2L 54
         },
         {
             (166, 6): "U L U' L' ", #F2L 1
@@ -141,12 +249,67 @@ class F2L:
             (170, 34): "L U L' U2 L U' L' U L U L' ", #F2L 39
             (106, 98): "L U' L U F U' F' L2 ", #F2L 40
             (170, 98): "L2 F U F' U' L' U L' ", #F2L 41
+            # aF2L
+            (105, 36): "R' U' R U L U' L' ", #F2L 1
+            (89, 5): "L F' U2 F L' ", #F2L 2
+            (90, 20): "L' U' L2 U2 L' ", #F2L 3
+            (169, 36): "U2 R' U R U' L U L' ", #F2L 4
+            (153, 5): "R U R' U L U L' ", #F2L 5
+            (154, 20): "U2 L' U L U L U L' ", #F2L 6
+            (41, 36): "U' R' U R L U' L' ", #F2L 7
+            (25, 5): "U' F' U2 L U L' F ", #F2L 8
+            (26, 20): "U L' U2 L U' L U L' ", #F2L 9
+            (165, 33): "R' U R L U' L' U L U L' ", #F2L 10
+            (149, 17): "U' R U' R' L U' L' ", #F2L 11
+            (150, 18): "U' L U L2 U' L2 U L' ", #F2L 12
+            (37, 97): "U' R B' R2 U R U2 R B R' ", #F2L 13
+            (21, 17): "U' F R' F' R U L U L' ", #F2L 14
+            (22, 82): "U' L F' L' F L U L' ", #F2L 15
+            # (42, 34): "", #F2L 16
+            (149, 81): "U2 R B' U' B R' ", #F2L 17
+            (150, 82): "U' F U' F' L U2 L' ", #F2L 18
+            # (42, 34): "", #F2L 19
+            (85, 17): "U R U R' L U L' ", #F2L 20
+            (86, 82): "U F L U L' F' ", #F2L 21
+            (37, 33): "L R' U2 R L' ", #F2L 22
+            (21, 81): "L F' U F L' ", #F2L 23
+            (22, 18): "L' U L2 U' L' ", #F2L 24
+            # (42, 34): "", #F2L 25
+            (25, 17): "L R U2 R' L' ", #F2L 26
+            (26, 82): "F U' L U2 L' F' ", #F2L 27
+            (105, 33): "R' U R U L U L' U L U' L' ", #F2L 28
+            (89, 81): "F' U L' U L U' L U L' F ", #F2L 29
+            (90, 18): "L' U L U' L U L' U L U' L' ", #F2L 30
+            (169, 33): "R' U R U L U' L' U' L U L' ", #F2L 31
+            (153, 81): "R U R' F R U R' U' F' L U2 L' ", #F2L 32
+            (154, 18): "L' U L2 U L' U L U L' ", #F2L 33
+            # (42, 34): "", #F2L 34
+            (89, 17): "R U' R' U' R U R' L U' L' ", #F2L 35
+            (90, 82): "F U L U2 L' U' L U L' F' ", #F2L 36
+            # (42, 34): "", #F2L 37
+            (153, 17): "R U' R' U R U2 R' L U2 L' ", #F2L 38
+            (154, 82): "F L U' L' U L U L' F' ", #F2L 39
+            (41, 33): "R' U R U2 L U2 L' U2 L U' L' ", #F2L 40
+            (25, 81): "F' U2 L' U2 L2 U L' F ", #F2L 41
+            (26, 18): "L' U L2 U2 L' U2 L U' L' ", #F2L 42
+            (105, 69): "B' R B R' L U' L' ", #F2L 43
+            (89, 84): "R' F R F' L U2 L' ", #F2L 44
+            (90, 70): "F' L F L' U2 L U' L' ", #F2L 45
+            # (42, 34): "", #F2L 46
+            (153, 69): "U R B' U2 B R' ", #F2L 47
+            (41, 100): "R B R' B R B' R' ", #F2L 48
+            # (42, 34): "", #F2L 49
+            # (42, 34): "", #F2L 50
+            # (42, 34): "", #F2L 51
+            # (42, 34): "", #F2L 52
+            (149, 81): "U2 L U' F' U F L' ", #F2L 53
+            # (42, 34): "", #F2L 54
         },
         {
             (165, 100): "U2 R2 F R F' R ", #F2L 1
             (101, 5): "U' R' U R ", #F2L 2
             (165, 20): "R' U' R ", #F2L 3
-            (149, 69): "B U' B'", #F2L 4
+            (101, 70): "B U B'", #F2L 4
             (165, 70): "U' R' F R U R' U' F' R ", #F2L 5
             (101, 20): "U R' U' R U2 R' U R ", #F2L 6
             (165, 84): "F R U R2 U' R F' ", #F2L 7
@@ -184,18 +347,73 @@ class F2L:
             (169, 33): "R' U' R U R' U2 R U R' U' R ", #F2L 39
             (105, 97): "R2 F' U' F U R U' R ", #F2L 40
             (169, 97): "R' U R' U' F' U F R2 ", #F2L 41
-        }
+            # aF2L
+            (89, 69): "R U' R' U R2 F R F' R ", #F2L 1
+            (90, 84): "L' B U2 B' L ", #F2L 2
+            (106, 70): "L U' R' F U' F' R L' ", #F2L 3
+            (153, 69): "F R' F' R U R' U2 R ", #F2L 4
+            (154, 84): "L F' L' F R' U2 R", #F2L 5
+            (170, 70): "B L' B' L R' U R ", #F2L 6
+            (25, 69): "F R' F' U R U' R' U' R ", #F2L 7
+            (26, 84): "F U2 R U R2 U' R F' ", #F2L 8
+            (42, 70): "U L' B' L B' L' B L ", #F2L 9
+            (149, 17): "U' R U R2 U' R ", #F2L 10
+            (150, 18): "U L' U2 L U R' U' R ", #F2L 11
+            (166, 34): "U' L U L' U2 R' U' R ", #F2L 12
+            (21, 81): "U R' F R F' R' U' R ", #F2L 13
+            (22, 18): "U2 R2 D' F2 D R2 ", #F2L 14
+            # (41, 33): "", #F2L 15
+            (149, 81): "U' F' R' U' R F ", #F2L 16
+            (150, 82): "U2 F R' U' R F' ", #F2L 17
+            (166, 98): "U' L U' L' R2 F R F' R ", #F2L 18
+            (85, 81): "R' F R F' R U2 R2 U R ", #F2L 19
+            (86, 18): "U L' U L R' U R ", #F2L 20
+            # (41, 33): "", #F2L 21
+            (21, 17): "R U' R2 U R ", #F2L 22
+            (22, 82): "R' F U' F' R ", #F2L 23
+            (38, 34): "L U' L' U2 R' U R ", #F2L 24
+            (25, 81): "F' U R' U2 R F ", #F2L 25
+            (26, 18): "L' U' L U R' U2 R ", #F2L 26
+            (42, 98): "L U L' B' R B R' ", #F2L 27
+            (89, 17): "R U' R2 U' R U' R' U' R ", #F2L 28
+            (90, 82): "L' U L B L' B L B2 ", #F2L 29
+            (106, 34): "L U' L' U' R' U R U R' U' R ", #F2L 30
+            (153, 17): "R U R' U' R U' R' U R' U' R ", #F2L 31
+            (154, 82): "F U' R U' R' U R' U' R F' ", #F2L 32
+            (170, 34): "L U' L' U' R' U' R U' R' U R ", #F2L 33
+            (89, 81): "F' R' U R U' R' U' R F ", #F2L 34
+            (90, 18): "L' U' L R' U R U' R' U' R ", #F2L 35
+            (106, 98): "L U' L' R' F R U R' U' F' R ", #F2L 36
+            (153, 81): "F' U' R' U2 R U R' U' R F ", #F2L 37
+            (154, 18): "L' U L U L' U' L R' U R ", #F2L 38
+            # (41, 33): "", #F2L 39
+            (25, 17): "R U' R2 U2 R U R' U2 R ", #F2L 40
+            (26, 82): "F U2 R U2 R2 U' R F' ", #F2L 41
+            (42, 34): "L U L' R U2 R2 U' R2 U' R' ", #F2L 42
+            (89, 20): "U' R U R2 U' R U' R' U R ", #F2L 43
+            (90, 6): "L' U' L U' R' U' R ", #F2L 44
+            (106, 36): "U2 L U' L' U R' U' R ", #F2L 45
+            (153, 5): "U R U R2 U2 R ", #F2L 46
+            (154, 20): "U L' U L R' U2 R ", #F2L 47
+            (170, 6): "U L R' U R L' ", #F2L 48
+            (25, 5): "R U2 R' U R' U' R ", #F2L 49
+            (26, 20): "U2 L F' L' F U2 R' U' R ", #F2L 50
+            (42, 6): "U2 L U' L' R' U R ", #F2L 51
+            # (41, 33): "", #F2L 52
+            (150, 82): "U' F U F' U' R' U' R ", #F2L 53
+            # (41, 33): "", #F2L 54
+        },
         ]
 
-    def prepare_algs(self, path):
+    def prepare_algs(self, path, slot: int):
         with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
         for i, case in enumerate(data):
-            cube = self.solved_cube
+            cube = deepcopy(self.solved_cube)
             cube.move(inverse(case))
             edges = edges_to_binary(cube, [10,11,8,9]) 
             corners = corners_to_binary(cube, [6,7,4,5])
-            print(f"({corners[3]}, {edges[3]}): \"{case}\", #F2L {i+1}")
+            print(f"({corners[slot]}, {edges[slot]}): \"{case}\", #F2L {i+1}")
 
     def __check_free_slots(self) -> List[int]:
         edges = edges_to_binary(self.solved_cube, [10,11,8,9]) 
@@ -221,6 +439,8 @@ class F2L:
         while i <= 4 and self.free_slots:
             for slot in self.free_slots:
                 key = (self.corners[slot], self.edges[slot])
+                # (149, 69): "B U' B'", #F2L 4
+                print(key)
                 if key in self.pairs[slot]:
                     alg = self.pairs[slot][key]
                     new_notation += alg
@@ -230,6 +450,8 @@ class F2L:
                     if verbose:
                         print(reduced, f" # Slot {slot}")
                     self.cube.move(alg)
+                    self.edges = edges_to_binary(self.cube, [10, 11, 8, 9])
+                    self.corners = corners_to_binary(self.cube, [6, 7, 4, 5])
                     self.free_slots.remove(slot)
                     i = 0
                     break
@@ -239,7 +461,6 @@ class F2L:
                 self.edges = edges_to_binary(self.cube, [10, 11, 8, 9])
                 self.corners = corners_to_binary(self.cube, [6, 7, 4, 5])
                 i += 1
-
         return final
 
 

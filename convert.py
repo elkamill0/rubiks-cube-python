@@ -232,6 +232,22 @@ def corners_to_binary(cube, target_values):
     ]
     return [color_to_binary[n[0]]+(n[1] * 64) for n in cross]
 
+def replace_numbers_with_colors(ascii_cube: str) -> str:
+    number_to_emoji = {
+        "0": "⬜",  # white
+        "1": "🟧",  # orange
+        "2": "🟩",  # green
+        "3": "🟥",  # red
+        "4": "🟦",  # blue
+        "5": "🟨",  # yellow
+    }
+
+    result = ascii_cube
+    for number, emoji in number_to_emoji.items():
+        result = result.replace(number, emoji)
+    
+    return result
+
 
 if __name__ == "__main__":
     corners = np.zeros((8, 2), dtype=np.int8)
