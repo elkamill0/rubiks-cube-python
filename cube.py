@@ -7,6 +7,8 @@ import visualization
 from cross import Cross
 from f2l import F2L
 from oll import OLL
+from solving_stage import Solving
+from pprint import pprint
 
 
 
@@ -57,10 +59,25 @@ if __name__ == "__main__":
     # notation = "L "#D2 B' R U2 F' L' B2 U R' D F2 L2 U' B R2 F D' U B'"
 
     # notation = "U2 D L2 B F2 R2 F B' D F' B' R' B F' U' R2 U2 B L D' R'"
-    # notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
-    notation = "U' L F2 D' R2 D B L B R B D2 U' L B' D L' R' B' F' L2"
+    notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
+    # notation = "U' L F2 D' R2 D B L B R B D2 U' L B' D L' R' B' F' L2"
+
 
     cube = Cube(notation=notation)
+
+
+
+    crosses_list = Cross(cube).find_cross(6)
+    print(crosses_list[0])
+    cube.move(crosses_list[0])
+
+
+    pprint(Solving(cube).solve())
+    
+    
+    # print(F2L(cube, Cube()).find_pairs())
+    # print(F2L(cube).solve_slot(3))
+
 
     # print(F2L(Cube(), Cube()).prepare_algs("algs/f2l4.json", 3))
 
@@ -70,18 +87,18 @@ if __name__ == "__main__":
     # print(cross)
     # print(cube)
 
-    OLL(Cube()).prepare_algs()
+    # OLL(Cube()).prepare_algs()
+    # cross = Cross(cube).find_cross(6)
+    # # print(cross)
+    # print(notation)
+    # print(cross[0])
+    # cube.move(cross[0])
+    # f2l = F2L(cube, Cube()).solve()
+    # [cube.move(i) for i in f2l]
+    # print(cube)
+    # oll = OLL(cube).solve()
+    # print(oll)
 
-    cross = Cross(cube).find_cross(6)
-    # print(cross)
-    print(notation)
-    print(cross[0])
-    cube.move(cross[0])
-    f2l = F2L(cube, Cube()).solve()
-    [cube.move(i) for i in f2l]
-    print(cube)
-    oll = OLL(cube).solve()
-    print(oll)
     # cube.move(oll)
     # print(cube)
     # pll = PLL(cube).solve()
@@ -94,6 +111,3 @@ if __name__ == "__main__":
     # print(cube.get_state())
 
     # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2
-
-
-    

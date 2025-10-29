@@ -18,4 +18,10 @@ class Cross:
 
     def __convert_cross_numbers_to_notation(self, notation_int: List[List[int]]) -> List[str]:
         return [' '.join(convert.int_to_notation[x] for x in sol) for sol in notation_int]
+    
+    def is_cross_solved(self):
+        for e in range(4,8):
+            if not (self.cube.edges[e] == [e,0]).all():
+                return False
+        return True
             

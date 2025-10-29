@@ -100,7 +100,7 @@ if solve_button:
             cube.move(cross[0])
 
 
-        f2l = F2L(cube, Cube()).solve(verbose=False)
+        f2l = F2L(cube).solve(verbose=False)
         f2l_solution.text(f"F2L: {f2l}")
         if f2l:
             _ = [cube.move(i) for i in f2l]

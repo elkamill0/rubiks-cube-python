@@ -84,13 +84,16 @@ class OLL():
         for _ in range(4):
             edges = tuple(int(e[1]) for e in cube.edges[0:4])
             corners = tuple(int(c[1]) for c in cube.corners[0:4])
-            print(edges, corners)
             if (edges, corners) in self.cases:
                 new_notation += self.cases.get((edges, corners))
                 return reduce(new_notation)
             new_notation += "U "
             cube.U()
         return None
+    
+    def is_solved(self):
+        for e in self.cube.edges[:4]:
+            print(e)
 
 
 

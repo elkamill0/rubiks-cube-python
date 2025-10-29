@@ -7,9 +7,10 @@ from tools import inverse, reduce
 from copy import deepcopy
 
 class F2L:
-    def __init__(self, cube, solved_cube):
-        self.solved_cube = solved_cube
+    def __init__(self, cube):
         self.cube = deepcopy(cube)
+        self.solved_cube = deepcopy(cube)
+        self.solved_cube.reset()
         self.edges = edges_to_binary(self.cube, [10,11,8,9]) 
         self.corners = corners_to_binary(self.cube, [6,7,4,5])
         self.free_slots = self.__check_free_slots()
@@ -439,8 +440,6 @@ class F2L:
         while i <= 4 and self.free_slots:
             for slot in self.free_slots:
                 key = (self.corners[slot], self.edges[slot])
-                # (149, 69): "B U' B'", #F2L 4
-                print(key)
                 if key in self.pairs[slot]:
                     alg = self.pairs[slot][key]
                     new_notation += alg
@@ -462,6 +461,42 @@ class F2L:
                 self.corners = corners_to_binary(self.cube, [6, 7, 4, 5])
                 i += 1
         return final
+
+
+    def find_pairs(self):
+        i = 0
+        final = []
+        u_notation = ""
+
+        while i <= 4 and self.free_slots:
+            for slot in self.free_slots:
+                key = (self.corners[slot], self.edges[slot])
+                if key in self.pairs[slot]:
+                    alg = self.pairs[slot][key]
+                    reduced = reduce(u_notation + alg)
+                    final.append(reduced)
+                    self.free_slots.remove(slot)
+                    break
+            else:
+                self.cube.U()
+                u_notation+="U "
+                self.edges = edges_to_binary(self.cube, [10, 11, 8, 9])
+                self.corners = corners_to_binary(self.cube, [6, 7, 4, 5])
+                i += 1
+        return final
+    
+    def solve_slot(self, slot_number: int):
+        for u in ["", "U ", "U2 ", "U' "]:
+            key = (self.corners[slot_number], self.edges[slot_number])
+            if key in self.pairs[slot_number]:
+                alg = self.pairs[slot_number][key]
+                return reduce(u + alg)
+            else:
+                self.cube.U()
+                self.edges = edges_to_binary(self.cube, [10, 11, 8, 9])
+                self.corners = corners_to_binary(self.cube, [6, 7, 4, 5])
+        return None
+
 
 
 if __name__ == "__main__":
