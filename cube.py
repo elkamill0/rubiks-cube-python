@@ -64,16 +64,34 @@ if __name__ == "__main__":
 
 
     cube = Cube(notation=notation)
+    solving = Solving(cube).build_tree(6)
+    node = solving[0]
+    while node.child:
+        print(node.alg)
+        node = node.child[0]
+    print(node.alg)
 
-
-
-    crosses_list = Cross(cube).find_cross(6)
-    print(crosses_list[0])
-    cube.move(crosses_list[0])
-
-
-    pprint(Solving(cube).solve())
     
+
+    # while node.parent:
+    #     print(node.alg)
+    #     node = node.parent
+    # print(node.alg)
+
+    # print(solving[0].parent.alg)
+
+
+
+    # crosses_list = Cross(cube).find_cross(6)
+    # print(crosses_list[0])
+    # cube.move(crosses_list[0])
+
+
+    # pprint(Solving(cube).solve())
+
+
+
+
     
     # print(F2L(cube, Cube()).find_pairs())
     # print(F2L(cube).solve_slot(3))

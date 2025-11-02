@@ -13,7 +13,7 @@ class F2L:
         self.solved_cube.reset()
         self.edges = edges_to_binary(self.cube, [10,11,8,9]) 
         self.corners = corners_to_binary(self.cube, [6,7,4,5])
-        self.free_slots = self.__check_free_slots()
+        self.free_slots = self.check_free_slots()
         self.pairs = [{
             (149, 5): "U R U' R'", #F2L 1
             (85, 84): "F R' F' R", #F2L 2
@@ -416,7 +416,7 @@ class F2L:
             corners = corners_to_binary(cube, [6,7,4,5])
             print(f"({corners[slot]}, {edges[slot]}): \"{case}\", #F2L {i+1}")
 
-    def __check_free_slots(self) -> List[int]:
+    def check_free_slots(self) -> List[int]:
         edges = edges_to_binary(self.solved_cube, [10,11,8,9]) 
         corners = corners_to_binary(self.solved_cube, [6,7,4,5])
 

@@ -6,36 +6,78 @@ from pll import PLL
 from copy import deepcopy
 # from cube import Cube
 
+
+class Node:
+    def __init__(self, cube, alg, stage, name, parent=None):
+        self.cube = cube
+        self.alg = alg
+        self.stage = stage
+        self.parent = parent
+        self.child = []
+        self.name = name
+
+
 class Solving:
     def __init__(self, cube):
         self.cube = cube
-        self.f2l_combinations = [
-            [0, 1, 2, 3],
-            [0, 1, 3, 2],
-            [0, 2, 1, 3],
-            [0, 2, 3, 1],
-            [0, 3, 1, 2],
-            [0, 3, 2, 1],
-            [1, 0, 2, 3],
-            [1, 0, 3, 2],
-            [1, 2, 0, 3],
-            [1, 2, 3, 0],
-            [1, 3, 0, 2],
-            [1, 3, 2, 0],
-            [2, 0, 1, 3],
-            [2, 0, 3, 1],
-            [2, 1, 0, 3],
-            [2, 1, 3, 0],
-            [2, 3, 0, 1],
-            [2, 3, 1, 0],
-            [3, 0, 1, 2],
-            [3, 0, 2, 1],
-            [3, 1, 0, 2],
-            [3, 1, 2, 0],
-            [3, 2, 0, 1],
-            [3, 2, 1, 0]
-        ]
-    
+        self.tree = []
+        self.solutions = []
+        self.root = []
+        self.total_cross = 0
+        self.total_f2l = 0
+        self.total_oll = 0
+        self.total_pll = 0
+
+    def build_tree(self, cross_length):
+        cross = Cross(self.cube).find_cross(cross_length)
+        for c in cross:
+            cube = deepcopy(self.cube)
+            cube.move(c)
+            self.total_cross += 1
+            node = Node(cube=cube, alg=c, stage=None, name="Cross: ", parent=None)
+            self.root.append(node)
+            node.stage = F2L(cube).check_free_slots()
+            self.tree.append(node)
+
+        while self.tree:
+            parent: Node = self.tree.pop()
+            if not parent.stage:
+                alg = OLL(parent.cube).solve()
+                cube = deepcopy(parent.cube)
+                if alg:
+                    self.total_oll += 1
+                    cube.move(alg)
+                node = Node(cube=cube, alg=alg, stage=None, name="OLL: ", parent=parent)
+                parent.child.append(node)
+                parent = node
+                alg = PLL(parent.cube).solve()
+                cube = deepcopy(parent.cube)
+                if alg:
+                    self.total_pll += 1
+                    cube.move(alg)
+                node = Node(cube=cube, alg=alg, stage=None, name="PLL: ", parent=parent)
+                parent.child.append(node)
+                self.solutions.append(node)
+            else:
+                original_stage = deepcopy(parent.stage)
+                while parent.stage:
+                    index = parent.stage.pop()
+                    alg = F2L(parent.cube).solve_slot(index)
+                    if not alg:
+                        continue
+                    self.total_f2l += 1
+                    cube = deepcopy(parent.cube)
+                    cube.move(alg)
+                    stage = deepcopy(original_stage)
+                    stage.remove(index)
+                    node = Node(cube=cube, alg=alg, stage=stage, name=f"F2L {index+1}: ", parent=parent)
+                    parent.child.append(node)
+                    self.tree.append(node)
+        
+        return self.root
+
+
+
     def solve(self):
         if not Cross(self.cube).is_cross_solved():
             print("cross is not solved")
