@@ -29,12 +29,14 @@ class Solving:
         self.total_pll = 0
 
     def build_tree(self, cross_length):
+        root = Node(self.cube, "", None, "scramble", None)
         cross = Cross(self.cube).find_cross(cross_length)
         for c in cross:
             cube = deepcopy(self.cube)
             cube.move(c)
             self.total_cross += 1
-            node = Node(cube=cube, alg=c, stage=None, name="Cross: ", parent=None)
+            node = Node(cube=cube, alg=c, stage=None, name="Cross: ", parent=root)
+            root.child.append(node)
             self.root.append(node)
             node.stage = F2L(cube).check_free_slots()
             self.tree.append(node)

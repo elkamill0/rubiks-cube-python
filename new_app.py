@@ -6,6 +6,7 @@ from f2l import F2L
 from oll import OLL
 from pll import PLL
 from solving_stage import Solving
+from tools import inverse
 
 
 # Inicjalizacja kostki w sesji
@@ -18,6 +19,9 @@ if "solving" not in st.session_state:
     st.session_state.total_f2l = 0
     st.session_state.total_oll = 0
     st.session_state.total_pll = 0
+    st.session_state.parent = None
+    st.session_state.name = None
+    # st.session_state.start_cube =
 
 cube = st.session_state.cube
 
@@ -70,18 +74,33 @@ if reconstruction_button:
     st.session_state.total_oll = solving.total_oll
     st.session_state.total_pll = solving.total_pll
 
+
+# print("parent", st.session_state.parent)
+
+def go_forward(item):
+    st.session_state.parent = item
+    st.session_state.solving = item.child
+    st.session_state.cube = item.cube
+
+def go_back():
+    prev = st.session_state.parent.parent
+    if prev:
+        st.session_state.parent = prev
+        st.session_state.solving = prev.child
+        st.session_state.cube = prev.cube
+    # else:
+    #     st.session_state.cube = 
+
+
 if st.session_state.solving:
     for item in st.session_state.solving:
         col1, col2 = st.columns([1,7])
         with col1:
             st.write(item.name)
         with col2:
-            if st.button(item.alg):
-                st.session_state.parent = item.parent
-                st.session_state.solving = item.child
-                st.session_state.cube = item.cube
-                st.rerun()
-
+            st.button(item.alg, on_click=go_forward, args=(item,))
+    if st.session_state.parent:
+        st.button(f"Back ({inverse(st.session_state.parent.alg)})", on_click=go_back) 
 
 scramble_notation.text(f"Scramble: {st.session_state.scramble}")
 
