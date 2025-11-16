@@ -7,6 +7,7 @@ from oll import OLL
 from pll import PLL
 from solving_stage import Solving
 from tools import inverse
+import convert
 
 
 # Inicjalizacja kostki w sesji
@@ -21,20 +22,24 @@ if "solving" not in st.session_state:
     st.session_state.total_pll = 0
     st.session_state.parent = None
     st.session_state.name = None
-    # st.session_state.start_cube =
 
 cube = st.session_state.cube
 
 display = st.empty()  # miejsce do wyświetlania kostki
 
 
-
-
 col1, col2 = st.columns([2, 1])
 
 cross_length = st.sidebar.number_input("Cross length", value=6)
 
-scramble_input = st.sidebar.text_input("Own scramble", value="B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2")
+agree = st.sidebar.checkbox("Wrpowadzanie ręczne")
+
+if not agree:
+    scramble_input = st.sidebar.text_input("Own scramble", value="B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2")
+    notation_input = None
+else:
+    notation_input = st.sidebar.text_input("Own notation", value="005004153124512222514520025013134133234044450332154135")
+    scramble_input = None
 
 scramble_length = st.sidebar.number_input("length", value=21)
 
@@ -53,20 +58,32 @@ if "scramble" not in st.session_state:
 
 if generate_button:
     cube.reset()
-    if scramble_input:
-        st.session_state.scramble = scramble_input
-        scramble_notation.text(f"Scramble: {scramble_input}")
-        cube.move(scramble_input)
+    if not agree:
+        if scramble_input:
+            st.session_state.scramble = scramble_input
+            scramble_notation.text(f"Scramble: {scramble_input}")
+            cube.move(scramble_input)
+        else:
+            scramble = generate_scramble(int(scramble_length))     
+            st.session_state.scramble = scramble
+            cube.move(scramble)
+    
     else:
-        scramble = generate_scramble(int(scramble_length))     
-        st.session_state.scramble = scramble
-        cube.move(scramble)
+        st.session_state.scramble = notation_input
+        cube.corners, cube.edges, cube.centers = convert.state_to_cube(state=notation_input)
+        # cube = Cube(state=notation_input)
+        scramble_notation.text(f"Scramble: {notation_input}")
+        
     scramble_notation.text(f"Scramble: {st.session_state.scramble}")
 
 
 
 if reconstruction_button:
-    cube = Cube(st.session_state.scramble)
+    if not agree:
+        cube = Cube(notation=st.session_state.scramble)
+    else:
+        cube = Cube(state=st.session_state.scramble)
+        
     solving = Solving(cube)
     st.session_state.solving = solving.build_tree(cross_length)
     st.session_state.total_cross = solving.total_cross

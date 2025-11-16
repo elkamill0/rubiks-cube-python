@@ -1,0 +1,53 @@
+[
+  { "name": "af2l3_1", "pair": [105, 36], "alg": "R' U' R U L U' L'" },
+  { "name": "af2l3_2", "pair": [89, 5], "alg": "L F' U2 F L'" },
+  { "name": "af2l3_3", "pair": [90, 20], "alg": "L' U' L2 U2 L'" },
+  { "name": "af2l3_4", "pair": [169, 36], "alg": "U2 R' U R U' L U L'" },
+  { "name": "af2l3_5", "pair": [153, 5], "alg": "R U R' U L U L'" },
+  { "name": "af2l3_6", "pair": [154, 20], "alg": "U2 L' U L U L U L'" },
+  { "name": "af2l3_7", "pair": [41, 36], "alg": "U' R' U R L U' L'" },
+  { "name": "af2l3_8", "pair": [25, 5], "alg": "U' F' U2 L U L' F" },
+  { "name": "af2l3_9", "pair": [26, 20], "alg": "U L' U2 L U' L U L'" },
+  { "name": "af2l3_10", "pair": [165, 33], "alg": "R' U R L U' L' U L U L'" },
+  { "name": "af2l3_11", "pair": [149, 17], "alg": "U' R U' R' L U' L'" },
+  { "name": "af2l3_12", "pair": [150, 18], "alg": "U' L U L2 U' L2 U L'" },
+  { "name": "af2l3_13", "pair": [37, 97], "alg": "U' R B' R2 U R U2 R B R'" },
+  { "name": "af2l3_14", "pair": [21, 17], "alg": "U' F R' F' R U L U L'" },
+  { "name": "af2l3_15", "pair": [22, 82], "alg": "U' L F' L' F L U L'" },
+  
+  { "name": "af2l3_17", "pair": [149, 81], "alg": "U2 R B' U' B R'" },
+  { "name": "af2l3_18", "pair": [150, 82], "alg": "U' F U' F' L U2 L'" },
+  
+  { "name": "af2l3_20", "pair": [85, 17], "alg": "U R U R' L U L'" },
+  { "name": "af2l3_21", "pair": [86, 82], "alg": "U F L U L' F'" },
+  { "name": "af2l3_22", "pair": [37, 33], "alg": "L R' U2 R L'" },
+  { "name": "af2l3_23", "pair": [21, 81], "alg": "L F' U F L'" },
+  { "name": "af2l3_24", "pair": [22, 18], "alg": "L' U L2 U' L'" },
+  
+  { "name": "af2l3_26", "pair": [25, 17], "alg": "L R U2 R' L'" },
+  { "name": "af2l3_27", "pair": [26, 82], "alg": "F U' L U2 L' F'" },
+  { "name": "af2l3_28", "pair": [105, 33], "alg": "R' U R U L U L' U L U' L'" },
+  { "name": "af2l3_29", "pair": [89, 81], "alg": "F' U L' U L U' L U L' F" },
+  { "name": "af2l3_30", "pair": [90, 18], "alg": "L' U L U' L U L' U L U' L'" },
+  { "name": "af2l3_31", "pair": [169, 33], "alg": "R' U R U L U' L' U' L U L'" },
+  { "name": "af2l3_32", "pair": [153, 81], "alg": "R U R' F R U R' U' F' L U2 L'" },
+  { "name": "af2l3_33", "pair": [154, 18], "alg": "L' U L2 U L' U L U L'" },
+  
+  { "name": "af2l3_35", "pair": [89, 17], "alg": "R U' R' U' R U R' L U' L'" },
+  { "name": "af2l3_36", "pair": [90, 82], "alg": "F U L U2 L' U' L U L' F'" },
+  
+  { "name": "af2l3_38", "pair": [153, 17], "alg": "R U' R' U R U2 R' L U2 L'" },
+  { "name": "af2l3_39", "pair": [154, 82], "alg": "F L U' L' U L U L' F'" },
+  { "name": "af2l3_40", "pair": [41, 33], "alg": "R' U R U2 L U2 L' U2 L U' L'" },
+  { "name": "af2l3_41", "pair": [25, 81], "alg": "F' U2 L' U2 L2 U L' F" },
+  { "name": "af2l3_42", "pair": [26, 18], "alg": "L' U L2 U2 L' U2 L U' L'" },
+  { "name": "af2l3_43", "pair": [105, 69], "alg": "B' R B R' L U' L'" },
+  { "name": "af2l3_44", "pair": [89, 84], "alg": "R' F R F' L U2 L'" },
+  { "name": "af2l3_45", "pair": [90, 70], "alg": "F' L F L' U2 L U' L'" },
+  
+  { "name": "af2l3_47", "pair": [153, 69], "alg": "U R B' U2 B R'" },
+  { "name": "af2l3_48", "pair": [41, 100], "alg": "R B R' B R B' R'" },
+
+  { "name": "af2l3_53", "pair": [149, 81], "alg": "U2 L U' F' U F L'" }
+
+]

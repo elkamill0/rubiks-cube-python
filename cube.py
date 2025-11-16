@@ -52,6 +52,7 @@ class Cube(Moves):
 if __name__ == "__main__":
     # print(scramble.generate_scramble(10))
     # notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"
+    # state = "305203242215110113300222024102334534110344044453555551"
     # notation="F' R2 F' U2 F R2 F' U2 R2 F U2 R U F L2 B D' B' R"
     # notation="F' B2 L F2 L D2 L2 U2 R D2 B2 L D' B2 F L' B L2 D U'"
     # notation = "R U R' L D2 F' B U' R2 L' F2 D' B2 U2 L2 D B' F"
@@ -64,12 +65,14 @@ if __name__ == "__main__":
 
 
     cube = Cube(notation=notation)
-    solving = Solving(cube).build_tree(6)
-    node = solving[0]
-    while node.child:
-        print(node.alg)
-        node = node.child[0]
-    print(node.alg)
+    # solving = Solving(cube).build_tree(6)
+    # node = solving[0]
+    # while node.child:
+    #     print(node.alg)
+    #     node = node.child[0]
+    # print(node.alg)
+
+    print(cube.get_state())
 
     
 
