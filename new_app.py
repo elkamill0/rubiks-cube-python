@@ -32,12 +32,16 @@ col1, col2 = st.columns([2, 1])
 
 cross_length = st.sidebar.number_input("Cross length", value=6)
 
-agree = st.sidebar.checkbox("Wrpowadzanie ręczne")
+agree = st.sidebar.checkbox("Wprowadzanie ręczne")
 
 if not agree:
     scramble_input = st.sidebar.text_input("Own scramble", value="B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2")
     notation_input = None
 else:
+    st.sidebar.markdown(
+        '<a href="http://localhost:8502" target="_self">Prepare scramble</a>',
+        unsafe_allow_html=True
+    )
     notation_input = st.sidebar.text_input("Own notation", value="005004153124512222514520025013134133234044450332154135")
     scramble_input = None
 

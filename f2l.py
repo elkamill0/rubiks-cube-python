@@ -1,5 +1,4 @@
 import json
-# from cube import Cube
 import numpy as np
 from convert import edges_to_binary, corners_to_binary
 from typing import List

@@ -155,7 +155,18 @@ def cube_to_color(corners, edges, centers, show: bool = False) -> str:
 
     return ''.join(numbers)
 
+import numpy as np
+
 def state_to_cube(state: str):
+    if not isinstance(state, str):
+        raise TypeError("Argument 'state' musi być napisem (str).")
+
+    if len(state) != 54:
+        raise ValueError(f"Stan kostki musi mieć długość 54")
+
+    if not all(ch.isdigit() for ch in state):
+        raise ValueError("Stan kostki może zawierać tylko cyfry (0–9).")
+    
     color_to_corners = {
         ('0','1','4'): np.array((0,0)), ('4','0','1'): np.array((0,1)), ('1','4','0'): np.array((0,2)),
         ('0','4','3'): np.array((1,0)), ('3','0','4'): np.array((1,1)), ('4','3','0'): np.array((1,2)),
@@ -166,6 +177,7 @@ def state_to_cube(state: str):
         ('5','2','3'): np.array((6,0)), ('3','5','2'): np.array((6,1)), ('2','3','5'): np.array((6,2)),
         ('5','1','2'): np.array((7,0)), ('2','5','1'): np.array((7,1)), ('1','2','5'): np.array((7,2))
     }
+
     color_to_edges = {
         ('0','4'):  np.array((0,0)), ('4','0'):  np.array((0,1)),
         ('0','3'):  np.array((1,0)), ('3','0'):  np.array((1,1)),
@@ -180,28 +192,42 @@ def state_to_cube(state: str):
         ('2','3'): np.array((10,0)), ('3','2'): np.array((10,1)),
         ('2','1'): np.array((11,0)), ('1','2'): np.array((11,1))
     }
-    corners_from_state = ((state[0], state[9], state[38]), (state[2], state[36], state[29]), 
-                             (state[8], state[27], state[20]), (state[6], state[18], state[11]),
-                             (state[51], state[44], state[15]), (state[53], state[35], state[42]),
-                             (state[47], state[26], state[33]), (state[45], state[17], state[24]))
 
-    edges_from_state = ((state[1], state[37]), (state[5], state[28]), (state[7], state[19]), (state[3], state[10]),
-                           (state[52], state[43]), (state[50], state[34]), (state[46], state[25]), (state[48], state[16]),
-                           (state[41], state[12]), (state[39], state[32]), (state[23], state[30]), (state[21], state[14]))
+    corners_from_state = (
+        (state[0], state[9],  state[38]), (state[2], state[36], state[29]),
+        (state[8], state[27], state[20]), (state[6], state[18], state[11]),
+        (state[51], state[44], state[15]), (state[53], state[35], state[42]),
+        (state[47], state[26], state[33]), (state[45], state[17], state[24])
+    )
 
-    centers_from_state = np.array((state[4], state[13], state[22], state[31], state[40], state[49]))
+    edges_from_state = (
+        (state[1],  state[37]), (state[5],  state[28]),
+        (state[7],  state[19]), (state[3],  state[10]),
+        (state[52], state[43]), (state[50], state[34]),
+        (state[46], state[25]), (state[48], state[16]),
+        (state[41], state[12]), (state[39], state[32]),
+        (state[23], state[30]), (state[21], state[14])
+    )
+
+    centers_from_state = np.array((state[4], state[13], state[22], state[31], state[40], state[49])).astype(int)
 
     def map_corners(element):
-        return color_to_corners.get(element, np.array([None, None]))
+        val = color_to_corners.get(element)
+        if val is None:
+            raise ValueError(f"Niepoprawny układ kolorów narożnika")
+        return val
 
     def map_edges(element):
-        return color_to_edges.get(element, np.array([None, None]))
+        val = color_to_edges.get(element)
+        if val is None:
+            raise ValueError(f"Niepoprawny układ kolorów krawędzi")
+        return val
 
-    mapped_corners = np.array(list(map(map_corners, corners_from_state)))
-    mapped_edges = np.array(list(map(map_edges, edges_from_state)))
-    color_to_centers = centers_from_state.astype(int)
+    mapped_corners = np.array([map_corners(e) for e in corners_from_state])
+    mapped_edges   = np.array([map_edges(e)   for e in edges_from_state])
 
-    return mapped_corners, mapped_edges, color_to_centers
+    return mapped_corners, mapped_edges, centers_from_state
+
 
 def edges_to_binary(cube, target_values):
     color_to_binary = {

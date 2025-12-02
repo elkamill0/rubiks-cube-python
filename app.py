@@ -71,11 +71,15 @@ def cube_gui_to_state_string():
     return state_str
 
 # ---------- INTERFACE ---------- #
-st.title("🧊 Rubik's Cube App")
 
 with st.sidebar:
-    if st.button("🔀 Wylosuj realistyczne kolory"):
-        losuj_realistycznie()
+    st.markdown(
+        '<a href="http://localhost:8501" target="_self">⬅️ Powrót</a>',
+        unsafe_allow_html=True
+    )
+    # st.markdown("[⬅️ Powrót](http://localhost:8501)")
+    # if st.button("🔀 Wylosuj realistyczne kolory"):
+    #     losuj_realistycznie()
 
     if st.button("🔁 Reset"):
         for face in ["U", "L", "F", "R", "B", "D"]:
@@ -101,29 +105,29 @@ with st.sidebar:
                     st.session_state.cube[face][row][col] = color
                     st.session_state[f"{face}-{row}-{col}"] = color
 
-    st.markdown("### ➡️ Wykonaj ruch")
-    move_input = st.text_input("Wprowadź notację (np. R U R')", key="move_input")
-    if st.button("▶️ Wykonaj ruch"):
-        move_seq = st.session_state.move_input
-        state_str = cube_gui_to_state_string()
-        cube = Cube(state=state_str)
-        cube.move(move_seq)
-        new_state = cube.get_state()
-        face_order = ["U", "L", "F", "R", "B", "D"]
-        for i, face in enumerate(face_order):
-            for row in range(3):
-                for col in range(3):
-                    idx = i * 9 + row * 3 + col
-                    val = new_state[idx]
-                    color = list(color_numbers.keys())[list(color_numbers.values()).index(val)]
-                    st.session_state.cube[face][row][col] = color
-                    st.session_state[f"{face}-{row}-{col}"] = color
+    # st.markdown("### ➡️ Wykonaj ruch")
+    # move_input = st.text_input("Wprowadź notację (np. R U R')", key="move_input")
+    # if st.button("▶️ Wykonaj ruch"):
+    #     move_seq = st.session_state.move_input
+    #     state_str = cube_gui_to_state_string()
+    #     cube = Cube(state=state_str)
+    #     cube.move(move_seq)
+    #     new_state = cube.get_state()
+    #     face_order = ["U", "L", "F", "R", "B", "D"]
+    #     for i, face in enumerate(face_order):
+    #         for row in range(3):
+    #             for col in range(3):
+    #                 idx = i * 9 + row * 3 + col
+    #                 val = new_state[idx]
+    #                 color = list(color_numbers.keys())[list(color_numbers.values()).index(val)]
+    #                 st.session_state.cube[face][row][col] = color
+    #                 st.session_state[f"{face}-{row}-{col}"] = color
 
     if st.button("📋 Pokaż stan jako string"):
         st.code(cube_gui_to_state_string(), language="text")
 
 # ---------- MAIN DISPLAY ---------- #
-st.markdown("## 🔧 Edytuj ścianki")
+# st.markdown("## 🔧 Edytuj ścianki")
 st.markdown("### Góra (U)")
 render_face("U")
 

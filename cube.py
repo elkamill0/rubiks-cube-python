@@ -35,9 +35,6 @@ class Cube(Moves):
     def streamlit_print(self):
         return "    "+convert.replace_numbers_with_colors(convert.cube_to_color(self.corners, self.edges, self.centers, show=True))
 
-    # def get_cube(self):
-        # return kk
-
     def reset(self) -> None:
         self.corners = np.zeros((8, 2), dtype=np.int8)
         self.corners[:, 0] = np.arange(8)
@@ -100,15 +97,11 @@ if __name__ == "__main__":
     # print(F2L(cube).solve_slot(3))
 
 
-    # print(F2L(Cube(), Cube()).prepare_algs("algs/f2l4.json", 3))
-
-
     # cross = Cross(cube).find_cross(7)
     # print(len(cross))
     # print(cross)
     # print(cube)
 
-    # OLL(Cube()).prepare_algs()
     # cross = Cross(cube).find_cross(6)
     # # print(cross)
     # print(notation)
@@ -125,8 +118,6 @@ if __name__ == "__main__":
     # pll = PLL(cube).solve()
     # print(pll)
     # cube.move(pll)
-
-    # pll = PLL(Cube()).prepare_algs("algs/pll.json")
 
     # print(cube)
     # print(cube.get_state())
