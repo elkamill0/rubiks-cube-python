@@ -3,7 +3,6 @@ import random
 from cube import Cube
 import scramble
 
-# ---------- CONFIG ---------- #
 st.set_page_config(layout="wide")
 colors = ["white", "yellow", "red", "orange", "green", "blue"]
 color_emojis = {
@@ -19,14 +18,12 @@ color_numbers = {
     "red": "3", "blue": "4", "yellow": "5"
 }
 
-# ---------- STATE INIT ---------- #
 if "cube" not in st.session_state:
     st.session_state.cube = {
         face: [[default_colors[face]] * 3 for _ in range(3)]
         for face in ["U", "L", "F", "R", "B", "D"]
     }
 
-# ---------- GUI ---------- #
 def styled_emoji(color):
     return f"<div style='text-align:center; font-size:28px; width:40px; height:40px;'>{color_emojis[color]}</div>"
 
@@ -70,16 +67,7 @@ def cube_gui_to_state_string():
                 state_str += color_numbers[color]
     return state_str
 
-# ---------- INTERFACE ---------- #
-
 with st.sidebar:
-    st.markdown(
-        '<a href="http://localhost:8501" target="_self">⬅️ Powrót</a>',
-        unsafe_allow_html=True
-    )
-    # st.markdown("[⬅️ Powrót](http://localhost:8501)")
-    # if st.button("🔀 Wylosuj realistyczne kolory"):
-    #     losuj_realistycznie()
 
     if st.button("🔁 Reset"):
         for face in ["U", "L", "F", "R", "B", "D"]:
@@ -105,29 +93,10 @@ with st.sidebar:
                     st.session_state.cube[face][row][col] = color
                     st.session_state[f"{face}-{row}-{col}"] = color
 
-    # st.markdown("### ➡️ Wykonaj ruch")
-    # move_input = st.text_input("Wprowadź notację (np. R U R')", key="move_input")
-    # if st.button("▶️ Wykonaj ruch"):
-    #     move_seq = st.session_state.move_input
-    #     state_str = cube_gui_to_state_string()
-    #     cube = Cube(state=state_str)
-    #     cube.move(move_seq)
-    #     new_state = cube.get_state()
-    #     face_order = ["U", "L", "F", "R", "B", "D"]
-    #     for i, face in enumerate(face_order):
-    #         for row in range(3):
-    #             for col in range(3):
-    #                 idx = i * 9 + row * 3 + col
-    #                 val = new_state[idx]
-    #                 color = list(color_numbers.keys())[list(color_numbers.values()).index(val)]
-    #                 st.session_state.cube[face][row][col] = color
-    #                 st.session_state[f"{face}-{row}-{col}"] = color
 
     if st.button("📋 Pokaż stan jako string"):
         st.code(cube_gui_to_state_string(), language="text")
 
-# ---------- MAIN DISPLAY ---------- #
-# st.markdown("## 🔧 Edytuj ścianki")
 st.markdown("### Góra (U)")
 render_face("U")
 

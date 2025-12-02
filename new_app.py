@@ -10,7 +10,6 @@ from tools import inverse
 import convert
 
 
-# Inicjalizacja kostki w sesji
 if "cube" not in st.session_state:
     st.session_state.cube = Cube()
 
@@ -25,7 +24,7 @@ if "solving" not in st.session_state:
 
 cube = st.session_state.cube
 
-display = st.empty()  # miejsce do wyświetlania kostki
+display = st.empty()
 
 
 col1, col2 = st.columns([2, 1])
@@ -39,8 +38,7 @@ if not agree:
     notation_input = None
 else:
     st.sidebar.markdown(
-        '<a href="http://localhost:8502" target="_self">Prepare scramble</a>',
-        unsafe_allow_html=True
+        '<a href="http://localhost:8502"> Prepare scramble </a>', unsafe_allow_html=True,
     )
     notation_input = st.sidebar.text_input("Own notation", value="005004153124512222514520025013134133234044450332154135")
     scramble_input = None
@@ -52,9 +50,7 @@ generate_button = st.sidebar.button("Scramble")
 reconstruction_button = st.sidebar.button("Reconstruction")
 
 
-# st.markdown("### Scramble")
 scramble_notation = st.empty()
-# st.markdown("---")
 
 if "scramble" not in st.session_state:
     st.session_state.scramble = ""
@@ -96,8 +92,6 @@ if reconstruction_button:
     st.session_state.total_pll = solving.total_pll
 
 
-# print("parent", st.session_state.parent)
-
 def go_forward(item):
     st.session_state.parent = item
     st.session_state.solving = item.child
@@ -109,8 +103,6 @@ def go_back():
         st.session_state.parent = prev
         st.session_state.solving = prev.child
         st.session_state.cube = prev.cube
-    # else:
-    #     st.session_state.cube = 
 
 
 if st.session_state.solving:
