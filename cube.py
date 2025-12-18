@@ -61,65 +61,8 @@ if __name__ == "__main__":
     # notation = "U' L F2 D' R2 D B L B R B D2 U' L B' D L' R' B' F' L2"
 
 
-    cube = Cube(notation=notation)
-    # solving = Solving(cube).build_tree(6)
-    # node = solving[0]
-    # while node.child:
-    #     print(node.alg)
-    #     node = node.child[0]
-    # print(node.alg)
+    # cube = Cube(notation = )
 
-    print(cube.get_state())
-
-    
-
-    # while node.parent:
-    #     print(node.alg)
-    #     node = node.parent
-    # print(node.alg)
-
-    # print(solving[0].parent.alg)
-
-
-
-    # crosses_list = Cross(cube).find_cross(6)
-    # print(crosses_list[0])
-    # cube.move(crosses_list[0])
-
-
-    # pprint(Solving(cube).solve())
-
-
-
-
-    
-    # print(F2L(cube, Cube()).find_pairs())
-    # print(F2L(cube).solve_slot(3))
-
-
-    # cross = Cross(cube).find_cross(7)
-    # print(len(cross))
-    # print(cross)
-    # print(cube)
-
-    # cross = Cross(cube).find_cross(6)
-    # # print(cross)
-    # print(notation)
-    # print(cross[0])
-    # cube.move(cross[0])
-    # f2l = F2L(cube, Cube()).solve()
-    # [cube.move(i) for i in f2l]
-    # print(cube)
-    # oll = OLL(cube).solve()
-    # print(oll)
-
-    # cube.move(oll)
-    # print(cube)
-    # pll = PLL(cube).solve()
-    # print(pll)
-    # cube.move(pll)
-
-    # print(cube)
     # print(cube.get_state())
 
     # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2

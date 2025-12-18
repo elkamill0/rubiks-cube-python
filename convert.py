@@ -1,4 +1,4 @@
-import moves
+from moves.moves import Moves
 import numpy as np
 
 notation_to_int = {
@@ -47,22 +47,22 @@ def notation_to_moves(moves: str, cube):
 
     move_map = {
         'R': cube.R,
-        "R'": cube.Rp,  # Zmieniono na "R'" dla R'
+        "R'": cube.Rp,
         'R2': cube.R2,
         'L': cube.L,
-        "L'": cube.Lp,  # Zmieniono na "L'" dla L'
+        "L'": cube.Lp,
         'L2': cube.L2,
         'U': cube.U,
-        "U'": cube.Up,  # Zmieniono na "U'" dla U'
+        "U'": cube.Up,
         'U2': cube.U2,
         'D': cube.D,
-        "D'": cube.Dp,  # Zmieniono na "D'" dla D'
+        "D'": cube.Dp,
         'D2': cube.D2,
         'F': cube.F,
-        "F'": cube.Fp,  # Zmieniono na "F'" dla F'
+        "F'": cube.Fp,
         'F2': cube.F2,
         'B': cube.B,
-        "B'": cube.Bp,  # Zmieniono na "B'" dla B'
+        "B'": cube.Bp,
         'B2': cube.B2
     }
 
@@ -80,7 +80,6 @@ def convert(input: list[int]|str, mode: dict) -> list[int]|str:
     elif isinstance(input, str):
         return [mode[char] for char in input.split() if char in mode]
 
-from moves.moves import Moves
 
 
 def cube_to_color(corners, edges, centers, show: bool = False) -> str:
