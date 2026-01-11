@@ -1,4 +1,3 @@
-
 def reduce(notation: str) -> str:
     note = notation.strip().split()
     if not(len(note)):

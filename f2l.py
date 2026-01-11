@@ -6,6 +6,19 @@ from tools import inverse, reduce
 from copy import deepcopy
 
 def load_f2l_from_json(path: str):
+    """
+    Wczytuje przypadki F2L z pliku JSON.
+
+    Każdy rekord w plik powinien zawierać:
+    - "pair": opis pary narożnik-krawędź w postaci binarnej,
+    - "alg": algorytm rozwiązujący dany przypadek.
+
+    Args:  
+        path (str): Ścieżka do pliku JSON z przypadkami F2L.
+
+    Returns:
+        dict[tuple, str]: Słownik ma
+    """
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
     return {tuple(item["pair"]): item["alg"] for item in data}
@@ -27,7 +40,7 @@ class F2L:
             load_f2l_from_json("cases/f2l4_cases.json") | load_f2l_from_json("cases/af2l4_cases.json")
         ]
 
-    def prepare_algs(self):
+    def prepare_algs(self) -> None:
         files = [
             ("algs/f2l1.json",  "test/f2l1_prepared.json", "f2l1", 0),
             ("algs/af2l1.json", "test/af2l1_prepared.json", "af2l1", 0),
@@ -84,8 +97,9 @@ class F2L:
                 differences.append(i)
 
         return differences
-    
-    def solve(self, verbose:bool = False):
+
+
+    def solve(self, verbose:bool = False) -> list[str]:
         i = 0
         new_notation = ""
     
@@ -117,7 +131,7 @@ class F2L:
         return final
 
 
-    def find_pairs(self):
+    def find_pairs(self) -> list[str]:
         i = 0
         final = []
         u_notation = ""
@@ -139,7 +153,7 @@ class F2L:
                 i += 1
         return final
     
-    def solve_slot(self, slot_number: int):
+    def solve_slot(self, slot_number: int) -> None:
         for u in ["", "U ", "U2 ", "U' "]:
             key = (self.corners[slot_number], self.edges[slot_number])
             if key in self.pairs[slot_number]:

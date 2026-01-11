@@ -1,6 +1,7 @@
 from moves.moves import Moves
 import numpy as np
 
+
 notation_to_int = {
     "R": 0,
     "R2": 1,
@@ -43,118 +44,7 @@ int_to_notation = {
     17: "B'"
 }
 
-def notation_to_moves(moves: str, cube):
 
-    move_map = {
-        'R': cube.R,
-        "R'": cube.Rp,
-        'R2': cube.R2,
-        'L': cube.L,
-        "L'": cube.Lp,
-        'L2': cube.L2,
-        'U': cube.U,
-        "U'": cube.Up,
-        'U2': cube.U2,
-        'D': cube.D,
-        "D'": cube.Dp,
-        'D2': cube.D2,
-        'F': cube.F,
-        "F'": cube.Fp,
-        'F2': cube.F2,
-        'B': cube.B,
-        "B'": cube.Bp,
-        'B2': cube.B2
-    }
-
-    moves_list = moves.split()
-    for move in moves_list:
-        if move in move_map:
-            move_map[move]()
-
-    return cube
-
-def convert(input: list[int]|str, mode: dict) -> list[int]|str:
-    if isinstance(input, list):
-        output = [mode[number] for number in input if number in mode]
-        return " ".join(output)
-    elif isinstance(input, str):
-        return [mode[char] for char in input.split() if char in mode]
-
-
-
-def cube_to_color(corners, edges, centers, show: bool = False) -> str:
-    corners_to_color = {
-        0: ['0','1','4'],
-        1: ['0','4','3'],
-        2: ['0','3','2'],
-        3: ['0','2','1'],
-        4: ['5','4','1'],
-        5: ['5','3','4'],
-        6: ['5','2','3'],
-        7: ['5','1','2']
-    }
-    edges_to_color = {
-        0: ['0','4'],
-        1: ['0','3'],
-        2: ['0','2'],
-        3: ['0','1'],
-        4: ['5','4'],
-        5: ['5','3'],
-        6: ['5','2'],
-        7: ['5','1'],
-        8: ['4','1'],
-        9: ['4','3'],
-        10:['2','3'],
-        11:['2','1'] 
-    }
-
-    mapped_edges = np.array([edges_to_color[i] for i in edges[:, 0]])
-    mapped_corners = np.array([corners_to_color[i] for i in corners[:, 0]])
-
-    rotated_edges = np.array([np.roll(mapped_edge, edge[1]) for mapped_edge, edge in zip(mapped_edges, edges)])
-    rotated_corners = np.array([np.roll(mapped_corner, edge[1]) for mapped_corner, edge in zip(mapped_corners, corners)])
-
-    mapped_centers = np.array(centers, dtype=str)
-
-    numbers = [
-        rotated_corners[0,0], rotated_edges[0,0], rotated_corners[1,0],
-        rotated_edges[3,0], mapped_centers[0], rotated_edges[1,0],
-        rotated_corners[3,0], rotated_edges[2,0], rotated_corners[2,0],
-        rotated_corners[0,1], rotated_edges[3,1], rotated_corners[3,2],
-        rotated_edges[8,1], mapped_centers[1], rotated_edges[11,1],
-        rotated_corners[4,2], rotated_edges[7,1], rotated_corners[7,1],
-        rotated_corners[3,1], rotated_edges[2,1], rotated_corners[2,2],
-        rotated_edges[11,0], mapped_centers[2], rotated_edges[10,0],
-        rotated_corners[7,2], rotated_edges[6,1], rotated_corners[6,1],
-        rotated_corners[2,1], rotated_edges[1,1], rotated_corners[1,2],
-        rotated_edges[10,1], mapped_centers[3], rotated_edges[9,1],
-        rotated_corners[6,2], rotated_edges[5,1], rotated_corners[5,1],
-        rotated_corners[1,1], rotated_edges[0,1], rotated_corners[0,2],
-        rotated_edges[9,0], mapped_centers[4], rotated_edges[8,0],
-        rotated_corners[5,2], rotated_edges[4,1], rotated_corners[4,1],
-        rotated_corners[7,0], rotated_edges[6,0], rotated_corners[6,0],
-        rotated_edges[7,0], mapped_centers[5], rotated_edges[5,0],
-        rotated_corners[4,0], rotated_edges[4,0], rotated_corners[5,0]
-    ]
-
-    if show:
-        return(f"""
-        {rotated_corners[0, 0]}{rotated_edges[0, 0]}{rotated_corners[1, 0]}
-        {rotated_edges[3, 0]}{centers[0]}{rotated_edges[1, 0]}
-        {rotated_corners[3, 0]}{rotated_edges[2, 0]}{rotated_corners[2, 0]}
-        ---
-    {rotated_corners[0, 1]}{rotated_edges[3, 1]}{rotated_corners[3, 2]}|{rotated_corners[3, 1]}{rotated_edges[2, 1]}{rotated_corners[2, 2]}|{rotated_corners[2, 1]}{rotated_edges[1, 1]}{rotated_corners[1, 2]}|{rotated_corners[1, 1]}{rotated_edges[0, 1]}{rotated_corners[0, 2]}
-    {rotated_edges[8, 1]}{centers[1]}{rotated_edges[11, 1]}|{rotated_edges[11, 0]}{centers[2]}{rotated_edges[10, 0]}|{rotated_edges[10, 1]}{centers[3]}{rotated_edges[9, 1]}|{rotated_edges[9, 0]}{centers[4]}{rotated_edges[8, 0]}
-    {rotated_corners[4, 2]}{rotated_edges[7, 1]}{rotated_corners[7, 1]}|{rotated_corners[7, 2]}{rotated_edges[6, 1]}{rotated_corners[6, 1]}|{rotated_corners[6, 2]}{rotated_edges[5, 1]}{rotated_corners[5, 1]}|{rotated_corners[5, 2]}{rotated_edges[4, 1]}{rotated_corners[4, 1]}
-        ---
-        {rotated_corners[7, 0]}{rotated_edges[6, 0]}{rotated_corners[6, 0]}
-        {rotated_edges[7, 0]}{centers[5]}{rotated_edges[5, 0]}
-        {rotated_corners[4, 0]}{rotated_edges[4, 0]}{rotated_corners[5, 0]}""")
-
-
-    return ''.join(numbers)
-
-import numpy as np
 
 def state_to_cube(state: str):
     if not isinstance(state, str):
@@ -228,7 +118,129 @@ def state_to_cube(state: str):
     return mapped_corners, mapped_edges, centers_from_state
 
 
-def edges_to_binary(cube, target_values):
+def notation_to_moves(moves: str, cube):
+
+    move_map = {
+        'R': cube.R,
+        "R'": cube.Rp,
+        'R2': cube.R2,
+        'L': cube.L,
+        "L'": cube.Lp,
+        'L2': cube.L2,
+        'U': cube.U,
+        "U'": cube.Up,
+        'U2': cube.U2,
+        'D': cube.D,
+        "D'": cube.Dp,
+        'D2': cube.D2,
+        'F': cube.F,
+        "F'": cube.Fp,
+        'F2': cube.F2,
+        'B': cube.B,
+        "B'": cube.Bp,
+        'B2': cube.B2
+    }
+
+    moves_list = moves.split()
+    for move in moves_list:
+        if move in move_map:
+            move_map[move]()
+
+    return cube
+
+
+def cube_to_color(cube, show: bool = False) -> str:
+
+    corners = cube.corners
+    edges = cube.edges
+    centers = cube.centers
+    
+    corners_to_color = {
+        0: ['0','1','4'],
+        1: ['0','4','3'],
+        2: ['0','3','2'],
+        3: ['0','2','1'],
+        4: ['5','4','1'],
+        5: ['5','3','4'],
+        6: ['5','2','3'],
+        7: ['5','1','2']
+    }
+    edges_to_color = {
+        0: ['0','4'],
+        1: ['0','3'],
+        2: ['0','2'],
+        3: ['0','1'],
+        4: ['5','4'],
+        5: ['5','3'],
+        6: ['5','2'],
+        7: ['5','1'],
+        8: ['4','1'],
+        9: ['4','3'],
+        10:['2','3'],
+        11:['2','1'] 
+    }
+
+    mapped_edges = np.array([edges_to_color[i] for i in edges[:, 0]])
+    mapped_corners = np.array([corners_to_color[i] for i in corners[:, 0]])
+
+    rotated_edges = np.array([np.roll(mapped_edge, edge[1]) for mapped_edge, edge in zip(mapped_edges, edges)])
+    rotated_corners = np.array([np.roll(mapped_corner, edge[1]) for mapped_corner, edge in zip(mapped_corners, corners)])
+
+    mapped_centers = np.array(centers, dtype=str)
+
+    numbers = [
+        rotated_corners[0,0], rotated_edges[0,0], rotated_corners[1,0],
+        rotated_edges[3,0], mapped_centers[0], rotated_edges[1,0],
+        rotated_corners[3,0], rotated_edges[2,0], rotated_corners[2,0],
+        rotated_corners[0,1], rotated_edges[3,1], rotated_corners[3,2],
+        rotated_edges[8,1], mapped_centers[1], rotated_edges[11,1],
+        rotated_corners[4,2], rotated_edges[7,1], rotated_corners[7,1],
+        rotated_corners[3,1], rotated_edges[2,1], rotated_corners[2,2],
+        rotated_edges[11,0], mapped_centers[2], rotated_edges[10,0],
+        rotated_corners[7,2], rotated_edges[6,1], rotated_corners[6,1],
+        rotated_corners[2,1], rotated_edges[1,1], rotated_corners[1,2],
+        rotated_edges[10,1], mapped_centers[3], rotated_edges[9,1],
+        rotated_corners[6,2], rotated_edges[5,1], rotated_corners[5,1],
+        rotated_corners[1,1], rotated_edges[0,1], rotated_corners[0,2],
+        rotated_edges[9,0], mapped_centers[4], rotated_edges[8,0],
+        rotated_corners[5,2], rotated_edges[4,1], rotated_corners[4,1],
+        rotated_corners[7,0], rotated_edges[6,0], rotated_corners[6,0],
+        rotated_edges[7,0], mapped_centers[5], rotated_edges[5,0],
+        rotated_corners[4,0], rotated_edges[4,0], rotated_corners[5,0]
+    ]
+
+    if show:
+        return(f"""
+            {rotated_corners[0, 0]}{rotated_edges[0, 0]}{rotated_corners[1, 0]}
+            {rotated_edges[3, 0]}{centers[0]}{rotated_edges[1, 0]}
+            {rotated_corners[3, 0]}{rotated_edges[2, 0]}{rotated_corners[2, 0]}
+        ---
+    {rotated_corners[0, 1]}{rotated_edges[3, 1]}{rotated_corners[3, 2]}|{rotated_corners[3, 1]}{rotated_edges[2, 1]}{rotated_corners[2, 2]}|{rotated_corners[2, 1]}{rotated_edges[1, 1]}{rotated_corners[1, 2]}|{rotated_corners[1, 1]}{rotated_edges[0, 1]}{rotated_corners[0, 2]}
+    {rotated_edges[8, 1]}{centers[1]}{rotated_edges[11, 1]}|{rotated_edges[11, 0]}{centers[2]}{rotated_edges[10, 0]}|{rotated_edges[10, 1]}{centers[3]}{rotated_edges[9, 1]}|{rotated_edges[9, 0]}{centers[4]}{rotated_edges[8, 0]}
+    {rotated_corners[4, 2]}{rotated_edges[7, 1]}{rotated_corners[7, 1]}|{rotated_corners[7, 2]}{rotated_edges[6, 1]}{rotated_corners[6, 1]}|{rotated_corners[6, 2]}{rotated_edges[5, 1]}{rotated_corners[5, 1]}|{rotated_corners[5, 2]}{rotated_edges[4, 1]}{rotated_corners[4, 1]}
+        ---
+            {rotated_corners[7, 0]}{rotated_edges[6, 0]}{rotated_corners[6, 0]}
+            {rotated_edges[7, 0]}{centers[5]}{rotated_edges[5, 0]}
+            {rotated_corners[4, 0]}{rotated_edges[4, 0]}{rotated_corners[5, 0]}""")
+
+
+    return ''.join(numbers)
+
+
+
+# def int_to_moves_scramble(input: list[int]|str, mode: dict) -> list[int]|str:
+#     if isinstance(input, list):
+#         output = [mode[number] for number in input if number in mode]
+#         return " ".join(output)
+#     elif isinstance(input, str):
+#         return [mode[char] for char in input.split() if char in mode]
+
+def int_to_moves_scramble(nums: list[int]) -> str:
+    return " ".join(int_to_notation[number] for number in nums if number in int_to_notation)
+
+
+
+def edges_to_binary(cube, target: list[int]) -> list[int]:
     color_to_binary = {
         0: 36,  1: 5,   2: 20,  3: 6,
         4: 40,  5: 9,   6: 24,  7: 10,
@@ -239,11 +251,11 @@ def edges_to_binary(cube, target_values):
     cross = [
         (np.where(cube.edges == val)[0][0],
          cube.edges[np.where(cube.edges == val)[0][0]][1])
-        for val in target_values
+        for val in target
     ]
     return [color_to_binary[n[0]]+(64 if n[1] else 0) for n in cross]
 
-def corners_to_binary(cube, target_values):
+def corners_to_binary(cube, target: list[int]) -> list[int]:
     color_to_binary = {
         0: 38,  1: 37,  2: 21,  3: 22,
         4: 42,  5: 41,  6: 25,  7: 26
@@ -253,7 +265,7 @@ def corners_to_binary(cube, target_values):
     cross = [
         (int(np.where(cube.corners == val)[0][0]),
          int(cube.corners[np.where(cube.corners == val)[0][0]][1]))
-        for val in target_values
+        for val in target
     ]
     return [color_to_binary[n[0]]+(n[1] * 64) for n in cross]
 

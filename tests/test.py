@@ -9,7 +9,7 @@ def test_moves():
     cube.R()
     assert np.array_equal(cube.corners, np.array([[0, 0], [2, 1], [6, 2], [3, 0], [4, 0], [1, 2], [5, 1], [7, 0]]))
     assert np.array_equal(cube.edges, np.array([[ 0, 0],[10, 0],[ 2, 0],[ 3, 0],[ 4, 0],[ 9, 0],[ 6, 0],[ 7, 0],[ 8, 0],[ 1, 0],[ 5, 0],[11, 0]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        002
+    assert cube_to_color(cube, show=True).strip() == """        002
         002
         002
         ---

@@ -8,7 +8,17 @@ from copy import deepcopy
 
 
 class Node:
-    def __init__(self, cube, alg, stage, name, parent=None):
+    def __init__(self, cube, alg: str, stage: list[int] | None, name: str, parent:"Node"=None):
+        """
+        Tworzy węzeł w drzewie rozwiązywania kostki.
+
+        Args:
+            cube (Cube): Obiekt reprezentujący stan kostki Rubika w tym węźle.
+            alg (str): Algorytm (ciąg ruchów), który prowadzi do tego stanu.
+            stage (list[int] | None): Lista dostępnych slotów F2L w tym stanie. None oznacza brak wolnych slotów f2l.
+            name (str): Nazwa węzła, np. "Cross", "F2L", "OLL", "PLL".
+            parent (Node | None): Rodzic tego węzła w drzewie. Domyślnie None.
+        """
         self.cube = cube
         self.alg = alg
         self.stage = stage
@@ -18,6 +28,12 @@ class Node:
 
 
 class Solving:
+    """
+    Inicjalizuje obiekt odpowiedzialny za rozwiązywanie kostki Rubika.
+
+    Args: 
+        cube: Obiekt reprezentujący aktualny stan kostki Rubika
+    """
     def __init__(self, cube):
         self.cube = cube
         self.tree = []
@@ -28,7 +44,16 @@ class Solving:
         self.total_oll = 0
         self.total_pll = 0
 
-    def build_tree(self, cross_length):
+    def build_tree(self, cross_length: int) -> list[Node]:
+        """
+        Buduje drzewo wszystkich możliwych rozwiązań od Cross do PLL.
+
+        Args: 
+            cross_length (int): Maksymalna długość algorytmu Cross, którego szukamy
+
+        Returns:
+            list[Node]: Lista węzłów będących bezpośrednimi dziećmi korzenia drzewa.
+        """
         root = Node(self.cube, "", None, "scramble", None)
         cross = Cross(self.cube).find_cross(cross_length)
         for c in cross:
@@ -80,13 +105,17 @@ class Solving:
 
 
 
-    def solve(self):
+    def _solve(self) -> List:
+        """
+        Tymczasowa funkcja rozwiązująca kostkę F2L + OLL + PLL.
+        Obecnie nieużywana.
+        """
         if not Cross(self.cube).is_cross_solved():
             print("cross is not solved")
             return None
 
 
-        def solve_f2l(combination: List):
+        def solve_f2l(combination: List[int]) -> List:
             f2l_list = []
             for slot in combination:
                 alg = F2L(cube).solve_slot(slot)
@@ -99,6 +128,7 @@ class Solving:
 
         solutions = []
         for combination in self.f2l_combinations:
+            print(self.f2l_combinations)
             combination_list = []
             cube = deepcopy(self.cube)
             f2l_list = solve_f2l(combination)
