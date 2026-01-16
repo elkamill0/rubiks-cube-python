@@ -26,8 +26,8 @@ def load_f2l_from_json(path: str):
 
 class F2L:
     def __init__(self, cube):
-        self.e = [6,2,0,4]  #[10,11,8,9]
-        self.c = [7,3,0,4]  #[6,7,4,5]
+        self.e = [10,11,8,9]  #[6,2,0,4]
+        self.c = [6,7,4,5]  #[7,3,0,4]
         self.cube = deepcopy(cube)
         self.solved_cube = deepcopy(cube)
         self.solved_cube.reset()

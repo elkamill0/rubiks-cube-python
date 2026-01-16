@@ -35,17 +35,18 @@ def render_face(face_key):
         for col in range(3):
             key = f"{face_key}-{row}-{col}"
             current_color = face[row][col]
-            if key not in st.session_state:
-                st.session_state[key] = current_color
             with cols[col]:
-                selected = st.selectbox(
-                    " ", colors,
-                    index=colors.index(st.session_state[key]),
+                # Nie ustawiamy ręcznie session_state[key] wcześniej
+                st.selectbox(
+                    " ",
+                    colors,
+                    index=colors.index(current_color),  # <- tylko domyślny index
                     format_func=lambda c: color_emojis[c],
                     label_visibility="collapsed",
                     key=key
                 )
-            face[row][col] = selected
+            # Aktualizujemy stan kostki po wybraniu
+            face[row][col] = st.session_state[key]
 
 def losuj_realistycznie():
     all_colors = sum([[color] * 9 for color in colors], [])
@@ -70,20 +71,30 @@ def cube_gui_to_state_string():
 with st.sidebar:
 
     if st.button("🔁 Reset"):
-        for face in ["U", "L", "F", "R", "B", "D"]:
-            for row in range(3):
-                for col in range(3):
-                    color = default_colors[face]
-                    st.session_state.cube[face][row][col] = color
-                    st.session_state[f"{face}-{row}-{col}"] = color
+        # Resetujemy tylko cube
+        st.session_state.cube = {
+            face: [[default_colors[face]] * 3 for _ in range(3)]
+            for face in ["U", "L", "F", "R", "B", "D"]
+        }
+        # Usuwamy stare widgety, aby Streamlit je odtworzył od nowa
+        keys_to_remove = [k for k in st.session_state if "-" in k]
+        for k in keys_to_remove:
+            del st.session_state[k]
+
 
     if st.button("🎲 Scramble"):
+        keys_to_remove = [k for k in st.session_state if "-" in k]
+        for k in keys_to_remove:
+            del st.session_state[k]
+
         moves = scramble.generate_scramble(20)
         st.session_state.scramble_moves = moves
+
         cube = Cube()
         cube.move(moves)
         new_state = cube.get_state()
         face_order = ["U", "L", "F", "R", "B", "D"]
+
         for i, face in enumerate(face_order):
             for row in range(3):
                 for col in range(3):
@@ -91,7 +102,7 @@ with st.sidebar:
                     val = new_state[idx]
                     color = list(color_numbers.keys())[list(color_numbers.values()).index(val)]
                     st.session_state.cube[face][row][col] = color
-                    st.session_state[f"{face}-{row}-{col}"] = color
+                    # <- NIE nadpisujemy st.session_state[f"{face}-{row}-{col}"]
 
 
     if st.button("📋 Pokaż stan jako string"):

@@ -167,48 +167,57 @@ def notation_to_moves(moves: str, cube):
     return cube
 
 
-def cube_to_color(cube, show: bool = False) -> str:
+def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
 
     corners = cube.corners
     edges = cube.edges
     centers = cube.centers
-    
+
+    colors = {
+        "y": ['0','1','2','3','4','5'],
+        "w": ['5','3','2','1','4','0'],
+        "r": ['1','5','2','0','4','3'],
+        "o": ['3','0','2','5','4','1'],
+        "g": ['4','1','0','3','5','2'],
+        "b": ['2','1','5','3','0','4']
+    }[cross_color]
+
+
     corners_to_color = {
-        0: ['0','1','4'],
-        1: ['0','4','3'],
-        2: ['0','3','2'],
-        3: ['0','2','1'],
-        4: ['5','4','1'],
-        5: ['5','3','4'],
-        6: ['5','2','3'],
-        7: ['5','1','2']
+        0: [colors[0],colors[1],colors[4]],
+        1: [colors[0],colors[4],colors[3]],
+        2: [colors[0],colors[3],colors[2]],
+        3: [colors[0],colors[2],colors[1]],
+        4: [colors[5],colors[4],colors[1]],
+        5: [colors[5],colors[3],colors[4]],
+        6: [colors[5],colors[2],colors[3]],
+        7: [colors[5],colors[1],colors[2]]
     }
     edges_to_color = {
-        0: ['0','4'],
-        1: ['0','3'],
-        2: ['0','2'],
-        3: ['0','1'],
-        4: ['5','4'],
-        5: ['5','3'],
-        6: ['5','2'],
-        7: ['5','1'],
-        8: ['4','1'],
-        9: ['4','3'],
-        10:['2','3'],
-        11:['2','1'] 
+        0: [colors[0],colors[4]],
+        1: [colors[0],colors[3]],
+        2: [colors[0],colors[2]],
+        3: [colors[0],colors[1]],
+        4: [colors[5],colors[4]],
+        5: [colors[5],colors[3]],
+        6: [colors[5],colors[2]],
+        7: [colors[5],colors[1]],
+        8: [colors[4],colors[1]],
+        9: [colors[4],colors[3]],
+        10:[colors[2],colors[3]],
+        11:[colors[2],colors[1]] 
     }
-
     mapped_edges = np.array([edges_to_color[i] for i in edges[:, 0]])
     mapped_corners = np.array([corners_to_color[i] for i in corners[:, 0]])
 
     rotated_edges = np.array([np.roll(mapped_edge, edge[1]) for mapped_edge, edge in zip(mapped_edges, edges)])
     rotated_corners = np.array([np.roll(mapped_corner, edge[1]) for mapped_corner, edge in zip(mapped_corners, corners)])
 
-    mapped_centers = np.array(centers, dtype=str)
+    mapped_centers = np.array(colors)
 
     numbers = [
         rotated_corners[0,0], rotated_edges[0,0], rotated_corners[1,0],
-        rotated_edges[3,0], mapped_centers[0], rotated_edges[1,0],
+        rotated_edges[3,0], colors[0], rotated_edges[1,0],
         rotated_corners[3,0], rotated_edges[2,0], rotated_corners[2,0],
         rotated_corners[0,1], rotated_edges[3,1], rotated_corners[3,2],
         rotated_edges[8,1], mapped_centers[1], rotated_edges[11,1],
@@ -230,15 +239,15 @@ def cube_to_color(cube, show: bool = False) -> str:
     if show:
         return(f"""
             {rotated_corners[0, 0]}{rotated_edges[0, 0]}{rotated_corners[1, 0]}
-            {rotated_edges[3, 0]}{centers[0]}{rotated_edges[1, 0]}
+            {rotated_edges[3, 0]}{colors[0]}{rotated_edges[1, 0]}
             {rotated_corners[3, 0]}{rotated_edges[2, 0]}{rotated_corners[2, 0]}
         ---
     {rotated_corners[0, 1]}{rotated_edges[3, 1]}{rotated_corners[3, 2]}|{rotated_corners[3, 1]}{rotated_edges[2, 1]}{rotated_corners[2, 2]}|{rotated_corners[2, 1]}{rotated_edges[1, 1]}{rotated_corners[1, 2]}|{rotated_corners[1, 1]}{rotated_edges[0, 1]}{rotated_corners[0, 2]}
-    {rotated_edges[8, 1]}{centers[1]}{rotated_edges[11, 1]}|{rotated_edges[11, 0]}{centers[2]}{rotated_edges[10, 0]}|{rotated_edges[10, 1]}{centers[3]}{rotated_edges[9, 1]}|{rotated_edges[9, 0]}{centers[4]}{rotated_edges[8, 0]}
+    {rotated_edges[8, 1]}{colors[1]}{rotated_edges[11, 1]}|{rotated_edges[11, 0]}{colors[2]}{rotated_edges[10, 0]}|{rotated_edges[10, 1]}{colors[3]}{rotated_edges[9, 1]}|{rotated_edges[9, 0]}{colors[4]}{rotated_edges[8, 0]}
     {rotated_corners[4, 2]}{rotated_edges[7, 1]}{rotated_corners[7, 1]}|{rotated_corners[7, 2]}{rotated_edges[6, 1]}{rotated_corners[6, 1]}|{rotated_corners[6, 2]}{rotated_edges[5, 1]}{rotated_corners[5, 1]}|{rotated_corners[5, 2]}{rotated_edges[4, 1]}{rotated_corners[4, 1]}
         ---
             {rotated_corners[7, 0]}{rotated_edges[6, 0]}{rotated_corners[6, 0]}
-            {rotated_edges[7, 0]}{centers[5]}{rotated_edges[5, 0]}
+            {rotated_edges[7, 0]}{colors[5]}{rotated_edges[5, 0]}
             {rotated_corners[4, 0]}{rotated_edges[4, 0]}{rotated_corners[5, 0]}""")
 
 

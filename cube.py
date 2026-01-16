@@ -1,7 +1,7 @@
 import numpy as np
 from moves.moves import Moves
 from pll import PLL
-import scramble
+from scramble import remap_scramble_by_color
 import convert
 import visualization
 from cross import Cross
@@ -9,6 +9,7 @@ from f2l import F2L
 from oll import OLL
 from solving_stage import Solving
 from pprint import pprint
+from tools import inverse
 
 
 
@@ -19,7 +20,7 @@ class Cube(Moves):
     Klasa przechowuje strukture kostki. Jest to zbiór rogów, krawędzi i centrów 
     oraz umozliwia wykonywanie ruchów na kostce.
     """
-    def __init__(self, notation: str = None, state: str = None):
+    def __init__(self, color="y", notation: str = None, state: str = None):
         """
         Inicjalizuje kostkę Rubika
 
@@ -39,9 +40,10 @@ class Cube(Moves):
             4-niebieski
             5-żółty)
         """
+        self.color = color
         self.reset()
         if notation: 
-            convert.notation_to_moves(moves=notation, cube=self)
+            convert.notation_to_moves(moves=remap_scramble_by_color(notation, color=self.color), cube=self)
         elif state:
             self.corners, self.edges, self.centers = convert.state_to_cube(state=state)
 
@@ -61,7 +63,7 @@ class Cube(Moves):
         Returns:
             str: Tekstowa reprezentacja kostki Rubika w formie kolorów.
         """
-        return convert.replace_numbers_with_colors(convert.cube_to_color(self, show=True))
+        return convert.replace_numbers_with_colors(convert.cube_to_color(self, cross_color=self.color, show=True))
 
     def get_state(self)->str:
         """
@@ -112,17 +114,26 @@ if __name__ == "__main__":
     # notation = "B' U2 R2 D2 F2 L' U2 R' U2 F2 R B' L' U2 L' D' B2 F' L"
 
     # cube = Cube(state = state)
-
-
-    cube = Cube(color = w, notation=notation)
-    # cube = Cube()
-    # cube.x()
+    color = "y"
+    remap = remap_scramble_by_color(notation=notation, color=color)
+    print(notation)
+    # print(inverse(remap))
+    cube = Cube(notation=notation, color=color)
     przypadek = 1
-    # cube.zp()
-    cross = Cross(cube, "o").find_cross(7)
-    cube.move(cross[przypadek])
-    F2L(cube).solve(verbose=True)
+    cross = Cross(cube).find_cross(6)
     print(cross[przypadek])
+    cube.move(cross[przypadek])
+    f2l = F2L(cube).solve(verbose=True)
+    cube.move(f2l[0])
+    cube.move(f2l[1])
+    cube.move(f2l[2])
+    cube.move(f2l[3])
+    oll = OLL(cube).solve()
+    print(oll)
+    cube.move(oll)
+    pll = PLL(cube).solve()
+    print(pll)
+    cube.move(pll)
     print(cube)
 
 
