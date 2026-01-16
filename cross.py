@@ -11,17 +11,37 @@ class Cross:
         start_state: Stan początkowy krawędzi Cross w postaci binarnej.
         end_state: Stan docelowy krawędzi Cross w postaci binarnej. 
     """
-    def __init__(self, cube):
+    def __init__(self, cube, color: str = "y"):
         """
         Inicjalizuje obiekt Cross.
 
         Args: 
             cube (Cube): Obiekt kostki Rubika, który ma być analizowany. 
         """
+        self.cross_edges = {
+            'w': [0, 1, 2, 3],
+            'y': [4, 5, 6, 7],
+            'r': [1, 5, 9, 10],
+            'b': [0, 4, 8, 9],
+            'g': [2, 6, 10, 11],
+            'o': [3, 7, 8, 11],
+        }[color]
+
         self.cube = cube
-        self.start_state = convert.edges_to_binary(self.cube, [4,5,6,7])
+
+        COLOR_ROTATION = {
+            'y': lambda: None,          # biały już na dole
+            'w': lambda: self.cube.z2(),      # żółty na dół
+            'r': lambda: self.cube.z(),       # czerwony na dół
+            'o': lambda: self.cube.zp(),     # pomarańczowy na dół
+            'b': lambda: self.cube.x(),       # niebieski na dół
+            'g': lambda: self.cube.xp(),     # zielony na dół
+        }[color]()
+
+        # test = [0,1,2,3]#[4,5,6,7] [2,6,10,11] [0,4,8,9] [0,1,2,3] [3,7,8,11] [0,4,8,9]
+        self.start_state = convert.edges_to_binary(self.cube, self.cross_edges)#[4,5,6,7])
         from cube import Cube
-        self.end_state = convert.edges_to_binary(Cube(), [4,5,6,7])
+        self.end_state = convert.edges_to_binary(Cube(cube.rotation), self.cross_edges)
 
     def find_cross(self, length: int) -> List[str]:
         """

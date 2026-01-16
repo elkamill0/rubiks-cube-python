@@ -43,7 +43,7 @@ class Cube(Moves):
         if notation: 
             convert.notation_to_moves(moves=notation, cube=self)
         elif state:
-            self.corners, self.edges, self.centers = convert.state_to_cube(state=state)   
+            self.corners, self.edges, self.centers = convert.state_to_cube(state=state)
 
     def move(self, notation: str) -> None:
         """
@@ -82,6 +82,8 @@ class Cube(Moves):
         - krawędzie,
         - środki kostki
         """
+        
+        self.rotation = ""
         self.corners = np.zeros((8, 2), dtype=np.int8)
         self.corners[:, 0] = np.arange(8)
         self.edges = np.zeros((12, 2), dtype=np.int8)
@@ -107,15 +109,21 @@ if __name__ == "__main__":
     # cube = Cube(notation = notation)
 
     notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
+    # notation = "B' U2 R2 D2 F2 L' U2 R' U2 F2 R B' L' U2 L' D' B2 F' L"
 
     # cube = Cube(state = state)
 
 
-    cube = Cube(notation=notation)
-    cube.get_state()
+    cube = Cube(color = w, notation=notation)
+    # cube = Cube()
+    # cube.x()
+    przypadek = 1
+    # cube.zp()
+    cross = Cross(cube, "o").find_cross(7)
+    cube.move(cross[przypadek])
+    F2L(cube).solve(verbose=True)
+    print(cross[przypadek])
     print(cube)
-    print(cube.corners)
 
-    # print(cube.get_state())
 
     # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2

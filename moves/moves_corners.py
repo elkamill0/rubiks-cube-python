@@ -74,6 +74,36 @@ class MovesCorners:
 
     def B2(self) -> None:
         self.corners[[0,4,5,1]] = self.corners[[5,1,0,4]]
+    
+    def E(self) -> None:
+        pass
+
+    def Ep(self) -> None:
+        pass
+
+    def Ep(self) -> None:
+        pass
+
+    def E2(self) -> None:
+        pass
+
+    def M(self) -> None:
+        pass
+
+    def Mp(self) -> None:
+        pass
+
+    def M2(self) -> None:
+        pass
+
+    def S(self) -> None:
+        pass
+
+    def Sp(self) -> None:
+        pass
+
+    def S2(self) -> None:
+        pass
 
     def y(self) -> None:
         MovesCorners.U(self)
@@ -88,38 +118,39 @@ class MovesCorners:
         MovesCorners.D2(self)
 
     def x(self) -> None:
-        a1 = [0,2,5,7]
-        a2 = [1,3,4,6]
-        for i,c in enumerate(self.corners):
-            if c[0] in a1:
-                if i in a2:
-                    c[1] = (c[1] - 1) % 3
-            else:
-                if i in a1:
-                    c[1] = (c[1] + 1) % 3
+        # a1 = [0,2,5,7]
+        # a2 = [1,3,4,6]
+        # for i,c in enumerate(self.corners):
+        #     if c[0] in a1:
+        #         if i in a2:
+        #             c[1] = (c[1] - 1) % 3
+        #     else:
+        #         if i in a1:
+        #             c[1] = (c[1] + 1) % 3
 
         MovesCorners.R(self)
         MovesCorners.Lp(self)
 
-    # def xp(self) -> None:
-    #     MovesCorners.Rp(self)
-    #     MovesCorners.L(self)
+    def xp(self) -> None:
+        MovesCorners.Rp(self)
+        MovesCorners.L(self)
 
-    # def x2(self) -> None:
-    #     MovesCorners.R2(self)
-    #     MovesCorners.L2(self)
+    def x2(self) -> None:
+        MovesCorners.R2(self)
+        MovesCorners.L2(self)
 
-    # def z(self) -> None:
-    #     MovesCorners.F(self)
-    #     MovesCorners.Bp(self)
+    def z(self) -> None:
+        MovesCorners.F(self)
+        MovesCorners.Bp(self)
 
-    # def zp(self) -> None:
-    #     MovesCorners.Fp(self)
-    #     MovesCorners.B(self)
+    def zp(self) -> None:
+        MovesCorners.Fp(self)
+        MovesCorners.B(self)
 
-    # def z2(self) -> None:
-    #     MovesCorners.F2(self)
-    #     MovesCorners.B2(self)
+    def z2(self) -> None:
+        MovesCorners.F2(self)
+        MovesCorners.B2(self)
+
 
 if __name__ == "__main__":
     corners = np.zeros((8, 2), dtype=np.int8)

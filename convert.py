@@ -138,7 +138,25 @@ def notation_to_moves(moves: str, cube):
         'F2': cube.F2,
         'B': cube.B,
         "B'": cube.Bp,
-        'B2': cube.B2
+        'B2': cube.B2,
+        'M': cube.M,
+        "M'": cube.Mp,
+        'M2': cube.M2,
+        'E': cube.E,
+        "E'": cube.Ep,
+        'E2': cube.E2,
+        'S': cube.S,
+        "S'": cube.Sp,
+        'S2': cube.S2,
+        'x': cube.x,
+        "x'": cube.xp,
+        'x2': cube.x2,
+        'y': cube.y,
+        "y'": cube.yp,
+        'y2': cube.y2,
+        'z': cube.z,
+        "z'": cube.zp,
+        'z2': cube.z2,
     }
 
     moves_list = moves.split()
@@ -248,12 +266,9 @@ def edges_to_binary(cube, target: list[int]) -> list[int]:
     }
 
     # target_values = [4, 5, 6, 7]
-    cross = [
-        (np.where(cube.edges == val)[0][0],
-         cube.edges[np.where(cube.edges == val)[0][0]][1])
-        for val in target
-    ]
-    return [color_to_binary[n[0]]+(64 if n[1] else 0) for n in cross]
+    cross = [(np.where(cube.edges[:,0] == val)[0][0], cube.edges[np.where(cube.edges[:,0] == val)[0][0]][1]) for val in target]
+    return [color_to_binary[n[0]] + (64 if n[1] else 0) for n in cross]
+
 
 def corners_to_binary(cube, target: list[int]) -> list[int]:
     color_to_binary = {

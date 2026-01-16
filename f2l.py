@@ -26,11 +26,13 @@ def load_f2l_from_json(path: str):
 
 class F2L:
     def __init__(self, cube):
+        self.e = [6,2,0,4]  #[10,11,8,9]
+        self.c = [7,3,0,4]  #[6,7,4,5]
         self.cube = deepcopy(cube)
         self.solved_cube = deepcopy(cube)
         self.solved_cube.reset()
-        self.edges = edges_to_binary(self.cube, [10,11,8,9]) 
-        self.corners = corners_to_binary(self.cube, [6,7,4,5])
+        self.edges = edges_to_binary(self.cube, self.e) 
+        self.corners = corners_to_binary(self.cube, self.c)
         self.free_slots = self.check_free_slots()
         
         self.pairs = [
@@ -63,8 +65,8 @@ class F2L:
                     continue
                 cube = deepcopy(self.solved_cube)
                 cube.move(inverse(case))
-                edges = edges_to_binary(cube, [10,11,8,9]) 
-                corners = corners_to_binary(cube, [6,7,4,5])
+                edges = edges_to_binary(cube, self.e) 
+                corners = corners_to_binary(cube, self.c)
                 record = {
                     "name": f"{name}_{i+1}",
                     "pair": [corners[slot], edges[slot]],
@@ -84,8 +86,8 @@ class F2L:
             print(f"Zapisano {len(records)} przypadków do pliku: {output_path}")
 
     def check_free_slots(self) -> List[int]:
-        edges = edges_to_binary(self.solved_cube, [10,11,8,9]) 
-        corners = corners_to_binary(self.solved_cube, [6,7,4,5])
+        edges = edges_to_binary(self.solved_cube, self.e) 
+        corners = corners_to_binary(self.solved_cube, self.c)
 
         solved_pairs = list(zip(edges, corners))
         pairs = list(zip(self.edges, self.corners))

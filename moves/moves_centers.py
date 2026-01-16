@@ -29,32 +29,64 @@ class MovesCenters:
     def B2(self) -> None: pass
 
     def E(self) -> None:
-        self.centers[[1,2,3,4]] = self.centers[[2,3,4,1]]
+        self.centers[[1,2,3,4]] = self.centers[[4,1,2,3]]
     
     def Ep(self) -> None:
-        self.centers[[1,2,3,4]] = self.centers[[4,1,2,3]]
+        self.centers[[1,2,3,4]] = self.centers[[2,3,4,1]]
 
     def E2(self) -> None:
         self.centers[[1,2,3,4]] = self.centers[[3,4,1,2]]
 
     def Mp(self) -> None:
-        self.centers[[0,2,5,4]] = self.centers[[4,0,2,5]]
+        self.centers[[0,2,5,4]] = self.centers[[2,5,4,0]]
 
     def M(self) -> None:
-        self.centers[[0,2,5,4]] = self.centers[[2,5,4,0]]
+        self.centers[[0,2,5,4]] = self.centers[[4,0,2,5]]
 
     def M2(self) -> None:
         self.centers[[0,2,5,4]] = self.centers[[5,4,0,2]]
 
+    def Sp(self) -> None:
+        self.centers[[0,3,5,1]] = self.centers[[3,5,1,0]]
+
+    def S(self) -> None:
+        self.centers[[0,3,5,1]] = self.centers[[1,0,3,5]]
+
+    def S2(self) -> None:
+        self.centers[[0,3,5,1]] = self.centers[[5,1,0,3]]
 
     def y(self) -> None:
-        MovesCenters.E(self)
+        MovesCenters.Ep(self)
+        self.rotation += "y "
 
     def yp(self) -> None:
-        MovesCenters.Ep(self)
+        MovesCenters.E(self)
+        self.rotation += "y' "
 
     def y2(self) -> None:
         MovesCenters.E2(self)
+        self.rotation += "y2 "
 
     def x(self) -> None:
+        MovesCenters.Mp(self)
+        self.rotation += "x "
+
+    def xp(self) -> None:
         MovesCenters.M(self)
+        self.rotation += "x' "
+
+    def x2(self) -> None:
+        MovesCenters.M2(self)
+        self.rotation += "x2 "
+
+    def z(self) -> None:
+        MovesCenters.S(self)
+        self.rotation += "z "
+
+    def zp(self) -> None:
+        MovesCenters.Sp(self)
+        self.rotation += "z' "
+
+    def z2(self) -> None:
+        MovesCenters.S2(self)
+        self.rotation += "z2 "

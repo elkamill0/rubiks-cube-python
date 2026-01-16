@@ -8,6 +8,7 @@ from pll import PLL
 from solving_stage import Solving
 from tools import inverse
 import convert
+from copy import deepcopy
 
 
 if "cube" not in st.session_state:
@@ -48,6 +49,31 @@ scramble_length = st.sidebar.number_input("length", value=21)
 generate_button = st.sidebar.button("Scramble")
 
 reconstruction_button = st.sidebar.button("Reconstruction")
+
+# --- wybór koloru crossa ---
+color = st.sidebar.selectbox(
+    "Wybierz kolor crossa",
+    options=['w','r','b','g','o'],
+    index=1  # domyślnie żółty
+)
+
+st.sidebar.text(f"Wybrany kolor: {color}")
+
+# --- obliczenie możliwych crossów ---
+if st.sidebar.button("Check Crosses"):
+    # cross_solver = Cross(st.session_state.cube, color=color)
+
+    st.subheader(f"Cross dla koloru {color.upper()}")
+
+    solving = Solving(st.session_state.cube)
+    solutions = Cross(st.session_state.cube, color=color).find_cross(length=cross_length)
+    st.session_state.cube.move(inverse(st.session_state.cube.rotation))
+    st.write(f"Liczba możliwych crossów: {len(solutions)}")
+    for sol in solutions:
+        st.text(sol)
+
+
+
 
 
 scramble_notation = st.empty()

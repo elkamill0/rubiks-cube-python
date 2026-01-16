@@ -17,8 +17,12 @@ move_names = [
     "D", "Dp", "D2",
     "F", "Fp", "F2",
     "B", "Bp", "B2",
+    "E", "Ep", "E2",
+    "M", "Mp", "M2",
+    "S", "Sp", "S2",
     "y", "yp", "y2",
-    "x"
+    "x", "xp", "x2",
+    "z", "zp", "z2",
 ]
 
 def make_move_function(name):
