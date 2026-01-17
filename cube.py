@@ -108,15 +108,12 @@ if __name__ == "__main__":
 
     color = "y"
     print(notation)
-    cube = Cube(notation=notation, color=color)
-    
-    print(cube)
+    cube = Cube(notation=inverse(notation), color=color)
 
-    cross = Cross(cube).find_cross(6)
-    print(cross[0])
-    cube.move(cross[0])
-    # print(cross[przypadek])
-    # cube.move(cross[przypadek])
+
+    # cross = Cross(cube).find_cross(6)
+    # print(cross[0])
+    # cube.move(cross[0])
     # f2l = F2L(cube).solve(verbose=True)
     # cube.move(f2l[0])
     # cube.move(f2l[1])
