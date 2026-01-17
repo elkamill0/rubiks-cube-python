@@ -100,6 +100,78 @@ class MovesEdges:
     def S2(self) -> None:
         self.edges[[3,1,5,7]] = self.edges[[5,7,3,1]]
 
+    def r(self) -> None:
+        MovesEdges.R(self)
+        MovesEdges.Mp(self)
+
+    def rp(self) -> None:
+        MovesEdges.Rp(self)
+        MovesEdges.M(self)
+
+    def r2(self) -> None:
+        MovesEdges.R2(self)
+        MovesEdges.M2(self)
+
+    def l(self) -> None:
+        MovesEdges.L(self)
+        MovesEdges.M(self)
+
+    def lp(self) -> None:
+        MovesEdges.Lp(self)
+        MovesEdges.Mp(self)
+
+    def l2(self) -> None:
+        MovesEdges.L2(self)
+        MovesEdges.M2(self)
+
+    def u(self) -> None:
+        MovesEdges.U(self)
+        MovesEdges.Ep(self)
+
+    def up(self) -> None:
+        MovesEdges.Up(self)
+        MovesEdges.E(self)
+
+    def u2(self) -> None:
+        MovesEdges.U2(self)
+        MovesEdges.E2(self)
+
+    def d(self) -> None:
+        MovesEdges.D(self)
+        MovesEdges.E(self)
+
+    def dp(self) -> None:
+        MovesEdges.Dp(self)
+        MovesEdges.Ep(self)
+
+    def d2(self) -> None:
+        MovesEdges.D2(self)
+        MovesEdges.E2(self)
+
+    def f(self) -> None:
+        MovesEdges.F(self)
+        MovesEdges.S(self)
+
+    def fp(self) -> None:
+        MovesEdges.Fp(self)
+        MovesEdges.Sp(self)
+
+    def f2(self) -> None:
+        MovesEdges.F2(self)
+        MovesEdges.S2(self)
+
+    def b(self) -> None:
+        MovesEdges.B(self)
+        MovesEdges.Sp(self)
+
+    def bp(self) -> None:
+        MovesEdges.Bp(self)
+        MovesEdges.S(self)
+
+    def b2(self) -> None:
+        MovesEdges.B2(self)
+        MovesEdges.S2(self)
+
     def x(self) -> None:
         MovesEdges.Mp(self)
         MovesEdges.R(self)
@@ -133,7 +205,6 @@ class MovesEdges:
     def y(self) -> None:
         MovesEdges.U(self)
         MovesEdges.Dp(self)
-        # MovesEdges.__rotate(self, [i for i in self.edges[:8] if i[0] >= 8])
         MovesEdges.Ep(self)
 
     def yp(self) -> None:

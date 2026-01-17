@@ -55,38 +55,83 @@ class MovesCenters:
     def S2(self) -> None:
         self.centers[[0,3,5,1]] = self.centers[[5,1,0,3]]
 
+    def r(self) -> None:
+        MovesCenters.Mp(self)
+
+    def rp(self) -> None:
+        MovesCenters.M(self)
+
+    def r2(self) -> None:
+        MovesCenters.M2(self)
+
+    def l(self) -> None:
+        MovesCenters.M(self)
+
+    def lp(self) -> None:
+        MovesCenters.Mp(self)
+
+    def l2(self) -> None:
+        MovesCenters.M2(self)
+
+    def u(self) -> None:
+        MovesCenters.Ep(self)
+
+    def up(self) -> None:
+        MovesCenters.E(self)
+
+    def u2(self) -> None:
+        MovesCenters.E2(self)
+
+    def d(self) -> None:
+        MovesCenters.E(self)
+
+    def dp(self) -> None:
+        MovesCenters.Ep(self)
+
+    def d2(self) -> None:
+        MovesCenters.E2(self)
+
+    def f(self) -> None:
+        MovesCenters.S(self)
+
+    def fp(self) -> None:
+        MovesCenters.Sp(self)
+
+    def f2(self) -> None:
+        MovesCenters.S2(self)
+
+    def b(self) -> None:
+        MovesCenters.Sp(self)
+
+    def bp(self) -> None:
+        MovesCenters.S(self)
+
+    def b2(self) -> None:
+        MovesCenters.S2(self)
+
     def y(self) -> None:
         MovesCenters.Ep(self)
-        self.rotation += "y "
 
     def yp(self) -> None:
         MovesCenters.E(self)
-        self.rotation += "y' "
 
     def y2(self) -> None:
         MovesCenters.E2(self)
-        self.rotation += "y2 "
 
     def x(self) -> None:
         MovesCenters.Mp(self)
-        self.rotation += "x "
 
     def xp(self) -> None:
         MovesCenters.M(self)
-        self.rotation += "x' "
 
     def x2(self) -> None:
         MovesCenters.M2(self)
-        self.rotation += "x2 "
 
     def z(self) -> None:
         MovesCenters.S(self)
-        self.rotation += "z "
 
     def zp(self) -> None:
         MovesCenters.Sp(self)
-        self.rotation += "z' "
 
     def z2(self) -> None:
         MovesCenters.S2(self)
-        self.rotation += "z2 "

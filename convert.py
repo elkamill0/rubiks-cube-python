@@ -148,6 +148,24 @@ def notation_to_moves(moves: str, cube):
         'S': cube.S,
         "S'": cube.Sp,
         'S2': cube.S2,
+        'r': cube.r,
+        "r'": cube.rp,
+        'r2': cube.r2,
+        'l': cube.l,
+        "l'": cube.lp,
+        'l2': cube.l2,
+        'u': cube.u,
+        "u'": cube.up,
+        'u2': cube.u2,
+        'd': cube.d,
+        "d'": cube.dp,
+        'd2': cube.d2,
+        'f': cube.f,
+        "f'": cube.fp,
+        'f2': cube.f2,
+        'b': cube.b,
+        "b'": cube.bp,
+        'b2': cube.b2,
         'x': cube.x,
         "x'": cube.xp,
         'x2': cube.x2,
@@ -217,7 +235,7 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
 
     numbers = [
         rotated_corners[0,0], rotated_edges[0,0], rotated_corners[1,0],
-        rotated_edges[3,0], colors[0], rotated_edges[1,0],
+        rotated_edges[3,0], centers[0], rotated_edges[1,0],
         rotated_corners[3,0], rotated_edges[2,0], rotated_corners[2,0],
         rotated_corners[0,1], rotated_edges[3,1], rotated_corners[3,2],
         rotated_edges[8,1], mapped_centers[1], rotated_edges[11,1],
@@ -239,15 +257,15 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
     if show:
         return(f"""
             {rotated_corners[0, 0]}{rotated_edges[0, 0]}{rotated_corners[1, 0]}
-            {rotated_edges[3, 0]}{colors[0]}{rotated_edges[1, 0]}
+            {rotated_edges[3, 0]}{centers[0]}{rotated_edges[1, 0]}
             {rotated_corners[3, 0]}{rotated_edges[2, 0]}{rotated_corners[2, 0]}
         ---
     {rotated_corners[0, 1]}{rotated_edges[3, 1]}{rotated_corners[3, 2]}|{rotated_corners[3, 1]}{rotated_edges[2, 1]}{rotated_corners[2, 2]}|{rotated_corners[2, 1]}{rotated_edges[1, 1]}{rotated_corners[1, 2]}|{rotated_corners[1, 1]}{rotated_edges[0, 1]}{rotated_corners[0, 2]}
-    {rotated_edges[8, 1]}{colors[1]}{rotated_edges[11, 1]}|{rotated_edges[11, 0]}{colors[2]}{rotated_edges[10, 0]}|{rotated_edges[10, 1]}{colors[3]}{rotated_edges[9, 1]}|{rotated_edges[9, 0]}{colors[4]}{rotated_edges[8, 0]}
+    {rotated_edges[8, 1]}{centers[1]}{rotated_edges[11, 1]}|{rotated_edges[11, 0]}{centers[2]}{rotated_edges[10, 0]}|{rotated_edges[10, 1]}{centers[3]}{rotated_edges[9, 1]}|{rotated_edges[9, 0]}{centers[4]}{rotated_edges[8, 0]}
     {rotated_corners[4, 2]}{rotated_edges[7, 1]}{rotated_corners[7, 1]}|{rotated_corners[7, 2]}{rotated_edges[6, 1]}{rotated_corners[6, 1]}|{rotated_corners[6, 2]}{rotated_edges[5, 1]}{rotated_corners[5, 1]}|{rotated_corners[5, 2]}{rotated_edges[4, 1]}{rotated_corners[4, 1]}
         ---
             {rotated_corners[7, 0]}{rotated_edges[6, 0]}{rotated_corners[6, 0]}
-            {rotated_edges[7, 0]}{colors[5]}{rotated_edges[5, 0]}
+            {rotated_edges[7, 0]}{centers[5]}{rotated_edges[5, 0]}
             {rotated_corners[4, 0]}{rotated_edges[4, 0]}{rotated_corners[5, 0]}""")
 
 
@@ -255,16 +273,8 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
 
 
 
-# def int_to_moves_scramble(input: list[int]|str, mode: dict) -> list[int]|str:
-#     if isinstance(input, list):
-#         output = [mode[number] for number in input if number in mode]
-#         return " ".join(output)
-#     elif isinstance(input, str):
-#         return [mode[char] for char in input.split() if char in mode]
-
 def int_to_moves_scramble(nums: list[int]) -> str:
     return " ".join(int_to_notation[number] for number in nums if number in int_to_notation)
-
 
 
 def edges_to_binary(cube, target: list[int]) -> list[int]:

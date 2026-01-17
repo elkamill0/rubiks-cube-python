@@ -85,56 +85,50 @@ class Cube(Moves):
         - środki kostki
         """
         
-        self.rotation = ""
         self.corners = np.zeros((8, 2), dtype=np.int8)
         self.corners[:, 0] = np.arange(8)
         self.edges = np.zeros((12, 2), dtype=np.int8)
         self.edges[:, 0] = np.arange(12)
-        self.centers = np.arange(6, dtype=np.uint8)
+        self.centers = np.zeros(6, dtype=np.uint8)
+        colors = {
+            "y": [0, 1, 2, 3, 4, 5],
+            "w": [5, 3, 2, 1, 4, 0],
+            "r": [1, 5, 2, 0, 4, 3],
+            "o": [3, 0, 2, 5, 4, 1],
+            "g": [4, 1, 0, 3, 5, 2],
+            "b": [2, 1, 5, 3, 0, 4]
+        }
+        self.centers[:] = colors[self.color]
 
 
 if __name__ == "__main__":
-    # print(scramble.generate_scramble(10))
-    # notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"
     state = "305203242215110113300222024102334534110344044453555551"
-    # notation="F' R2 F' U2 F R2 F' U2 R2 F U2 R U F L2 B D' B' R"
-    # notation="F' B2 L F2 L D2 L2 U2 R D2 B2 L D' B2 F L' B L2 D U'"
-    # notation = "R U R' L D2 F' B U' R2 L' F2 D' B2 U2 L2 D B' F"
-    # notation = "U2 R' F D B2 L U' R2 F' D' L2 B U L' D2 R F2 B' U'"
-    # notation = "L "#D2 B' R U2 F' L' B2 U R' D F2 L2 U' B R2 F D' U B'"
-
-    # notation = "U2 D L2 B F2 R2 F B' D F' B' R' B F' U' R2 U2 B L D' R'"
-    # notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
-    # notation = "U' L F2 D' R2 D B L B R B D2 U' L B' D L' R' B' F' L2"
-
-
-    # cube = Cube(notation = notation)
 
     notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
-    # notation = "B' U2 R2 D2 F2 L' U2 R' U2 F2 R B' L' U2 L' D' B2 F' L"
 
-    # cube = Cube(state = state)
     color = "y"
-    remap = remap_scramble_by_color(notation=notation, color=color)
     print(notation)
-    # print(inverse(remap))
     cube = Cube(notation=notation, color=color)
-    przypadek = 1
-    cross = Cross(cube).find_cross(6)
-    print(cross[przypadek])
-    cube.move(cross[przypadek])
-    f2l = F2L(cube).solve(verbose=True)
-    cube.move(f2l[0])
-    cube.move(f2l[1])
-    cube.move(f2l[2])
-    cube.move(f2l[3])
-    oll = OLL(cube).solve()
-    print(oll)
-    cube.move(oll)
-    pll = PLL(cube).solve()
-    print(pll)
-    cube.move(pll)
+    
     print(cube)
+
+    cross = Cross(cube).find_cross(6)
+    print(cross[0])
+    cube.move(cross[0])
+    # print(cross[przypadek])
+    # cube.move(cross[przypadek])
+    # f2l = F2L(cube).solve(verbose=True)
+    # cube.move(f2l[0])
+    # cube.move(f2l[1])
+    # cube.move(f2l[2])
+    # cube.move(f2l[3])
+    # oll = OLL(cube).solve()
+    # print(oll)
+    # cube.move(oll)
+    # pll = PLL(cube).solve()
+    # print(pll)
+    # cube.move(pll)
+    # print(cube)
 
 
     # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2

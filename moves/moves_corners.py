@@ -105,6 +105,78 @@ class MovesCorners:
     def S2(self) -> None:
         pass
 
+    def r(self) -> None:
+        MovesCorners.R(self)
+        MovesCorners.Mp(self)
+
+    def rp(self) -> None:
+        MovesCorners.Rp(self)
+        MovesCorners.M(self)
+
+    def r2(self) -> None:
+        MovesCorners.R2(self)
+        MovesCorners.M2(self)
+
+    def l(self) -> None:
+        MovesCorners.L(self)
+        MovesCorners.M(self)
+
+    def lp(self) -> None:
+        MovesCorners.Lp(self)
+        MovesCorners.Mp(self)
+
+    def l2(self) -> None:
+        MovesCorners.L2(self)
+        MovesCorners.M2(self)
+
+    def u(self) -> None:
+        MovesCorners.U(self)
+        MovesCorners.Ep(self)
+
+    def up(self) -> None:
+        MovesCorners.Up(self)
+        MovesCorners.E(self)
+
+    def u2(self) -> None:
+        MovesCorners.U2(self)
+        MovesCorners.E2(self)
+
+    def d(self) -> None:
+        MovesCorners.D(self)
+        MovesCorners.E(self)
+
+    def dp(self) -> None:
+        MovesCorners.Dp(self)
+        MovesCorners.Ep(self)
+
+    def d2(self) -> None:
+        MovesCorners.D2(self)
+        MovesCorners.E2(self)
+
+    def f(self) -> None:
+        MovesCorners.F(self)
+        MovesCorners.S(self)
+
+    def fp(self) -> None:
+        MovesCorners.Fp(self)
+        MovesCorners.Sp(self)
+
+    def f2(self) -> None:
+        MovesCorners.F2(self)
+        MovesCorners.S2(self)
+
+    def b(self) -> None:
+        MovesCorners.B(self)
+        MovesCorners.Sp(self)
+
+    def bp(self) -> None:
+        MovesCorners.Bp(self)
+        MovesCorners.S(self)
+
+    def b2(self) -> None:
+        MovesCorners.B2(self)
+        MovesCorners.S2(self)
+
     def y(self) -> None:
         MovesCorners.U(self)
         MovesCorners.Dp(self)
@@ -118,16 +190,6 @@ class MovesCorners:
         MovesCorners.D2(self)
 
     def x(self) -> None:
-        # a1 = [0,2,5,7]
-        # a2 = [1,3,4,6]
-        # for i,c in enumerate(self.corners):
-        #     if c[0] in a1:
-        #         if i in a2:
-        #             c[1] = (c[1] - 1) % 3
-        #     else:
-        #         if i in a1:
-        #             c[1] = (c[1] + 1) % 3
-
         MovesCorners.R(self)
         MovesCorners.Lp(self)
 
