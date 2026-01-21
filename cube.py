@@ -14,32 +14,7 @@ from tools import inverse
 
 
 class Cube(Moves):
-    """
-    Reprezentuje stan kostki Rubika oraz operacje wykonywane na niej.
-
-    Klasa przechowuje strukture kostki. Jest to zbiór rogów, krawędzi i centrów 
-    oraz umozliwia wykonywanie ruchów na kostce.
-    """
     def __init__(self, color="y", notation: str = None, state: str = None):
-        """
-        Inicjalizuje kostkę Rubika
-
-        Kostka może zostać:
-        - zainicjowana w stanie ułożonym (domyślnie)
-        - przemieszana za pomocą notacji ruchów
-        - odtworzona z zapisanego stanu
-
-        Args:
-            notation (str, optional): Sekwencja ruchów w notacji
-            state (str, optional): Rozłożenie kostki według stanu (liczb od 0-5 
-            symbolizujące kolory
-            0-biały
-            1-pomarańczowy
-            2-zielony
-            3-czerwony
-            4-niebieski
-            5-żółty)
-        """
         self.color = color
         self.reset()
         if notation: 
@@ -48,43 +23,15 @@ class Cube(Moves):
             self.corners, self.edges, self.centers = convert.state_to_cube(state=state)
 
     def move(self, notation: str) -> None:
-        """
-        Wykojnuje sekwecję ruchów na kostce.
-
-        Args:
-            notation (str): Sekwecja ruchów notacja.
-        """
         convert.notation_to_moves(notation, self)
 
     def __str__(self):
-        """
-        Zwraca aktualny stan kostki rubika w formie kolorów.
-
-        Returns:
-            str: Tekstowa reprezentacja kostki Rubika w formie kolorów.
-        """
         return convert.replace_numbers_with_colors(convert.cube_to_color(self, cross_color=self.color, show=True))
 
     def get_state(self)->str:
-        """
-        Zwraca aktualny stan kostki rubika w postaci notacji od 0-5 symbolizującą kolory.
-
-        Returns:
-            str: Tekstowa reprezentacja stanu kostki.
-
-        """
         return convert.cube_to_color(self, show=False)
 
     def reset(self) -> None:
-        """
-        Resetuje kostkę do stanu ułożonego.
-
-        Inicjalizuje:
-        - narożniki, 
-        - krawędzie,
-        - środki kostki
-        """
-        
         self.corners = np.zeros((8, 2), dtype=np.int8)
         self.corners[:, 0] = np.arange(8)
         self.edges = np.zeros((12, 2), dtype=np.int8)
@@ -99,6 +46,7 @@ class Cube(Moves):
             "b": [2, 1, 5, 3, 0, 4]
         }
         self.centers[:] = colors[self.color]
+        self.y_rotation = 0   # 0 or 64 for f2l only
 
 
 if __name__ == "__main__":
@@ -108,15 +56,26 @@ if __name__ == "__main__":
 
     color = "y"
     print(notation)
-    cube = Cube(notation=inverse(notation), color=color)
+    cube = Cube(notation=notation, color=color)
+    
 
-
-    # cross = Cross(cube).find_cross(6)
-    # print(cross[0])
+    # print(cube)
+    cross = Cross(cube).find_cross(6)
+    print(cross[0])
     # cube.move(cross[0])
-    # f2l = F2L(cube).solve(verbose=True)
+    # cube.y()
+    # cube.U2()
+    print(cube)
+    print(cube.edges)
+    # f2l = F2L(cube, [10,11,8,9], [6,7,4,5]).solve(verbose=True)
+    # f2l = F2L(cube, [9,10,11,8], [5,6,7,4]).solve(verbose=True) # y
+    # f2l = F2L(cube, [8,9,10,11], [4,5,6,7]).solve(verbose=True) # y2
+    # f2l = F2L(cube, [11,8,9,10], [7,4,5,6]).solve(verbose=True) # y'
     # cube.move(f2l[0])
     # cube.move(f2l[1])
+    # cube.move(f2l[2])
+    # cube.move(f2l[3])
+    # print(cube)
     # cube.move(f2l[2])
     # cube.move(f2l[3])
     # oll = OLL(cube).solve()
@@ -125,7 +84,6 @@ if __name__ == "__main__":
     # pll = PLL(cube).solve()
     # print(pll)
     # cube.move(pll)
-    # print(cube)
 
 
     # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2

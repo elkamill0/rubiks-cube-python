@@ -26,8 +26,23 @@ def load_f2l_from_json(path: str):
 
 class F2L:
     def __init__(self, cube):
-        self.e = [10,11,8,9]  #[6,2,0,4]
-        self.c = [6,7,4,5]  #[7,3,0,4]
+        # self.e = [9,10,11,8] #[10,11,8,9]  [6,2,0,4]
+        # self.c = [5,6,7,4] #[6,7,4,5]  [7,3,0,4]
+        self.e_variation = [
+            [10,11,8,9], 
+            [9,10,11,8],
+            [8,9,10,11],
+            [11,8,9,10]
+        ]
+        self.c_variation = [
+            [6,7,4,5],
+            [5,6,7,4],
+            [4,5,6,7],
+            [7,4,5,6]
+        ]
+        self.e = self.e_variation[0]
+        self.c = self.c_variation[0]
+        self.rotate_edges = False
         self.cube = deepcopy(cube)
         self.solved_cube = deepcopy(cube)
         self.solved_cube.reset()
@@ -36,10 +51,10 @@ class F2L:
         self.free_slots = self.check_free_slots()
         
         self.pairs = [
-            load_f2l_from_json("cases/f2l1_cases.json") | load_f2l_from_json("cases/af2l1_cases.json"),
-            load_f2l_from_json("cases/f2l2_cases.json") | load_f2l_from_json("cases/af2l2_cases.json"),
-            load_f2l_from_json("cases/f2l3_cases.json") | load_f2l_from_json("cases/af2l3_cases.json"),
-            load_f2l_from_json("cases/f2l4_cases.json") | load_f2l_from_json("cases/af2l4_cases.json")
+            load_f2l_from_json("cases/f2l1_cases.json"), # | load_f2l_from_json("cases/af2l1_cases.json"),
+            load_f2l_from_json("cases/f2l2_cases.json"), # | load_f2l_from_json("cases/af2l2_cases.json"),
+            load_f2l_from_json("cases/f2l3_cases.json"), # | load_f2l_from_json("cases/af2l3_cases.json"),
+            load_f2l_from_json("cases/f2l4_cases.json"), # | load_f2l_from_json("cases/af2l4_cases.json")
         ]
 
     def prepare_algs(self) -> None:
@@ -104,13 +119,14 @@ class F2L:
     def solve(self, verbose:bool = False) -> list[str]:
         i = 0
         new_notation = ""
-    
+
         final = []
 
         while i <= 4 and self.free_slots:
             for slot in self.free_slots:
-                key = (self.corners[slot], self.edges[slot])
+                key = (self.corners[slot], self.edges[slot] ^ (64 * self.rotate_edges))
                 if key in self.pairs[slot]:
+                    print(key)
                     alg = self.pairs[slot][key]
                     new_notation += alg
                     reduced = reduce(new_notation)
@@ -119,16 +135,23 @@ class F2L:
                     if verbose:
                         print(reduced, f" # Slot {slot}")
                     self.cube.move(alg)
-                    self.edges = edges_to_binary(self.cube, [10, 11, 8, 9])
-                    self.corners = corners_to_binary(self.cube, [6, 7, 4, 5])
+                    self.edges = edges_to_binary(self.cube, self.e)
+                    self.corners = corners_to_binary(self.cube, self.c)
                     self.free_slots.remove(slot)
+                    if self.cube.y_rotate:
+                        free_slots = [(slot + self.cube.y_rotation) % 4 for slot in free_slots]
+                        if self.cube.y_rotate % 2:
+                            self.rotate_edges ^= True
+                        self.cube.y_rotate = 0
+                        self.e = self.e_variation[0]
+                        
                     i = 0
                     break
             else:
                 self.cube.U()
                 new_notation+="U "
-                self.edges = edges_to_binary(self.cube, [10, 11, 8, 9])
-                self.corners = corners_to_binary(self.cube, [6, 7, 4, 5])
+                self.edges = edges_to_binary(self.cube, self.e)
+                self.corners = corners_to_binary(self.cube, self.c)
                 i += 1
         return final
 

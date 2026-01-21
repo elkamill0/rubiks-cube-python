@@ -63,7 +63,7 @@ class Solving:
             node = Node(cube=cube, alg=c, stage=None, name="Cross: ", parent=root)
             root.child.append(node)
             self.root.append(node)
-            node.stage = F2L(cube).check_free_slots()
+            node.stage = F2L(cube,[9,10,11,8], [5,6,7,4]).check_free_slots()
             self.tree.append(node)
 
         while self.tree:

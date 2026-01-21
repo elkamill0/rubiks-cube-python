@@ -32,6 +32,7 @@ class MovesCenters:
         self.centers[[1,2,3,4]] = self.centers[[4,1,2,3]]
     
     def Ep(self) -> None:
+        self.cube.y_rotation ^= 64
         self.centers[[1,2,3,4]] = self.centers[[2,3,4,1]]
 
     def E2(self) -> None:
