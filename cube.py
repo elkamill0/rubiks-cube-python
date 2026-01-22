@@ -90,32 +90,11 @@ class Cube(Moves):
 
 
 if __name__ == "__main__":
-    # print(scramble.generate_scramble(10))
-    # notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"
     state = "305203242215110113300222024102334534110344044453555551"
-    # notation="F' R2 F' U2 F R2 F' U2 R2 F U2 R U F L2 B D' B' R"
-    # notation="F' B2 L F2 L D2 L2 U2 R D2 B2 L D' B2 F L' B L2 D U'"
-    # notation = "R U R' L D2 F' B U' R2 L' F2 D' B2 U2 L2 D B' F"
-    # notation = "U2 R' F D B2 L U' R2 F' D' L2 B U L' D2 R F2 B' U'"
-    # notation = "L "#D2 B' R U2 F' L' B2 U R' D F2 L2 U' B R2 F D' U B'"
-
-    # notation = "U2 D L2 B F2 R2 F B' D F' B' R' B F' U' R2 U2 B L D' R'"
-    # notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
-    # notation = "U' L F2 D' R2 D B L B R B D2 U' L B' D L' R' B' F' L2"
-
-
-    # cube = Cube(notation = notation)
 
     notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
 
-    # cube = Cube(state = state)
-
-
     cube = Cube(notation=notation)
     cube.get_state()
+    cube.R()
     print(cube)
-    print(cube.corners)
-
-    # print(cube.get_state())
-
-    # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2

@@ -20,7 +20,6 @@ class PLL:
                 notation = case+j
                 cube = deepcopy(self.solved_cube)
                 cube.move(inverse(notation))
-                # print(f"({tuple(int(e[0]) for e in cube.edges[0:4])}, {tuple(int(e[0]) for e in cube.corners[0:4])}): \"{case[:-1]+j}\", #PLL {i+1}")
 
                 records.append({
                     "edges": [int(e[0]) for e in cube.edges[0:4]],
@@ -29,7 +28,6 @@ class PLL:
                 })
 
         with open(self.path, "w", encoding="utf-8") as f:
-            # json.dump(records, f, indent=1)
             f.write("[\n")
             for i, record in enumerate(records):
                 line = json.dumps(record, ensure_ascii=False)

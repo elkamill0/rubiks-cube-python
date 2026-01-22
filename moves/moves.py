@@ -28,7 +28,6 @@ def make_move_function(name):
         getattr(MovesCenters, name)(self)
     return move
 
-# Dynamicznie tworzymy metody
 for move_name in move_names:
     setattr(Moves, move_name, make_move_function(move_name))
 

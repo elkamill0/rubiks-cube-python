@@ -101,26 +101,6 @@ class MovesCorners:
         MovesCorners.R(self)
         MovesCorners.Lp(self)
 
-    # def xp(self) -> None:
-    #     MovesCorners.Rp(self)
-    #     MovesCorners.L(self)
-
-    # def x2(self) -> None:
-    #     MovesCorners.R2(self)
-    #     MovesCorners.L2(self)
-
-    # def z(self) -> None:
-    #     MovesCorners.F(self)
-    #     MovesCorners.Bp(self)
-
-    # def zp(self) -> None:
-    #     MovesCorners.Fp(self)
-    #     MovesCorners.B(self)
-
-    # def z2(self) -> None:
-    #     MovesCorners.F2(self)
-    #     MovesCorners.B2(self)
-
 if __name__ == "__main__":
     corners = np.zeros((8, 2), dtype=np.int8)
     corners[:, 0] = np.arange(8, dtype=np.int8)

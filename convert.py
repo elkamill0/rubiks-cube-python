@@ -227,14 +227,6 @@ def cube_to_color(cube, show: bool = False) -> str:
     return ''.join(numbers)
 
 
-
-# def int_to_moves_scramble(input: list[int]|str, mode: dict) -> list[int]|str:
-#     if isinstance(input, list):
-#         output = [mode[number] for number in input if number in mode]
-#         return " ".join(output)
-#     elif isinstance(input, str):
-#         return [mode[char] for char in input.split() if char in mode]
-
 def int_to_moves_scramble(nums: list[int]) -> str:
     return " ".join(int_to_notation[number] for number in nums if number in int_to_notation)
 
@@ -299,7 +291,6 @@ if __name__ == "__main__":
 
     moves = Moves(corners, edges)
 
-    # notation = "302101501443513544230422322450333021115542542003501104"
     notation = "545305011121015533220120050443132344212543501432400423"
     corners, edges, centers = state_to_cube(state=notation)
     print(cube_to_color(corners, edges, centers))

@@ -4,7 +4,6 @@ from f2l import F2L
 from oll import OLL
 from pll import PLL
 from copy import deepcopy
-# from cube import Cube
 
 
 class Node:

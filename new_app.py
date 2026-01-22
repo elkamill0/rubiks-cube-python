@@ -71,7 +71,6 @@ if generate_button:
     else:
         st.session_state.scramble = notation_input
         cube.corners, cube.edges, cube.centers = convert.state_to_cube(state=notation_input)
-        # cube = Cube(state=notation_input)
         scramble_notation.text(f"Scramble: {notation_input}")
         
     scramble_notation.text(f"Scramble: {st.session_state.scramble}")

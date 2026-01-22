@@ -113,13 +113,6 @@ class MovesEdges:
     
     def M2(self) -> None:
         self.edges[[0,2,6,4]] = self.edges[[6,4,2,0]]
-
-
-    def x(self) -> None:
-        MovesEdges.Mp(self)
-        # MovesEdges.R(self)
-        # MovesEdges.Lp(self)
-        
     
 
 
