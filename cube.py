@@ -9,7 +9,7 @@ from f2l import F2L
 from oll import OLL
 from solving_stage import Solving
 from pprint import pprint
-from tools import inverse
+from tools import inverse, remap_notation_by_rotation
 
 
 
@@ -46,32 +46,59 @@ class Cube(Moves):
             "b": [2, 1, 5, 3, 0, 4]
         }
         self.centers[:] = colors[self.color]
-        self.y_rotation = 0   # 0 or 64 for f2l only
+        self.y_rotate = 0   # 0 or 64 for f2l only
 
 
 if __name__ == "__main__":
     state = "305203242215110113300222024102334534110344044453555551"
 
-    notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
+    # notation = "B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
 
-    color = "y"
-    print(notation)
-    cube = Cube(notation=notation, color=color)
+    # color = "y"
+    # print(notation)
+    # cube = Cube(notation=notation, color=color)
     
 
-    # print(cube)
-    cross = Cross(cube).find_cross(6)
-    print(cross[0])
+    # # print(cube)
+    # cross = Cross(cube).find_cross(6)
+    # print(cross[0])
     # cube.move(cross[0])
     # cube.y()
-    # cube.U2()
-    print(cube)
-    print(cube.edges)
-    # f2l = F2L(cube, [10,11,8,9], [6,7,4,5]).solve(verbose=True)
-    # f2l = F2L(cube, [9,10,11,8], [5,6,7,4]).solve(verbose=True) # y
-    # f2l = F2L(cube, [8,9,10,11], [4,5,6,7]).solve(verbose=True) # y2
-    # f2l = F2L(cube, [11,8,9,10], [7,4,5,6]).solve(verbose=True) # y'
-    # cube.move(f2l[0])
+    # # cube.U2()
+    # print(cube)
+    # f2l = F2L(cube)
+    
+    # pairs = f2l.find_pairs()
+    # print(pairs)
+    # cube.move(pairs[1])
+    # f2l = F2L(cube)
+    # pairs = f2l.find_pairs()
+    # print(pairs)
+    # cube.move(pairs[0])
+
+
+    notation = "R2 D L2 F2 U' F2 D2 U L2 B2 U F L' U2 B' F L' U2 B2 U L'"
+    cube = Cube(notation=notation, color="y")
+    cross = Cross(cube).find_cross(6)[0]
+    print(cross)
+    cube.move(cross)
+    f2l = F2L(cube).find_pairs()
+    print(f2l)
+
+    
+    # solving = Solving(cube)
+    # tree = solving.build_tree(6)
+    # print(tree[0].cube.edges)
+    # print(tree[0].cube.corners)
+    # print(tree[0])
+    
+    # cube.move(Cross(cube).find_cross(6)[0])
+
+
+
+
+
+
     # cube.move(f2l[1])
     # cube.move(f2l[2])
     # cube.move(f2l[3])
@@ -85,5 +112,8 @@ if __name__ == "__main__":
     # print(pll)
     # cube.move(pll)
 
+    # R2 D L2 F2 U' F2 D2 U L2 B2 U F L' U2 B' F L' U2 B2 U L'
+    # B U' L' D B F
+    # f2l2, f2l4, 
 
     # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2

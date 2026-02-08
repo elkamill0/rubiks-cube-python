@@ -296,12 +296,8 @@ def corners_to_binary(cube, target: list[int]) -> list[int]:
     }
 
     # target_values = [4, 5, 6, 7]
-    cross = [
-        (int(np.where(cube.corners == val)[0][0]),
-         int(cube.corners[np.where(cube.corners == val)[0][0]][1]))
-        for val in target
-    ]
-    return [color_to_binary[n[0]]+(n[1] * 64) for n in cross]
+    cross = [(np.where(cube.corners[:,0] == val)[0][0], cube.corners[np.where(cube.corners[:,0] == val)[0][0]][1]) for val in target]
+    return [color_to_binary[n[0]] + (int(n[1]) * 64) for n in cross]
 
 def replace_numbers_with_colors(ascii_cube: str) -> str:
     number_to_emoji = {

@@ -63,7 +63,7 @@ class Solving:
             node = Node(cube=cube, alg=c, stage=None, name="Cross: ", parent=root)
             root.child.append(node)
             self.root.append(node)
-            node.stage = F2L(cube,[9,10,11,8], [5,6,7,4]).check_free_slots()
+            node.stage = F2L(cube).check_free_slots()
             self.tree.append(node)
 
         while self.tree:
@@ -86,9 +86,8 @@ class Solving:
                 parent.child.append(node)
                 self.solutions.append(node)
             else:
-                original_stage = deepcopy(parent.stage)
-                while parent.stage:
-                    index = parent.stage.pop()
+                original_stage = deepcopy(parent.stage)  # pełna lista slotów
+                for index in original_stage:              # iterujemy po kopii
                     alg = F2L(parent.cube).solve_slot(index)
                     if not alg:
                         continue
@@ -96,10 +95,13 @@ class Solving:
                     cube = deepcopy(parent.cube)
                     cube.move(alg)
                     stage = deepcopy(original_stage)
-                    stage.remove(index)
+                    stage.remove(index)                   # usuń właśnie użyty slot
+                    delta = (cube.y_rotate - parent.cube.y_rotate) % 4
+                    stage = [(s + delta) % 4 for s in original_stage if s != index]
                     node = Node(cube=cube, alg=alg, stage=stage, name=f"F2L {index+1}: ", parent=parent)
                     parent.child.append(node)
                     self.tree.append(node)
+
         
         return self.root
 
@@ -128,7 +130,6 @@ class Solving:
 
         solutions = []
         for combination in self.f2l_combinations:
-            print(self.f2l_combinations)
             combination_list = []
             cube = deepcopy(self.cube)
             f2l_list = solve_f2l(combination)

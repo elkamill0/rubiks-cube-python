@@ -32,14 +32,15 @@ cross_length = st.sidebar.number_input("Cross length", value=6)
 cross_color = st.sidebar.selectbox(
     "Wybierz kolor crossa",
     options=['w','r','b','g','o','y'],  # wszystkie możliwe
-    index=0  # domyślnie w
+    index=5  # domyślnie w
 )
 
 agree = st.sidebar.checkbox("Wprowadzanie ręczne")
 if not agree:
     scramble_input = st.sidebar.text_input(
         "Own scramble", 
-        value="B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
+        # value="B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
+        value="R2 D L2 F2 U' F2 D2 U L2 B2 U F L' U2 B' F L' U2 B2 U L'"
     )
     notation_input = None
 else:
@@ -51,6 +52,31 @@ else:
         value="005004153124512222514520025013134133234044450332154135"
     )
     scramble_input = None
+
+def print_debug():
+    st.write("cube.corners:",str([st.session_state.cube.corners[i].tolist() for i in parse_numbers(corners_number)]))
+    st.write("corners_to_binary:", str(convert.corners_to_binary(st.session_state.cube, parse_numbers(corners_number))))
+    st.write("cube.edges:",str([st.session_state.cube.edges[i].tolist() for i in parse_numbers(edges_input)]))
+    st.write("edges_to_binary:", str(convert.edges_to_binary(st.session_state.cube, parse_numbers(edges_input))))
+    st.write("y_rotate:", st.session_state.cube.y_rotate)
+    st.write("solving: ", st.session_state.parent)
+        
+
+
+debug_mode = st.sidebar.checkbox("Debug mode")
+if debug_mode:
+    with st.sidebar.form("debug_form"):
+        corners_number = st.sidebar.text_input("corner number", value="0 1 2 3 4 5 6 7", on_change=print_debug)
+        edges_input = st.sidebar.text_input("edges number", value="0 1 2 3 4 5 6 7 8 9 10 11", on_change=print_debug)
+    
+def parse_numbers(text):
+    if not text.strip():
+        return []
+    try:
+        return [int(x) for x in text.split()]
+    except ValueError:
+        st.error("Wpisz tylko liczby oddzielone spacjami")
+        return []
 
 scramble_length = st.sidebar.number_input("length", value=21)
 generate_button = st.sidebar.button("Scramble")
@@ -95,13 +121,23 @@ def go_forward(item):
     st.session_state.parent = item
     st.session_state.solving = item.child
     st.session_state.cube = item.cube
+    if debug_mode:
+        print_debug()
 
+        
 def go_back():
     prev = st.session_state.parent.parent
     if prev:
         st.session_state.parent = prev
         st.session_state.solving = prev.child
         st.session_state.cube = prev.cube
+    if debug_mode:
+        print_debug()
+
+
+
+
+
 
 if st.session_state.solving:
     for item in st.session_state.solving:
@@ -119,5 +155,9 @@ st.sidebar.text(f"Cross: {st.session_state.total_cross}")
 st.sidebar.text(f"F2L:   {st.session_state.total_f2l}")
 st.sidebar.text(f"OLL:   {st.session_state.total_oll}")
 st.sidebar.text(f"PLL:   {st.session_state.total_pll}")
+
+
+
+
 display.text(st.session_state.scramble)
 display.text(f"{str(st.session_state.cube)}")

@@ -99,6 +99,68 @@ def inverse(notation: str) -> str:
     return ' '.join(inverted_moves)
 
 
+def remap_notation_by_rotation(notation: str, rotation_move: str):
+    INVERSE_MOVE_MAP = {
+        "z": {  # z
+            "R":  "D",  "R'": "D'",  "R2": "D2",
+            "L":  "U",  "L'": "U'",  "L2": "U2",
+            "U":  "R",  "U'": "R'",  "U2": "R2",
+            "D":  "L",  "D'": "L'",  "D2": "L2",
+        },
+        "z'": {  # z'
+            "R":  "U",  "R'": "U'",  "R2": "U2",
+            "L":  "D",  "L'": "D'",  "L2": "D2",
+            "U":  "L",  "U'": "L'",  "U2": "L2",
+            "D":  "R",  "D'": "R'",  "D2": "R2",
+        },
+        "z2": {  # z2
+            "R":  "L",  "R'": "L'",  "R2": "L2",
+            "L":  "R",  "L'": "R'",  "L2": "R2",
+            "U":  "D",  "U'": "D'",  "U2": "D2",
+            "D":  "U",  "D'": "U'",  "D2": "U2",
+        },
+        "x": {  # x
+            "U":  "B",  "U'": "B'",  "U2": "B2",
+            "D":  "F",  "D'": "F'",  "D2": "F2",
+            "F":  "U",  "F'": "U'",  "F2": "U2",
+            "B":  "D",  "B'": "D'",  "B2": "D2",
+        },
+        "x'": {  # x'
+            "U":  "F",  "U'": "F'",  "U2": "F2",
+            "D":  "B",  "D'": "B'",  "D2": "B2",
+            "F":  "D",  "F'": "D'",  "F2": "D2",
+            "B":  "U",  "B'": "U'",  "B2": "U2",
+        },
+        "x2": {  # x2
+            "U":  "D",  "U'": "D'",  "U2": "D2",
+            "D":  "U",  "D'": "U'",  "D2": "U2",
+            "F":  "B",  "F'": "B'",  "F2": "B2",
+            "B":  "F",  "B'": "F'",  "B2": "F2",
+        },
+        "y": {   # y
+            "R":  "F",  "R'": "F'",  "R2": "F2",
+            "F":  "L",  "F'": "L'",  "F2": "L2",
+            "L":  "B",  "L'": "B'",  "L2": "B2",
+            "B":  "R",  "B'": "R'",  "B2": "R2",
+        },
+        "y'": {   # y'
+            "R":  "B",  "R'": "B'",  "R2": "B2",
+            "F":  "R",  "F'": "R'",  "F2": "R2",
+            "L":  "F",  "L'": "F'",  "L2": "F2",
+            "B":  "L",  "B'": "L'",  "B2": "L2",
+        },
+        "y2": {   # y2
+            "R":  "L",  "R'": "L'",  "R2": "L2",
+            "L":  "R",  "L'": "R'",  "L2": "R2",
+            "F":  "B",  "F'": "B'",  "F2": "B2",
+            "B":  "F",  "B'": "F'",  "B2": "F2",
+        },
+    }
+
+    mapping = INVERSE_MOVE_MAP.get(rotation_move, {})
+    return " ".join(mapping.get(m, m) for m in notation.split())
+
+
 if __name__ == "__main__":
     notation = "L' U2 L2 U L2 U L U U U U R U' R' F R' F' R U U U U R' U' R U' R' U' R U U U L' U' L U2 L' U L"
     reduce(notation)

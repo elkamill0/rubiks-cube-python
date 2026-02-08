@@ -7,11 +7,11 @@ import numpy as np
 
 
 class Moves(MovesCorners, MovesEdges, MovesCenters, MovesUtils):
-    def __init__(self, corners, edges, y_rotation):
+    def __init__(self, corners, edges, y_rotate):
         self.corners = corners
         self.edges = edges
         self.centers = centers
-        self.y_rotation = y_rotation
+        self.y_rotate = y_rotate
 
 move_names = [
     "R", "Rp", "R2",
