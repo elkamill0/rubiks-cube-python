@@ -59,11 +59,13 @@ class OLL():
                 return reduce(new_notation)
             new_notation += "U "
             cube.U()
-        return None
+        return ""
     
     def is_solved(self):
-        for e in self.cube.edges[:4]:
-            print(e)
+        edges_ok = all(e[1] == 0 for e in self.cube.edges[0:4])
+        corners_ok = all(c[1] == 0 for c in self.cube.corners[0:4])
+        return edges_ok and corners_ok
+
 
 
 

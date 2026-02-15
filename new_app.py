@@ -5,7 +5,7 @@ from cross import Cross
 from f2l import F2L
 from oll import OLL
 from pll import PLL
-from solving_stage import Solving
+from solving_stage import Solving, Manual
 from tools import inverse
 import convert
 from copy import deepcopy
@@ -22,6 +22,8 @@ if "solving" not in st.session_state:
     st.session_state.total_pll = 0
     st.session_state.parent = None
     st.session_state.name = None
+    st.session_state.manual = []
+    st.session_state.prev_move_list = []
 
 cube = st.session_state.cube
 display = st.empty()
@@ -68,6 +70,7 @@ if debug_mode:
     with st.sidebar.form("debug_form"):
         corners_number = st.sidebar.text_input("corner number", value="0 1 2 3 4 5 6 7", on_change=print_debug)
         edges_input = st.sidebar.text_input("edges number", value="0 1 2 3 4 5 6 7 8 9 10 11", on_change=print_debug)
+        st.sidebar.text_input("Enter moves", key="moves_text", on_change=lambda: st.session_state.cube.move(st.session_state.moves_text))
     
 def parse_numbers(text):
     if not text.strip():
@@ -79,15 +82,17 @@ def parse_numbers(text):
         return []
 
 scramble_length = st.sidebar.number_input("length", value=21)
-generate_button = st.sidebar.button("Scramble")
+scramble_button = st.sidebar.button("Scramble")
 reconstruction_button = st.sidebar.button("Reconstruction")
+reconstruction_step_by_step_button = st.sidebar.button("Reconstruction (step by step)")
 
 scramble_notation = st.empty()
 if "scramble" not in st.session_state:
     st.session_state.scramble = ""
 
 # --- generowanie scramble ---
-if generate_button:
+if scramble_button:
+    print("\n----------------------------------------------\n")
     st.session_state.cube.reset()
     if not agree:
         if scramble_input:
@@ -104,6 +109,7 @@ if generate_button:
 
 # --- rekonstrukcja całej sekwencji ---
 if reconstruction_button:
+    st.session_state.manual = None
     if not agree:
         cube = Cube(color=cross_color, notation=st.session_state.scramble)
     else:
@@ -115,6 +121,27 @@ if reconstruction_button:
     st.session_state.total_f2l = solving.total_f2l
     st.session_state.total_oll = solving.total_oll
     st.session_state.total_pll = solving.total_pll
+
+if reconstruction_step_by_step_button or st.session_state.manual:
+    # print(st.session_state.cube)
+    st.session_state.manual = Manual(st.session_state.cube, cross_length=cross_length).loop()
+    print(st.session_state.manual)
+    # print("------------------------------------------------")
+    for i, alg in enumerate(st.session_state.manual):
+        if st.button(alg, key=f"btn_{i}"):
+            st.session_state.cube.move(alg)
+            st.session_state.prev_move_list.append(inverse(alg))
+            st.rerun()
+
+    if st.session_state.prev_move_list: 
+        if st.button(f"Back: {st.session_state.prev_move_list[-1]}", key="Back"):
+            st.session_state.cube.move(st.session_state.prev_move_list[-1])
+            st.session_state.prev_move_list.pop()
+            st.rerun()
+    
+    
+
+    
 
 # --- przyciski do poruszania się po drzewie rozwiązań ---
 def go_forward(item):
@@ -145,6 +172,7 @@ if st.session_state.solving:
         with col1:
             st.write(item.name)
         with col2:
+            print(item.alg)
             st.button(item.alg, on_click=go_forward, args=(item,))
     if st.session_state.parent:
         st.button(f"Back ({inverse(st.session_state.parent.alg)})", on_click=go_back)
@@ -158,6 +186,8 @@ st.sidebar.text(f"PLL:   {st.session_state.total_pll}")
 
 
 
+# display.text(f"Total moves: {st.session_state.cube.total_moves}")
+print(f"Total moves: {st.session_state.cube.total_moves}")
 
 display.text(st.session_state.scramble)
 display.text(f"{str(st.session_state.cube)}")

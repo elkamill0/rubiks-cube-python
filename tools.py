@@ -160,7 +160,36 @@ def remap_notation_by_rotation(notation: str, rotation_move: str):
     mapping = INVERSE_MOVE_MAP.get(rotation_move, {})
     return " ".join(mapping.get(m, m) for m in notation.split())
 
+def decimal_to_faces(number: int):
+    faces = ['R', 'L', 'U', 'D', 'F', 'B', "1", "2"]
+    result = ""
+    
+    for i, face in enumerate(faces):
+        if number & (1 << i):
+            result += face
+            
+    return result
+
+def binary_to_faces(binary: str):
+    faces = ['R', 'L', 'U', 'D', 'F', 'B', "1", "2"]
+    result = ""
+    
+    for i, bit in enumerate(binary[::-1]):
+        if bit == "1" and i < len(faces):
+            result += faces[i]
+            
+    return result
+
+def format_pairs_with_faces(pairs):
+    return [
+        (decimal_to_faces(edge), decimal_to_faces(corner))
+        for edge, corner in pairs
+    ]
+
+
+
 
 if __name__ == "__main__":
-    notation = "L' U2 L2 U L2 U L U U U U R U' R' F R' F' R U U U U R' U' R U' R' U' R U U U L' U' L U2 L' U L"
-    reduce(notation)
+    print(decimal_to_faces(102))
+    # notation = "L' U2 L2 U L2 U L U U U U R U' R' F R' F' R U U U U R' U' R U' R' U' R U U U L' U' L U2 L' U L"
+    # reduce(notation)

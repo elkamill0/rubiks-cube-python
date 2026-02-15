@@ -1,5 +1,4 @@
 import json
-import numpy as np
 from convert import edges_to_binary, corners_to_binary
 from typing import List
 from tools import inverse, reduce
@@ -25,8 +24,6 @@ def load_f2l_from_json(path: str):
 
     return {tuple(item["pair"]): item["alg"] for item in data}
 
-
-
 class F2L:
     def __init__(self, cube):
         self.e = [
@@ -45,6 +42,7 @@ class F2L:
         self.cube = deepcopy(cube)
         self.solved_cube = deepcopy(cube)
         self.solved_cube.reset()
+        self.solved_cube.y_rotate = self.cube.y_rotate
         self.edges = edges_to_binary(self.cube, self.e[self.cube.y_rotate]) 
         self.corners = corners_to_binary(self.cube, self.c[self.cube.y_rotate])
         self.free_slots = self.check_free_slots()
@@ -140,11 +138,16 @@ class F2L:
 
 
     def check_free_slots(self) -> List[int]:
-        edges = edges_to_binary(self.solved_cube, self.e[self.cube.y_rotate]) 
-        corners = corners_to_binary(self.solved_cube, self.c[self.cube.y_rotate])
+        edge_offset = 64 * (self.cube.y_rotate % 2)
+        edges = [e ^ edge_offset for e in edges_to_binary(self.solved_cube, self.e[0])]
+        # edges = edges_to_binary(self.solved_cube, self.e[0]) #self.solved_cube.y_rotate]) 
+        corners = corners_to_binary(self.solved_cube, self.c[0])#self.solved_cube.y_rotate])
 
         solved_pairs = list(zip(edges, corners))
         pairs = list(zip(self.edges, self.corners))
+
+        # print(f"{'solved_pairs:':<15}{format_pairs_with_faces(solved_pairs)}")
+        # print(f"{'pairs:':<15}{format_pairs_with_faces(pairs)}")
 
         differences = []
 
@@ -155,44 +158,8 @@ class F2L:
         return differences
 
 
-    def solve(self, verbose:bool = False) -> list[str]:
-        i = 0
-        new_notation = ""
 
-        final = []
-
-        while i <= 4 and self.free_slots:
-            for slot in self.free_slots:
-                key = (self.cube.corners[slot], self.cube.edges[slot] ^ (64 * (self.cube.y_rotate % 2)))
-                if key in self.pairs[slot]:
-                    prev_y_rotate = self.cube.y_rotate
-                    alg = self.pairs[slot][key]
-                    new_notation += alg
-                    reduced = reduce(new_notation)
-                    final.append(reduced)
-                    new_notation = ""
-                    if verbose:
-                        print(reduced, f" # Slot {slot}")
-                    self.cube.move(alg)
-                    self.edges = edges_to_binary(self.cube, self.e[self.cube.y_rotate])
-                    self.corners = corners_to_binary(self.cube, self.c[self.cube.y_rotate])
-                    self.free_slots.remove(slot)
-                    delta = (self.cube.y_rotate - prev_y_rotate) % 4
-                    if delta:
-                        self.free_slots = [(slot + delta) % 4 for slot in self.free_slots]
-                        
-                    i = 0
-                    break
-            else:
-                self.cube.U()
-                new_notation+="U "
-                self.edges = edges_to_binary(self.cube, self.e[self.cube.y_rotate])
-                self.corners = corners_to_binary(self.cube, self.c[self.cube.y_rotate])
-                i += 1
-        return final
-
-
-    def find_pairs(self) -> list[str]:
+    def solve(self) -> list[str]:
         i = 0
         final = []
         u_notation = ""
@@ -218,23 +185,9 @@ class F2L:
                 self.corners = corners_to_binary(self.cube, self.c[self.cube.y_rotate])
                 i += 1
         return final
-    
-    def solve_slot(self, slot_number: int) -> None:
-        for u in ["", "U ", "U2 ", "U' "]:
-            key = (self.corners[slot_number], self.edges[slot_number] ^ (64 * (self.cube.y_rotate % 2)))
-            if key in self.pairs[slot_number]:
-                prev_y_rotate = self.cube.y_rotate
-                alg = self.pairs[slot_number][key]
-                delta = (self.cube.y_rotate - prev_y_rotate) % 4
-                if delta:
-                    self.free_slots = [(slot + delta) % 4 for slot in self.free_slots]
-                return reduce(u + alg)
-            else:
-                self.cube.U()
-                self.edges = edges_to_binary(self.cube, self.e[self.cube.y_rotate])
-                self.corners = corners_to_binary(self.cube, self.c[self.cube.y_rotate])
-        return None
 
+    def is_solved(self):
+        return not self.check_free_slots()
 
 
 if __name__ == "__main__":

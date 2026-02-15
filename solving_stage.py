@@ -9,31 +9,24 @@ from copy import deepcopy
 
 class Node:
     def __init__(self, cube, alg: str, stage: list[int] | None, name: str, parent:"Node"=None):
-        """
-        Tworzy węzeł w drzewie rozwiązywania kostki.
-
-        Args:
-            cube (Cube): Obiekt reprezentujący stan kostki Rubika w tym węźle.
-            alg (str): Algorytm (ciąg ruchów), który prowadzi do tego stanu.
-            stage (list[int] | None): Lista dostępnych slotów F2L w tym stanie. None oznacza brak wolnych slotów f2l.
-            name (str): Nazwa węzła, np. "Cross", "F2L", "OLL", "PLL".
-            parent (Node | None): Rodzic tego węzła w drzewie. Domyślnie None.
-        """
         self.cube = cube
         self.alg = alg
         self.stage = stage
         self.parent = parent
         self.child = []
         self.name = name
+        self.total_moves = {
+            "R": 5,
+            "L": 3,
+            "U": 2,
+            "D": 1,
+            "F": 5,
+            "B": 2,
+            "y": 2,
+        }
 
 
 class Solving:
-    """
-    Inicjalizuje obiekt odpowiedzialny za rozwiązywanie kostki Rubika.
-
-    Args: 
-        cube: Obiekt reprezentujący aktualny stan kostki Rubika
-    """
     def __init__(self, cube):
         self.cube = cube
         self.tree = []
@@ -45,25 +38,14 @@ class Solving:
         self.total_pll = 0
 
     def build_tree(self, cross_length: int) -> list[Node]:
-        """
-        Buduje drzewo wszystkich możliwych rozwiązań od Cross do PLL.
-
-        Args: 
-            cross_length (int): Maksymalna długość algorytmu Cross, którego szukamy
-
-        Returns:
-            list[Node]: Lista węzłów będących bezpośrednimi dziećmi korzenia drzewa.
-        """
         root = Node(self.cube, "", None, "scramble", None)
-        cross = Cross(self.cube).find_cross(cross_length)
-        for c in cross:
+        for c in Cross(self.cube).find_cross(cross_length):
             cube = deepcopy(self.cube)
             cube.move(c)
+            f2l = F2L(cube)
+            node = Node(cube=cube, alg=c, name="Cross: ", stage = f2l.free_slots, parent=root)
             self.total_cross += 1
-            node = Node(cube=cube, alg=c, stage=None, name="Cross: ", parent=root)
             root.child.append(node)
-            self.root.append(node)
-            node.stage = F2L(cube).check_free_slots()
             self.tree.append(node)
 
         while self.tree:
@@ -86,24 +68,21 @@ class Solving:
                 parent.child.append(node)
                 self.solutions.append(node)
             else:
-                original_stage = deepcopy(parent.stage)  # pełna lista slotów
-                for index in original_stage:              # iterujemy po kopii
-                    alg = F2L(parent.cube).solve_slot(index)
-                    if not alg:
-                        continue
-                    self.total_f2l += 1
+                f2l = F2L(parent.cube)
+
+                # for i, alg in zip(f2l.free_slots, f2l.solve()):
+                for alg in f2l.solve():
                     cube = deepcopy(parent.cube)
                     cube.move(alg)
-                    stage = deepcopy(original_stage)
-                    stage.remove(index)                   # usuń właśnie użyty slot
-                    delta = (cube.y_rotate - parent.cube.y_rotate) % 4
-                    stage = [(s + delta) % 4 for s in original_stage if s != index]
-                    node = Node(cube=cube, alg=alg, stage=stage, name=f"F2L {index+1}: ", parent=parent)
-                    parent.child.append(node)
-                    self.tree.append(node)
 
+                    child = Node(cube=cube, alg=alg, name=f"F2L",
+                                    stage=F2L(cube).free_slots, parent=parent)
+                    
+                    self.total_f2l+=1
+                    parent.child.append(child)
+                    self.tree.append(child)
         
-        return self.root
+        return root.child
 
 
 
@@ -112,9 +91,8 @@ class Solving:
         Tymczasowa funkcja rozwiązująca kostkę F2L + OLL + PLL.
         Obecnie nieużywana.
         """
-        if not Cross(self.cube).is_cross_solved():
-            print("cross is not solved")
-            return None
+        if not Cross(self.cube).is_solved():
+            return ""
 
 
         def solve_f2l(combination: List[int]) -> List:
@@ -143,3 +121,28 @@ class Solving:
             combination_list.append(PLL(cube).solve())
             solutions.append(combination_list)
         return solutions
+
+class Manual:
+    def __init__(self, cube, cross_length):
+        self.cube = cube
+        self.cross_length = cross_length
+
+    def loop(self):
+        cross = Cross(self.cube)
+        if not cross.is_solved():
+            return cross.find_cross(self.cross_length)
+
+        f2l = F2L(self.cube) 
+        if not f2l.is_solved():
+            print("f2l.free_slots:", f2l.free_slots)
+            return f2l.solve()
+        
+        oll = OLL(self.cube)
+        if not oll.is_solved():
+            return [oll.solve()]
+        
+        pll = PLL(self.cube)
+        if not pll.is_solved():
+            return [pll.solve()]
+        
+        return []

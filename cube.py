@@ -24,6 +24,9 @@ class Cube(Moves):
 
     def move(self, notation: str) -> None:
         convert.notation_to_moves(notation, self)
+        self.total_moves += len(notation.strip().split())
+        
+
 
     def __str__(self):
         return convert.replace_numbers_with_colors(convert.cube_to_color(self, cross_color=self.color, show=True))
@@ -47,6 +50,7 @@ class Cube(Moves):
         }
         self.centers[:] = colors[self.color]
         self.y_rotate = 0   # 0 or 64 for f2l only
+        self.total_moves = 0
 
 
 if __name__ == "__main__":
@@ -82,7 +86,8 @@ if __name__ == "__main__":
     cross = Cross(cube).find_cross(6)[0]
     print(cross)
     cube.move(cross)
-    f2l = F2L(cube).find_pairs()
+    f2l = F2L(cube).possible_moves()
+    cube.move(f2l[0].alg)
     print(f2l)
 
     

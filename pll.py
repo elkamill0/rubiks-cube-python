@@ -1,6 +1,7 @@
 from copy import deepcopy
 import json
 from tools import inverse, reduce
+import numpy as np
 
 class PLL:
     def __init__(self, cube, path="cases/pll_cases.json"):
@@ -61,8 +62,16 @@ class PLL:
                 return reduce(new_notation)
             new_notation += "U "
             cube.U()
-        return None
-    
+        return ""
+
+    def is_solved(self) -> bool:
+
+        edges_ok = (np.array(self.cube.edges[0:4]) == np.array([[0,0],[1,0],[2,0],[3,0]])).all()
+        corners_ok = (np.array(self.cube.corners[0:4]) == np.array([[0,0],[1,0],[2,0],[3,0]])).all()
+
+        return edges_ok and corners_ok
+
+
 
 
 
