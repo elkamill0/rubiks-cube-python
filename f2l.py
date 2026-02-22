@@ -5,24 +5,10 @@ from tools import inverse, reduce
 from copy import deepcopy
 
 def load_f2l_from_json(path: str):
-    """
-    Wczytuje przypadki F2L z pliku JSON.
-
-    Każdy rekord w plik powinien zawierać:
-    - "pair": opis pary narożnik-krawędź w postaci binarnej,
-    - "alg": algorytm rozwiązujący dany przypadek.
-
-    Args:  
-        path (str): Ścieżka do pliku JSON z przypadkami F2L.
-
-    Returns:
-        dict[tuple, str]: Słownik ma
-    """
-
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    return {tuple(item["pair"]): item["alg"] for item in data}
+    return {tuple(item["pair"]): (item["alg"], item["name"]) for item in data}
 
 class F2L:
     def __init__(self, cube):
@@ -42,20 +28,15 @@ class F2L:
         self.cube = deepcopy(cube)
         self.solved_cube = deepcopy(cube)
         self.solved_cube.reset()
-        self.solved_cube.y_rotate = self.cube.y_rotate
         self.edges = edges_to_binary(self.cube, self.e[self.cube.y_rotate]) 
         self.corners = corners_to_binary(self.cube, self.c[self.cube.y_rotate])
         self.free_slots = self.check_free_slots()
         
         self.pairs = [
-            # load_f2l_from_json("cases/new_f2l1_cases.json"), # | load_f2l_from_json("cases/af2l1_cases.json"),
-            # load_f2l_from_json("cases/new_f2l2_cases.json"), # | load_f2l_from_json("cases/af2l2_cases.json"),
-            # load_f2l_from_json("cases/new_f2l3_cases.json"), # | load_f2l_from_json("cases/af2l3_cases.json"),
-            # load_f2l_from_json("cases/new_f2l4_cases.json"), # | load_f2l_from_json("cases/af2l4_cases.json")
-            load_f2l_from_json("test/f2l1_prepared.json") | load_f2l_from_json("test/af2l1_prepared.json"),
-            load_f2l_from_json("test/f2l2_prepared.json") | load_f2l_from_json("test/af2l2_prepared.json"),
-            load_f2l_from_json("test/f2l3_prepared.json") | load_f2l_from_json("test/af2l3_prepared.json"),
-            load_f2l_from_json("test/f2l4_prepared.json") | load_f2l_from_json("test/af2l4_prepared.json")
+            load_f2l_from_json("cases/f2l1_prepared.json"), #| load_f2l_from_json("cases/af2l1_prepared.json"),
+            load_f2l_from_json("cases/f2l2_prepared.json"), #| load_f2l_from_json("cases/af2l2_prepared.json"),
+            load_f2l_from_json("cases/f2l3_prepared.json"), #| load_f2l_from_json("cases/af2l3_prepared.json"),
+            load_f2l_from_json("cases/f2l4_prepared.json")  #| load_f2l_from_json("cases/af2l4_prepared.json")
         ]
 
     def prepare_algs(self, prepare_pairs = False) -> None:
@@ -93,13 +74,13 @@ class F2L:
 
                 if prepare_pairs:                    
                     record = {
-                        "name": f"{name}",
+                        "name": name,
                         "pair": [corners[slot], edges[slot]],
                         "alg": alg
                     }
                 else:
                     record = {
-                        "name": f"{name}",
+                        "name": name,
                         "pair": pair,
                         "alg": alg
                     }                    
@@ -140,14 +121,10 @@ class F2L:
     def check_free_slots(self) -> List[int]:
         edge_offset = 64 * (self.cube.y_rotate % 2)
         edges = [e ^ edge_offset for e in edges_to_binary(self.solved_cube, self.e[0])]
-        # edges = edges_to_binary(self.solved_cube, self.e[0]) #self.solved_cube.y_rotate]) 
         corners = corners_to_binary(self.solved_cube, self.c[0])#self.solved_cube.y_rotate])
 
         solved_pairs = list(zip(edges, corners))
         pairs = list(zip(self.edges, self.corners))
-
-        # print(f"{'solved_pairs:':<15}{format_pairs_with_faces(solved_pairs)}")
-        # print(f"{'pairs:':<15}{format_pairs_with_faces(pairs)}")
 
         differences = []
 
@@ -168,16 +145,10 @@ class F2L:
             for slot in self.free_slots:
                 key = (self.corners[slot], self.edges[slot] ^ (64 * (self.cube.y_rotate % 2)))
                 if key in self.pairs[slot]:
-                    # prev_y_rotate = self.cube.y_rotate
-                    # print(key)
-                    alg = self.pairs[slot][key]
+                    alg, name = self.pairs[slot][key]
                     reduced = reduce(u_notation + alg)
-                    final.append(reduced)
+                    final.append((reduced, name))
                     self.free_slots.remove(slot)
-                    # delta = (self.cube.y_rotate - prev_y_rotate) % 4
-                    # if delta:
-                    #     self.free_slots = [(slot + delta) % 4 for slot in self.free_slots]
-                    # break
             else:
                 self.cube.U()
                 u_notation+="U "
@@ -194,35 +165,3 @@ if __name__ == "__main__":
     from cube import Cube
 
     F2L = F2L(Cube()).prepare_algs()
-
-    # import json
-
-    # input_path = "test/f2l4_prepared.json"
-    # output_path = "test/f2l4_pair.json"
-
-    # with open(input_path, "r", encoding="utf-8") as f:
-    #     data = json.load(f)
-
-    # with open(output_path, "w", encoding="utf-8") as f:
-    #     f.write("[\n")  # początek tablicy
-
-    #     for i, item in enumerate(data):
-    #         out = {"name": item["name"], "pair": item["pair"]}
-    #         line = "\t" + json.dumps(out, ensure_ascii=False)
-    #         if i < len(data) - 1:  # przecinek tylko jeśli to nie ostatni
-    #             line += ","
-    #         f.write(line + "\n")
-
-    #     f.write("]\n")  # koniec tablicy
-
-
-
-
-
-    # state = "144304304520113211220024422303331332514240540055555151"
-    # state = "305203242215110113300222024102334534110344044453555551"
-    # state = "404304022524314510100123323105032033113144542254555152"
-    # state = "542400105114211014544023023330232534132140342152555350"
-    # cube = Cube(state=state)
-    # f2l = F2L(cube)
-    # print(f2l.solve(verbose=True))

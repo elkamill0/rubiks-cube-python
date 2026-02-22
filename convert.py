@@ -176,7 +176,7 @@ def notation_to_moves(moves: str, cube):
         "z'": cube.zp,
         'z2': cube.z2,
     }
-
+    # print(moves)
     moves_list = moves.split()
     for move in moves_list:
         if move in move_map:

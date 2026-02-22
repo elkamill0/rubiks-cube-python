@@ -36,16 +36,14 @@ def render_face(face_key):
             key = f"{face_key}-{row}-{col}"
             current_color = face[row][col]
             with cols[col]:
-                # Nie ustawiamy ręcznie session_state[key] wcześniej
                 st.selectbox(
                     " ",
                     colors,
-                    index=colors.index(current_color),  # <- tylko domyślny index
+                    index=colors.index(current_color),
                     format_func=lambda c: color_emojis[c],
                     label_visibility="collapsed",
                     key=key
                 )
-            # Aktualizujemy stan kostki po wybraniu
             face[row][col] = st.session_state[key]
 
 def losuj_realistycznie():
@@ -71,12 +69,10 @@ def cube_gui_to_state_string():
 with st.sidebar:
 
     if st.button("🔁 Reset"):
-        # Resetujemy tylko cube
         st.session_state.cube = {
             face: [[default_colors[face]] * 3 for _ in range(3)]
             for face in ["U", "L", "F", "R", "B", "D"]
         }
-        # Usuwamy stare widgety, aby Streamlit je odtworzył od nowa
         keys_to_remove = [k for k in st.session_state if "-" in k]
         for k in keys_to_remove:
             del st.session_state[k]
@@ -102,7 +98,6 @@ with st.sidebar:
                     val = new_state[idx]
                     color = list(color_numbers.keys())[list(color_numbers.values()).index(val)]
                     st.session_state.cube[face][row][col] = color
-                    # <- NIE nadpisujemy st.session_state[f"{face}-{row}-{col}"]
 
 
     if st.button("📋 Pokaż stan jako string"):

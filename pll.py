@@ -18,19 +18,18 @@ class PLL:
 
         for i, case in enumerate(data):
             for j in ["", " U", " U2", " U'"]:
-                notation = case+j
+                notation = case['alg']+" "+j
                 cube = deepcopy(self.solved_cube)
                 cube.move(inverse(notation))
-                # print(f"({tuple(int(e[0]) for e in cube.edges[0:4])}, {tuple(int(e[0]) for e in cube.corners[0:4])}): \"{case[:-1]+j}\", #PLL {i+1}")
 
                 records.append({
+                    "name": case['name'],
                     "edges": [int(e[0]) for e in cube.edges[0:4]],
                     "corners": [int(c[0]) for c in cube.corners[0:4]],
-                    "algorithm": notation
+                    "alg": notation
                 })
 
         with open(self.path, "w", encoding="utf-8") as f:
-            # json.dump(records, f, indent=1)
             f.write("[\n")
             for i, record in enumerate(records):
                 line = json.dumps(record, ensure_ascii=False)
@@ -47,7 +46,7 @@ class PLL:
             data = json.load(f)
         
         self.cases = {
-            (tuple(item["edges"]), tuple(item["corners"])): item["algorithm"]
+            (tuple(item["edges"]), tuple(item["corners"])): (item["alg"], item["name"])
             for item in data
         }
 
@@ -58,11 +57,12 @@ class PLL:
             corners = tuple(int(c[0]) for c in cube.corners[0:4])
             
             if (edges, corners) in self.cases:
-                new_notation += self.cases.get((edges, corners))
-                return reduce(new_notation)
+                alg, name = self.cases[(edges, corners)]
+                new_notation += alg
+                return reduce(new_notation), name
             new_notation += "U "
             cube.U()
-        return ""
+        return "", ""
 
     def is_solved(self) -> bool:
 

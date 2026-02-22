@@ -19,12 +19,13 @@ class OLL():
 
         for i, case in enumerate(data):
             cube = deepcopy(self.solved_cube)
-            cube.move(inverse(case))
+            cube.move(inverse(case['alg']))
 
             record = {
+                "name": case['name'],
                 "edges": [int(e[1]) for e in cube.edges[0:4]],
                 "corners": [int(c[1]) for c in cube.corners[0:4]],
-                "algorithm": case
+                "alg": case['alg']
             }
             records.append(record)
 
@@ -40,26 +41,32 @@ class OLL():
         print(f"Zapisano {len(records)} przypadków OLL do pliku: {self.path}")
 
 
-    def solve(self) -> str:
+    def solve(self) -> tuple[str, str]:
         with open(self.path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         self.cases = {
-            (tuple(item["edges"]), tuple(item["corners"])): item["algorithm"]
+            (tuple(item["edges"]), tuple(item["corners"])): (item["alg"], item["name"])
             for item in data
         }
 
         new_notation = ""
         cube = deepcopy(self.cube)
+
         for _ in range(4):
             edges = tuple(int(e[1]) for e in cube.edges[0:4])
             corners = tuple(int(c[1]) for c in cube.corners[0:4])
+
             if (edges, corners) in self.cases:
-                new_notation += self.cases.get((edges, corners))
-                return reduce(new_notation)
+                alg, name = self.cases[(edges, corners)]
+                new_notation += alg
+                return reduce(new_notation), name
+
             new_notation += "U "
             cube.U()
-        return ""
+
+        return "", ""
+
     
     def is_solved(self):
         edges_ok = all(e[1] == 0 for e in self.cube.edges[0:4])

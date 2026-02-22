@@ -87,7 +87,7 @@ class MovesEdges:
         self.edges[[0,2,6,4]] = self.edges[[4,0,2,6]]
     
     def M2(self) -> None:
-        self.edges[[0,2,6,4]] = self.edges[[6,4,2,0]]
+        self.edges[[0,2,4,6]] = self.edges[[6,4,2,0]]
 
     def Sp(self) -> None:
         self.edges[[3,1,5,7]] = self.edges[[1,5,7,3]]

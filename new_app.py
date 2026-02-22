@@ -21,9 +21,8 @@ if "solving" not in st.session_state:
     st.session_state.total_oll = 0
     st.session_state.total_pll = 0
     st.session_state.parent = None
-    st.session_state.name = None
     st.session_state.manual = []
-    st.session_state.prev_move_list = []
+    st.session_state.shortest_path = []
 
 cube = st.session_state.cube
 display = st.empty()
@@ -92,7 +91,7 @@ if "scramble" not in st.session_state:
 
 # --- generowanie scramble ---
 if scramble_button:
-    print("\n----------------------------------------------\n")
+    # print("\n----------------------------------------------\n")
     st.session_state.cube.reset()
     if not agree:
         if scramble_input:
@@ -121,29 +120,30 @@ if reconstruction_button:
     st.session_state.total_f2l = solving.total_f2l
     st.session_state.total_oll = solving.total_oll
     st.session_state.total_pll = solving.total_pll
+    # for log, moves in solving.shortest_path:
+    #     print("Solution:")
+    #     print(log)
+    #     print("Total moves:", moves)
+    #     print("-" * 40)
 
 if reconstruction_step_by_step_button or st.session_state.manual:
-    # print(st.session_state.cube)
     st.session_state.manual = Manual(st.session_state.cube, cross_length=cross_length).loop()
-    print(st.session_state.manual)
+    # print(st.session_state.manual)
     # print("------------------------------------------------")
-    for i, alg in enumerate(st.session_state.manual):
-        if st.button(alg, key=f"btn_{i}"):
-            st.session_state.cube.move(alg)
-            st.session_state.prev_move_list.append(inverse(alg))
+    for i, (alg, name) in enumerate(st.session_state.manual):
+        cols = st.columns([1, 3])
+
+        cols[0].write(name)  
+
+        if cols[1].button(alg, key=f"btn_{i}"):
+            st.session_state.cube.apply_step((alg, name))
             st.rerun()
 
-    if st.session_state.prev_move_list: 
-        if st.button(f"Back: {st.session_state.prev_move_list[-1]}", key="Back"):
-            st.session_state.cube.move(st.session_state.prev_move_list[-1])
-            st.session_state.prev_move_list.pop()
+    if st.session_state.cube.log: 
+        if st.button(f"Back: {inverse(st.session_state.cube.log[-1])}", key="Back"):
+            st.session_state.cube.undo()
             st.rerun()
-    
-    
 
-    
-
-# --- przyciski do poruszania się po drzewie rozwiązań ---
 def go_forward(item):
     st.session_state.parent = item
     st.session_state.solving = item.child
@@ -167,17 +167,16 @@ def go_back():
 
 
 if st.session_state.solving:
-    for item in st.session_state.solving:
-        col1, col2 = st.columns([1,7])
-        with col1:
-            st.write(item.name)
-        with col2:
-            print(item.alg)
-            st.button(item.alg, on_click=go_forward, args=(item,))
-    if st.session_state.parent:
-        st.button(f"Back ({inverse(st.session_state.parent.alg)})", on_click=go_back)
+    st.title("Solutions")
 
-# --- podsumowanie i wyświetlenie stanu ---
+    for i, (log_names, moves) in enumerate(solving.shortest_path, 1):
+        st.subheader(f"Solution {i}")
+        st.write("Moves:")
+        st.code("\n".join(log_names), language="text")
+        st.write(f"Total moves: {moves}")
+        st.divider()
+
+
 scramble_notation.text(f"Scramble: {st.session_state.scramble}")
 st.sidebar.text(f"Cross: {st.session_state.total_cross}")
 st.sidebar.text(f"F2L:   {st.session_state.total_f2l}")
@@ -186,8 +185,6 @@ st.sidebar.text(f"PLL:   {st.session_state.total_pll}")
 
 
 
-# display.text(f"Total moves: {st.session_state.cube.total_moves}")
-print(f"Total moves: {st.session_state.cube.total_moves}")
-
+# print(f"Total moves: {sum(len(s.split()) for s in st.session_state.cube.log)}")
 display.text(st.session_state.scramble)
 display.text(f"{str(st.session_state.cube)}")
