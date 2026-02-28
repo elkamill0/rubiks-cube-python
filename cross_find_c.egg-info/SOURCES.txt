@@ -1,9 +1,0 @@
-README.md
-dfs_concept.c
-dfs_concept_wrapper.c
-setup.py
-cross_find_c.egg-info/PKG-INFO
-cross_find_c.egg-info/SOURCES.txt
-cross_find_c.egg-info/dependency_links.txt
-cross_find_c.egg-info/top_level.txt
-tests/test.py
