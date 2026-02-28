@@ -102,7 +102,6 @@ class Manual:
 
         f2l = F2L(self.cube) 
         if not f2l.is_solved():
-            print("f2l.free_slots:", f2l.free_slots)
             return f2l.solve()
         
         oll = OLL(self.cube)

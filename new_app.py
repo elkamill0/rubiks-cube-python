@@ -10,7 +10,6 @@ from tools import inverse
 import convert
 from copy import deepcopy
 
-# --- inicjalizacja sesji ---
 if "cube" not in st.session_state:
     st.session_state.cube = Cube()
 
@@ -38,16 +37,15 @@ cross_length = st.sidebar.number_input(
 
 
 cross_color = st.sidebar.selectbox(
-    "Wybierz kolor crossa",
-    options=['w','r','b','g','o','y'],  # wszystkie możliwe
-    index=5  # domyślnie w
+    "Cross color",
+    options=['w','r','b','g','o','y'],
+    index=5
 )
 
-agree = st.sidebar.checkbox("Wprowadzanie ręczne")
+agree = st.sidebar.checkbox("Manual state")
 if not agree:
     scramble_input = st.sidebar.text_input(
         "Own scramble", 
-        # value="B L B2 U' L' B L' R2 D' L B F2 L' B2 L U2 L F' U' R2 D2"
         value="R2 D L2 F2 U' F2 D2 U L2 B2 U F L' U2 B' F L' U2 B2 U L'"
     )
     notation_input = None
@@ -96,9 +94,7 @@ scramble_notation = st.empty()
 if "scramble" not in st.session_state:
     st.session_state.scramble = ""
 
-# --- generowanie scramble ---
 if scramble_button:
-    # print("\n----------------------------------------------\n")
     st.session_state.cube.reset()
     if not agree:
         if scramble_input:
@@ -113,7 +109,6 @@ if scramble_button:
         
     scramble_notation.text(f"Scramble: {st.session_state.scramble}")
 
-# --- rekonstrukcja całej sekwencji ---
 if reconstruction_button:
     st.session_state.manual = None    
         
@@ -139,16 +134,10 @@ if reconstruction_button:
     st.session_state.total_f2l = solving.total_f2l
     st.session_state.total_oll = solving.total_oll
     st.session_state.total_pll = solving.total_pll
-    # for log, moves in solving.shortest_path:
-    #     print("Solution:")
-    #     print(log)
-    #     print("Total moves:", moves)
-    #     print("-" * 40)
 
 if reconstruction_step_by_step_button or st.session_state.manual:
+    st.session_state.solving = False
     st.session_state.manual = Manual(st.session_state.cube, cross_length=cross_length).loop()
-    # print(st.session_state.manual)
-    # print("------------------------------------------------")
     for i, (alg, name) in enumerate(st.session_state.manual):
         cols = st.columns([1, 3])
 
@@ -187,7 +176,6 @@ def go_back():
 
 if st.session_state.solving:
     st.title("Solutions")
-    print("st.session_state.solving.shortest_path:", st.session_state.solving.shortest_path)
     for i, (log_names, moves) in enumerate(st.session_state.solving.shortest_path, 1):
         st.subheader(f"Solution {i}")
         st.write("Moves:")
@@ -203,6 +191,5 @@ st.sidebar.text(f"OLL:   {st.session_state.total_oll}")
 st.sidebar.text(f"PLL:   {st.session_state.total_pll}")
 
 
-# print(f"Total moves: {sum(len(s.split()) for s in st.session_state.cube.log)}")
 display.text(st.session_state.scramble)
 display.text(f"{str(st.session_state.cube)}")
