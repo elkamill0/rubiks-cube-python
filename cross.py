@@ -1,97 +1,33 @@
-from cube import Cube
-import numpy as np
-from convert import sequence_to_moves, int_to_notation
-from moves.moves import Moves
-from time import time
-from itertools import product
+import convert
+import cube_solver
+from typing import List
+
+class Cross:
+    def __init__(self, cube):
+        self.cube = cube
+        self.cross_edges = [4,5,6,7]
+        rot = self.cube.y_rotate % 4
+        self.rotated_slots = self.cross_edges[rot:] + self.cross_edges[:rot]
+        self.start_state = convert.edges_to_binary(self.cube, self.cross_edges)
+        from cube import Cube
+        self.end_state = convert.edges_to_binary(Cube(), self.cross_edges)
 
 
-def map_move_from_numbers(cube: Cube, move_as_int):
-    moves_map = {
-        0: cube.R(),
-        1: cube.L(),
-        2: cube.U(),
-        3: cube.D(),
-        4: cube.F(),
-        5: cube.B()
-    }
-    return moves_map[move_as_int]
+    def find_cross(self, length: int) -> List[str]:
+        solutions = self.__find_solutions(length)
+        return [(self.__convert_cross_numbers_to_notation([sol])[0], "cross") for sol in solutions]
+        
 
+    def __find_solutions(self, length: int) -> List[List[int]]:
+        return cube_solver.combinations(length, self.start_state, self.end_state)
 
-def find_cross(length):
-    # return scramble.combinations(length, self.cube)
-    combination_list = np.array()
-
-
-def check_cross(cube: Cube):
-    if cube.edges[4] == [4,0] and cube.edges[5] == [5,0] and cube.edges[6] == [6,0] and cube.edges[7] == [7,0]:
-        return True
-    return False
-
-def generate_numpy_combinations(n, limit):
-    grid = np.indices((limit,) * n)
-    combinations = grid.reshape(n, -1).T
-    return combinations
-
-def generate_combinations(n, limit):
-    ranges = [range(limit) for _ in range(n)]
-    return product(*ranges)  # to jest generator
-
-
-def is_invalid(one, two, three):
-    return True if (three == one) and ((two^1) == one) else False
-
-def is_repeat(one, two):
-    return True if two == one else False
-
-def combinations():
-    cube = Cube()
-    iterator = 0
-    for i in range(6):
-        for _ in range(3):
-            map_move_from_numbers(cube,i)
-            for j in range(6):
-                if i == j:
-                    continue
-                for _ in range(3):
-                    map_move_from_numbers(cube,j)
-                    for k in range(6):
-                        if is_invalid(k, j, i) or j == k:
-                            continue
-                        for _ in range(3):
-                            map_move_from_numbers(cube,k)
-                            for l in range(6):
-                                if is_invalid(l, k, j) or k == l:
-                                    continue
-                                for _ in range(3):
-                                    map_move_from_numbers(cube,l)
-                                    # for m in range(6):
-                                    #     if is_invalid(m, l, k) or l == m:
-                                    #         continue
-                                    #     for _ in range(3):
-                                    #         map_move_from_numbers(cube,m)
-                                    #         # print(i,j,k,l,m)
-                                    iterator += 1
-                                map_move_from_numbers(cube,l)
-                        map_move_from_numbers(cube, k)
-                map_move_from_numbers(cube,j)
-        map_move_from_numbers(cube,i)
-
-    print(iterator)
-
+    def __convert_cross_numbers_to_notation(self, notation_int: List[List[int]]) -> List[str]:
+        return [' '.join(convert.int_to_notation[x] for x in sol) for sol in notation_int]
     
-if __name__ == "__main__":
-    a=6
-    b=15
+    def is_solved(self) -> bool:
+        for slot, edge in zip(self.rotated_slots, self.cross_edges):
+            if not (self.cube.edges[slot] == [edge, 0]).all():
+                return False
 
-    # start = time()
-    # generate_combinations(a,15)
-    # end = time()
-    # print(end-start)
-
-
-    start = time()
-    combinations()
-    # generated = generate_numpy_combinations(a,15)
-    end = time()
-    print(end-start)
+        return True
+            

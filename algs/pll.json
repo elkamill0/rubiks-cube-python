@@ -1,0 +1,23 @@
+[
+    {"name": "Aa", "alg": "x R' U R' D2 R U' R' D2 R2 x'"},
+    {"name": "Ab", "alg": "x R2 D2 R U R' D2 R U' R x'"},
+    {"name": "E",  "alg": "x' R U' R' D R U R' D' R U R' D R U' R' D' x"},
+    {"name": "F",  "alg": "R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"},
+    {"name": "Ga", "alg": "R2 U R' U R' U' R U' R2 D U' R' U R D'"},
+    {"name": "Gb", "alg": "R' U' R D' U R2 U R' U R U' R U' R2 D"},
+    {"name": "Gc", "alg": "R2 F2 R U2 R U2 R' F R U R' U' R' F R2"},
+    {"name": "Gd", "alg": "R U R' U' D R2 U' R U' R' U R' U R2 D'"},
+    {"name": "H",  "alg": "M2 U M2 U2 M2 U M2"},
+    {"name": "Ja", "alg": "R' U L' U2 R U' R' U2 R L"},
+    {"name": "Jb", "alg": "R U R' F' R U R' U' R' F R2 U' R' U"},
+    {"name": "Na", "alg": "R U R' U R U R' F' R U R' U' R' F R2 U' R' U2 R U' R'"},
+    {"name": "Nb", "alg": "R' U R U' R' F' U' F R U R' F R' F' R U' R"},
+    {"name": "Ra", "alg": "R U' R' U' R U R D R' U' R D' R' U2 R'"},
+    {"name": "Rb", "alg": "R' U2 R' D' R U' R' D R U R U' R' U' R"},
+    {"name": "T",  "alg": "R U R' U' R' F R2 U' R' U' R U R' F'"},
+    {"name": "Ua", "alg": "M2 U M U2 M' U M2"},
+    {"name": "Ub", "alg": "M2 U' M U2 M' U' M2"},
+    {"name": "V",  "alg": "R' U R' U' R D' R' D R' U D' R2 U' R2 D R2"},
+    {"name": "Y",  "alg": "F R U' R' U' R U R' F' R U R' U' R' F R F'"},
+    {"name": "Z",  "alg": "M2 U M2 U M' U2 M2 U2 M'"}
+]

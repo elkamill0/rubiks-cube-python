@@ -1,11 +1,17 @@
 from moves.moves_corners import MovesCorners
 from moves.moves_edges import MovesEdges
+from moves.moves_centers import MovesCenters
+from moves.moves_utils import MovesUtils
+
 import numpy as np
 
-class Moves(MovesCorners, MovesEdges):
-    def __init__(self, corners, edges):
+
+class Moves(MovesCorners, MovesEdges, MovesCenters, MovesUtils):
+    def __init__(self, corners, edges, y_rotate):
         self.corners = corners
         self.edges = edges
+        self.centers = centers
+        self.y_rotate = y_rotate
 
 move_names = [
     "R", "Rp", "R2",
@@ -14,12 +20,26 @@ move_names = [
     "D", "Dp", "D2",
     "F", "Fp", "F2",
     "B", "Bp", "B2",
+    "E", "Ep", "E2",
+    "M", "Mp", "M2",
+    "S", "Sp", "S2",
+    "r", "rp", "r2",
+    "l", "lp", "l2",
+    "u", "up", "u2",
+    "d", "dp", "d2",
+    "f", "fp", "f2",
+    "b", "bp", "b2",
+    "y", "yp", "y2",
+    "x", "xp", "x2",
+    "z", "zp", "z2",
 ]
 
 def make_move_function(name):
     def move(self):
         getattr(MovesCorners, name)(self)
         getattr(MovesEdges, name)(self)
+        getattr(MovesCenters, name)(self)
+        getattr(MovesUtils, name)(self)
     return move
 
 # Dynamicznie tworzymy metody

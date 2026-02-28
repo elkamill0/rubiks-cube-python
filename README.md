@@ -1,28 +1,62 @@
 # Rubiks Cube Simulator
 
-Rubik's cube simulator writes in Python/C extension focusing on high code performance.
+A 3x3 Rubik's Cube simulator using the CFOP method.  
+The logic is implemented in Python and C (Python C-extension),  
+and the user interface is built with Streamlit.
 
-## utils
+## 🎥 Demo
 
-Rubiks cube can simulate your actual situation on your real cube.
+![Demo](demo.gif)
 
-You can move cube like commonly rubiks cube notation
+## ✨ Features
 
-Moves are in the [moves.py](https://github.com/elkamill0/rubiks-cube-python/blob/main/moves.py) file
+- Input your own scrambles or generate random ones
+- Add custom algorithms
+- Step-by-step reconstruction (manual and automatic)
+- Automatic analysis of Cross, F2L, OLL, and PLL
+- Debug mode: view cube state, binary conversion, and move logs
 
-- **find_cross(length)** - you can find all possible crosses on the bottom side to a predefined max length
-- **sequence(string)** - you can put moves like "R U B' F2" and program will make a sequence
-- **f2l()** - program could find all possible f2l solutions (still in progress)
+## 🛠 Tech Stack
 
-## Example file
+- Python
+- Streamlit (interactive frontend)
+- C (Python C-extension for cube logic)
 
-I located an [example file](https://github.com/elkamill0/rubiks-cube-python/blob/main/main.py) how this program works
+## ⚙️ Requirements
 
-<<<<<<< HEAD
+- Python 3.10+
+- pip
+- C compiler (gcc on Linux / MSVC on Windows)
 
+The project has been tested on Linux.
 
-# Update 12.09.2024
+If you are using Windows, first install **Visual Studio Build Tools**.
 
-I implemented better solution and some functions works faster.
-[here](https://github.com/elkamill0/rubiks-cube-python/blob/main/cube_upgrade/main.py)
+## 🚀 Installation
 
+```bash
+git clone https://github.com/twojlogin/projekt.git
+cd projekt
+pip install -r requirements.txt
+pip install .
+```
+
+## ▶️ Running the Application
+
+```bash
+streamlit run app.py
+```
+
+## 🚀 Project Development
+
+A more advanced [web version](https://github.com/elkamill0/rubiks-cube-symulator-js),
+with a dynamic interface built in JavaScript and full client-side functionality.
+
+## 🎯 Project Goal
+
+The project aims to:
+
+- Optimize cube operations using a C-extension
+- Separate logic from the presentation layer
+- Implement the CFOP method
+- Provide an interactive tool for learning and analyzing Rubik's Cube moves
