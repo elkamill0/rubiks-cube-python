@@ -16,6 +16,7 @@ class Cross:
     def find_cross(self, length: int) -> List[str]:
         solutions = self.__find_solutions(length)
         return [(self.__convert_cross_numbers_to_notation([sol])[0], "cross") for sol in solutions]
+        
 
     def __find_solutions(self, length: int) -> List[List[int]]:
         return cube_solver.combinations(length, self.start_state, self.end_state)

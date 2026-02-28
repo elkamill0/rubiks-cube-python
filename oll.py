@@ -1,6 +1,7 @@
 from tools import inverse, reduce
 import json
 from copy import deepcopy
+import numpy as np
 
 
 class OLL():
@@ -28,6 +29,12 @@ class OLL():
                 "alg": case['alg']
             }
             records.append(record)
+            print(case['name'])
+            print(record["edges"], record["corners"])
+            print(cube, "\n---------------------------------------------\n")
+
+            if np.any(cube.edges[:4, 0] > 3) or np.any(cube.corners[:4, 0] > 3):
+                raise ValueError(f'Error with preparing on {case["name"]},\n {cube.edges[:4]}')
 
         with open(self.path, "w", encoding="utf-8") as f:
             f.write("[\n")

@@ -28,6 +28,8 @@ class PLL:
                     "corners": [int(c[0]) for c in cube.corners[0:4]],
                     "alg": notation
                 })
+                if np.any(cube.edges[:4, 0] > 3) or np.any(cube.corners[:4, 0] > 3):
+                    raise ValueError(f'Error with preparing on {case["name"]},\n {cube.edges[:4]}')
 
         with open(self.path, "w", encoding="utf-8") as f:
             f.write("[\n")
@@ -37,7 +39,9 @@ class PLL:
                     line += ","
                 f.write("\t" + line + "\n")
             f.write("]\n")
-            
+
+        
+
         print(f"Zapisano {len(records)} przypadków do {self.path}")
 
     

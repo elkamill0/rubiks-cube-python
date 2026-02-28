@@ -22,13 +22,20 @@ if "solving" not in st.session_state:
     st.session_state.total_pll = 0
     st.session_state.parent = None
     st.session_state.manual = []
-    st.session_state.shortest_path = []
 
 cube = st.session_state.cube
 display = st.empty()
 col1, col2 = st.columns([2, 1])
 
-cross_length = st.sidebar.number_input("Cross length", value=6)
+auto_cross_length = st.sidebar.checkbox("Auto cross length")
+cross_length = st.sidebar.number_input(
+    "Cross length",
+    min_value=0,
+    step=1,
+    value=6,
+    disabled=auto_cross_length
+)
+
 
 cross_color = st.sidebar.selectbox(
     "Wybierz kolor crossa",
@@ -108,14 +115,26 @@ if scramble_button:
 
 # --- rekonstrukcja całej sekwencji ---
 if reconstruction_button:
-    st.session_state.manual = None
+    st.session_state.manual = None    
+        
     if not agree:
         cube = Cube(color=cross_color, notation=st.session_state.scramble)
     else:
         cube = Cube(color=cross_color, state=st.session_state.scramble)
     st.session_state.cube = cube
     solving = Solving(cube)
-    st.session_state.solving = solving.build_tree(cross_length)
+    def find_solution():
+        if auto_cross_length:
+            for length in range(8):
+                result = solving.build_tree(length)
+                if result:
+                    return result
+            return None
+        else:
+            return solving.build_tree(cross_length)
+
+    st.session_state.build_tree = find_solution()
+    st.session_state.solving = solving
     st.session_state.total_cross = solving.total_cross
     st.session_state.total_f2l = solving.total_f2l
     st.session_state.total_oll = solving.total_oll
@@ -168,8 +187,8 @@ def go_back():
 
 if st.session_state.solving:
     st.title("Solutions")
-
-    for i, (log_names, moves) in enumerate(solving.shortest_path, 1):
+    print("st.session_state.solving.shortest_path:", st.session_state.solving.shortest_path)
+    for i, (log_names, moves) in enumerate(st.session_state.solving.shortest_path, 1):
         st.subheader(f"Solution {i}")
         st.write("Moves:")
         st.code("\n".join(log_names), language="text")
@@ -182,7 +201,6 @@ st.sidebar.text(f"Cross: {st.session_state.total_cross}")
 st.sidebar.text(f"F2L:   {st.session_state.total_f2l}")
 st.sidebar.text(f"OLL:   {st.session_state.total_oll}")
 st.sidebar.text(f"PLL:   {st.session_state.total_pll}")
-
 
 
 # print(f"Total moves: {sum(len(s.split()) for s in st.session_state.cube.log)}")

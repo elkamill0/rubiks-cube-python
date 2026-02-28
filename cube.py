@@ -66,7 +66,7 @@ class Cube(Moves):
             "b": [2, 1, 5, 3, 0, 4]
         }
         self.centers[:] = colors[self.color]
-        self.y_rotate = 0   # 0 or 64 for f2l only
+        self.y_rotate = 0
         self.total_moves = 0
         self.log = []
         self.log_names = []
@@ -74,11 +74,5 @@ class Cube(Moves):
 
 if __name__ == "__main__":
     state = "305203242215110113300222024102334534110344044453555551"
-
-
-    cube = Cube(notation="R2 D L2 F2 U' F2 D2 U L2 B2 U F L' U2 B' F L' U2 B2 U L'")
-    start = time()
-    tree = Solving(cube).build_tree(6)
-    print(time() - start)
 
     # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2
