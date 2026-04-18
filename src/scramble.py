@@ -1,6 +1,6 @@
-import convert
+import src.convert as convert
 from random import randint
-from tools import remap_notation_by_rotation
+from src.tools import remap_notation_by_rotation
 
 
 def generate_scramble(length: int) -> list[int]:

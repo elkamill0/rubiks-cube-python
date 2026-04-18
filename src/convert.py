@@ -1,4 +1,4 @@
-from moves.moves import Moves
+from src.moves.moves import Moves
 import numpy as np
 
 

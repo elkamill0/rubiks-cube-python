@@ -1,11 +1,11 @@
 from copy import deepcopy
 import json
-from tools import inverse, reduce
+from src.tools import inverse, reduce
 import numpy as np
 
 
 class PLL:
-    def __init__(self, cube, path="cases/pll_cases.json"):
+    def __init__(self, cube, path="data/cases/pll_cases.json"):
         self.cube = cube
         self.solved_cube = deepcopy(cube)
         self.solved_cube.reset()
@@ -84,6 +84,6 @@ class PLL:
 
 
 if __name__ == "__main__":
-    from cube import Cube
+    from src.cube import Cube
 
     pll = PLL(Cube()).prepare_algs()

@@ -1,4 +1,4 @@
-import convert
+import src.convert as convert
 import cube_solver
 from typing import List
 
@@ -10,7 +10,7 @@ class Cross:
         rot = self.cube.y_rotate % 4
         self.rotated_slots = self.cross_edges[rot:] + self.cross_edges[:rot]
         self.start_state = convert.edges_to_binary(self.cube, self.cross_edges)
-        from cube import Cube
+        from src.cube import Cube
 
         self.end_state = convert.edges_to_binary(Cube(), self.cross_edges)
 

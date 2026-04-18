@@ -1,8 +1,8 @@
 from typing import List
-from cross import Cross
-from f2l import F2L
-from oll import OLL
-from pll import PLL
+from src.cross import Cross
+from src.f2l import F2L
+from src.oll import OLL
+from src.pll import PLL
 from copy import deepcopy, copy
 
 from time import time

@@ -1,11 +1,11 @@
-from tools import inverse, reduce
+from src.tools import inverse, reduce
 import json
 from copy import deepcopy
 import numpy as np
 
 
 class OLL:
-    def __init__(self, cube, path="cases/oll_cases.json"):
+    def __init__(self, cube, path="data/cases/oll_cases.json"):
         self.cube = deepcopy(cube)
         self.solved_cube = deepcopy(cube)
         self.solved_cube.reset()
@@ -81,6 +81,6 @@ class OLL:
 
 
 if __name__ == "__main__":
-    from cube import Cube
+    from src.cube import Cube
 
     oll = OLL(Cube()).prepare_algs()

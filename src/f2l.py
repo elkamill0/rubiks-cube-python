@@ -1,7 +1,7 @@
 import json
-from convert import edges_to_binary, corners_to_binary
+from src.convert import edges_to_binary, corners_to_binary
 from typing import List
-from tools import inverse, reduce
+from src.tools import inverse, reduce
 from copy import deepcopy
 
 
@@ -26,16 +26,16 @@ class F2L:
 
         self.pairs = [
             load_f2l_from_json(
-                "cases/f2l1_prepared.json"
+                "data/cases/f2l1_prepared.json"
             ),  # | load_f2l_from_json("cases/af2l1_prepared.json"),
             load_f2l_from_json(
-                "cases/f2l2_prepared.json"
+                "data/cases/f2l2_prepared.json"
             ),  # | load_f2l_from_json("cases/af2l2_prepared.json"),
             load_f2l_from_json(
-                "cases/f2l3_prepared.json"
+                "data/cases/f2l3_prepared.json"
             ),  # | load_f2l_from_json("cases/af2l3_prepared.json"),
             load_f2l_from_json(
-                "cases/f2l4_prepared.json"
+                "data/cases/f2l4_prepared.json"
             ),  # | load_f2l_from_json("cases/af2l4_prepared.json")
         ]
 
@@ -157,6 +157,6 @@ class F2L:
 
 
 if __name__ == "__main__":
-    from cube import Cube
+    from src.cube import Cube
 
     F2L = F2L(Cube()).prepare_algs()

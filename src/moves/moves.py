@@ -1,7 +1,7 @@
-from moves.moves_corners import MovesCorners
-from moves.moves_edges import MovesEdges
-from moves.moves_centers import MovesCenters
-from moves.moves_utils import MovesUtils
+from src.moves.moves_corners import MovesCorners
+from src.moves.moves_edges import MovesEdges
+from src.moves.moves_centers import MovesCenters
+from src.moves.moves_utils import MovesUtils
 
 import numpy as np
 

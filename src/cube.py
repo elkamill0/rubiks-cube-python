@@ -1,13 +1,13 @@
 import numpy as np
-from moves.moves import Moves
-from scramble import remap_scramble_by_color
-import convert
-from cross import Cross
-from f2l import F2L
-from oll import OLL
-from pll import PLL
-from solving_stage import Solving
-from tools import inverse, remap_notation_by_rotation
+from src.moves.moves import Moves
+from src.scramble import remap_scramble_by_color
+import src.convert as convert
+from src.cross import Cross
+from src.f2l import F2L
+from src.oll import OLL
+from src.pll import PLL
+from src.solving_stage import Solving
+from src.tools import inverse, remap_notation_by_rotation
 from time import time
 
 
