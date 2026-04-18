@@ -1,48 +1,90 @@
 import numpy as np
 
+
 class MovesUtils:
     def __init__(self, y_rotate):
         self.y_rotate = y_rotate
 
-    def R(self) -> None: pass
-    def Rp(self) -> None: pass
-    def R2(self) -> None: pass
+    def R(self) -> None:
+        pass
 
-    def L(self) -> None: pass
-    def Lp(self) -> None: pass
-    def L2(self) -> None: pass
+    def Rp(self) -> None:
+        pass
 
-    def U(self) -> None: pass
-    def Up(self) -> None: pass
-    def U2(self) -> None: pass
+    def R2(self) -> None:
+        pass
 
-    def D(self) -> None: pass
-    def Dp(self) -> None: pass
-    def D2(self) -> None: pass
+    def L(self) -> None:
+        pass
 
-    def F(self) -> None: pass
-    def Fp(self) -> None: pass
-    def F2(self) -> None: pass
+    def Lp(self) -> None:
+        pass
 
-    def B(self) -> None: pass
-    def Bp(self) -> None: pass
-    def B2(self) -> None: pass
+    def L2(self) -> None:
+        pass
 
-    def E(self) -> None: 
+    def U(self) -> None:
+        pass
+
+    def Up(self) -> None:
+        pass
+
+    def U2(self) -> None:
+        pass
+
+    def D(self) -> None:
+        pass
+
+    def Dp(self) -> None:
+        pass
+
+    def D2(self) -> None:
+        pass
+
+    def F(self) -> None:
+        pass
+
+    def Fp(self) -> None:
+        pass
+
+    def F2(self) -> None:
+        pass
+
+    def B(self) -> None:
+        pass
+
+    def Bp(self) -> None:
+        pass
+
+    def B2(self) -> None:
+        pass
+
+    def E(self) -> None:
         self.y_rotate = (self.y_rotate - 1) % 4
 
     def Ep(self) -> None:
         self.y_rotate = (self.y_rotate + 1) % 4
 
-    def E2(self) -> None: 
+    def E2(self) -> None:
         self.y_rotate = (self.y_rotate + 2) % 4
 
-    def Mp(self) -> None: pass
-    def M(self) -> None: pass
-    def M2(self) -> None: pass
-    def Sp(self) -> None: pass
-    def S(self) -> None: pass
-    def S2(self) -> None: pass
+    def Mp(self) -> None:
+        pass
+
+    def M(self) -> None:
+        pass
+
+    def M2(self) -> None:
+        pass
+
+    def Sp(self) -> None:
+        pass
+
+    def S(self) -> None:
+        pass
+
+    def S2(self) -> None:
+        pass
 
     def r(self) -> None:
         MovesUtils.R(self)
@@ -120,12 +162,12 @@ class MovesUtils:
         MovesUtils.Mp(self)
         MovesUtils.R(self)
         MovesUtils.Lp(self)
-        
+
     def xp(self) -> None:
         MovesUtils.M(self)
         MovesUtils.Rp(self)
         MovesUtils.L(self)
-    
+
     def x2(self) -> None:
         MovesUtils.M2(self)
         MovesUtils.R2(self)
@@ -135,12 +177,12 @@ class MovesUtils:
         MovesUtils.F(self)
         MovesUtils.S(self)
         MovesUtils.Bp(self)
-        
+
     def zp(self) -> None:
         MovesUtils.Fp(self)
         MovesUtils.Sp(self)
         MovesUtils.B(self)
-    
+
     def z2(self) -> None:
         MovesUtils.F2(self)
         MovesUtils.S2(self)

@@ -607,13 +607,13 @@ void printSolutionLast(SearchCube *node, int lastMove)
 
 int *saveSolution(SearchCube *node)
 {
-    int *sol = malloc(sizeof(int) * (node->depth + 1));
-    sol[node->depth] = -1;
+    int *sol = malloc(sizeof(int) * (node->depth));
+    sol[node->depth - 1] = -1;
 
     SearchCube *current = node;
     while (current->parent != NULL)
     {
-        sol[current->depth - 1] = current->path;
+        sol[current->depth - 2] = current->path;
         current = current->parent;
     }
     sol[0] = current->path;
@@ -622,7 +622,7 @@ int *saveSolution(SearchCube *node)
 
 int *saveSolutionLast(SearchCube *node, int lastMove)
 {
-    int *sol = malloc(sizeof(int) * (node->depth + 1));
+    int *sol = malloc(sizeof(int) * (node->depth + 2));
     sol[node->depth] = -1;
     sol[node->depth - 1] = lastMove;
     SearchCube *current = node;

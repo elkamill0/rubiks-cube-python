@@ -28,25 +28,18 @@ col1, col2 = st.columns([2, 1])
 
 auto_cross_length = st.sidebar.checkbox("Auto cross length")
 cross_length = st.sidebar.number_input(
-    "Cross length",
-    min_value=0,
-    step=1,
-    value=6,
-    disabled=auto_cross_length
+    "Cross length", min_value=0, step=1, value=6, disabled=auto_cross_length
 )
 
 
 cross_color = st.sidebar.selectbox(
-    "Cross color",
-    options=['w','r','b','g','o','y'],
-    index=5
+    "Cross color", options=["w", "r", "b", "g", "o", "y"], index=5
 )
 
 agree = st.sidebar.checkbox("Manual state")
 if not agree:
     scramble_input = st.sidebar.text_input(
-        "Own scramble", 
-        value="R2 D L2 F2 U' F2 D2 U L2 B2 U F L' U2 B' F L' U2 B2 U L'"
+        "Own scramble", value="R2 D L2 F2 U' F2 D2 U L2 B2 U F L' U2 B' F L' U2 B2 U L'"
     )
     notation_input = None
 else:
@@ -54,28 +47,62 @@ else:
         '<a href="http://localhost:8502"> Prepare scramble </a>', unsafe_allow_html=True
     )
     notation_input = st.sidebar.text_input(
-        "Own notation", 
-        value="005004153124512222514520025013134133234044450332154135"
+        "Own notation", value="005004153124512222514520025013134133234044450332154135"
     )
     scramble_input = None
 
+
 def print_debug():
-    st.write("cube.corners:",str([st.session_state.cube.corners[i].tolist() for i in parse_numbers(corners_number)]))
-    st.write("corners_to_binary:", str(convert.corners_to_binary(st.session_state.cube, parse_numbers(corners_number))))
-    st.write("cube.edges:",str([st.session_state.cube.edges[i].tolist() for i in parse_numbers(edges_input)]))
-    st.write("edges_to_binary:", str(convert.edges_to_binary(st.session_state.cube, parse_numbers(edges_input))))
+    st.write(
+        "cube.corners:",
+        str(
+            [
+                st.session_state.cube.corners[i].tolist()
+                for i in parse_numbers(corners_number)
+            ]
+        ),
+    )
+    st.write(
+        "corners_to_binary:",
+        str(
+            convert.corners_to_binary(
+                st.session_state.cube, parse_numbers(corners_number)
+            )
+        ),
+    )
+    st.write(
+        "cube.edges:",
+        str(
+            [
+                st.session_state.cube.edges[i].tolist()
+                for i in parse_numbers(edges_input)
+            ]
+        ),
+    )
+    st.write(
+        "edges_to_binary:",
+        str(convert.edges_to_binary(st.session_state.cube, parse_numbers(edges_input))),
+    )
     st.write("y_rotate:", st.session_state.cube.y_rotate)
     st.write("solving: ", st.session_state.parent)
-        
 
 
 debug_mode = st.sidebar.checkbox("Debug mode")
 if debug_mode:
     with st.sidebar.form("debug_form"):
-        corners_number = st.sidebar.text_input("corner number", value="0 1 2 3 4 5 6 7", on_change=print_debug)
-        edges_input = st.sidebar.text_input("edges number", value="0 1 2 3 4 5 6 7 8 9 10 11", on_change=print_debug)
-        st.sidebar.text_input("Enter moves", key="moves_text", on_change=lambda: st.session_state.cube.move(st.session_state.moves_text))
-    
+        corners_number = st.sidebar.text_input(
+            "corner number", value="0 1 2 3 4 5 6 7", on_change=print_debug
+        )
+        edges_input = st.sidebar.text_input(
+            "edges number", value="0 1 2 3 4 5 6 7 8 9 10 11", on_change=print_debug
+        )
+        st.sidebar.text_input(
+            "Enter moves",
+            key="moves_text",
+            on_change=lambda: st.session_state.cube.move(st.session_state.moves_text),
+        )
+
+
 def parse_numbers(text):
     if not text.strip():
         return []
@@ -84,6 +111,7 @@ def parse_numbers(text):
     except ValueError:
         st.error("Wpisz tylko liczby oddzielone spacjami")
         return []
+
 
 scramble_length = st.sidebar.number_input("length", value=21)
 scramble_button = st.sidebar.button("Scramble")
@@ -106,26 +134,29 @@ if scramble_button:
     else:
         st.session_state.scramble = notation_input
         st.session_state.cube = Cube(state=notation_input)
-        
+
     scramble_notation.text(f"Scramble: {st.session_state.scramble}")
 
 if reconstruction_button:
-    st.session_state.manual = None    
-        
+    st.session_state.manual = None
+
     if not agree:
         cube = Cube(color=cross_color, notation=st.session_state.scramble)
     else:
         cube = Cube(color=cross_color, state=st.session_state.scramble)
     st.session_state.cube = cube
     solving = Solving(cube)
+
     def find_solution():
         if auto_cross_length:
             for length in range(8):
+                st.write(f"Trying length: {length}")
                 result = solving.build_tree(length)
                 if result:
                     return result
             return None
         else:
+            st.write(f"Cross length: {cross_length}")
             return solving.build_tree(cross_length)
 
     st.session_state.build_tree = find_solution()
@@ -137,20 +168,23 @@ if reconstruction_button:
 
 if reconstruction_step_by_step_button or st.session_state.manual:
     st.session_state.solving = False
-    st.session_state.manual = Manual(st.session_state.cube, cross_length=cross_length).loop()
+    st.session_state.manual = Manual(
+        st.session_state.cube, cross_length=cross_length
+    ).loop()
     for i, (alg, name) in enumerate(st.session_state.manual):
         cols = st.columns([1, 3])
 
-        cols[0].write(name)  
+        cols[0].write(name)
 
         if cols[1].button(alg, key=f"btn_{i}"):
             st.session_state.cube.apply_step((alg, name))
             st.rerun()
 
-    if st.session_state.cube.log: 
+    if st.session_state.cube.log:
         if st.button(f"Back: {inverse(st.session_state.cube.log[-1])}", key="Back"):
             st.session_state.cube.undo()
             st.rerun()
+
 
 def go_forward(item):
     st.session_state.parent = item
@@ -159,7 +193,7 @@ def go_forward(item):
     if debug_mode:
         print_debug()
 
-        
+
 def go_back():
     prev = st.session_state.parent.parent
     if prev:
@@ -168,10 +202,6 @@ def go_back():
         st.session_state.cube = prev.cube
     if debug_mode:
         print_debug()
-
-
-
-
 
 
 if st.session_state.solving:

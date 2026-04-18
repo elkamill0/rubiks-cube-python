@@ -3,13 +3,37 @@ from cube import Cube
 import numpy as np
 from convert import cube_to_color
 
+
 def test_moves():
     cube = Cube()
 
     cube.R()
-    assert np.array_equal(cube.corners, np.array([[0, 0], [2, 1], [6, 2], [3, 0], [4, 0], [1, 2], [5, 1], [7, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 0, 0],[10, 0],[ 2, 0],[ 3, 0],[ 4, 0],[ 9, 0],[ 6, 0],[ 7, 0],[ 8, 0],[ 1, 0],[ 5, 0],[11, 0]]))
-    assert cube_to_color(cube, show=True).strip() == """        002
+    assert np.array_equal(
+        cube.corners,
+        np.array([[0, 0], [2, 1], [6, 2], [3, 0], [4, 0], [1, 2], [5, 1], [7, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [0, 0],
+                [10, 0],
+                [2, 0],
+                [3, 0],
+                [4, 0],
+                [9, 0],
+                [6, 0],
+                [7, 0],
+                [8, 0],
+                [1, 0],
+                [5, 0],
+                [11, 0],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube, show=True).strip()
+        == """        002
         002
         002
         ---
@@ -20,13 +44,36 @@ def test_moves():
         554
         554
         554""".strip()
+    )
 
     cube.U()
-    assert np.array_equal(cube.corners, np.array([[3, 0], [0, 0], [2, 1], [6, 2], [4, 0], [1, 2], [5, 1], [7, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 3, 0],[ 0, 0],[10, 0],[ 2, 0],[ 4, 0],[ 9, 0],[ 6, 0],[ 7, 0],[ 8, 0],[ 1, 0],[ 5, 0],[11, 0]]
-        # TODO: po U
-    ))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        000
+    assert np.array_equal(
+        cube.corners,
+        np.array([[3, 0], [0, 0], [2, 1], [6, 2], [4, 0], [1, 2], [5, 1], [7, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [3, 0],
+                [0, 0],
+                [10, 0],
+                [2, 0],
+                [4, 0],
+                [9, 0],
+                [6, 0],
+                [7, 0],
+                [8, 0],
+                [1, 0],
+                [5, 0],
+                [11, 0],
+            ]
+            # TODO: po U
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        000
         000
         222
         ---
@@ -37,11 +84,35 @@ def test_moves():
         554
         554
         554""".strip()
+    )
 
     cube.Rp()
-    assert np.array_equal(cube.corners, np.array([[3, 0],[1, 0],[0, 2],[6, 2],[4, 0],[5, 0],[2, 2],[7, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 3, 0],[ 1, 0],[10, 0],[ 2, 0],[ 4, 0],[ 5, 0],[ 6, 0],[ 7, 0],[ 8, 0],[ 9, 0],[ 0, 0],[11, 0]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        000
+    assert np.array_equal(
+        cube.corners,
+        np.array([[3, 0], [1, 0], [0, 2], [6, 2], [4, 0], [5, 0], [2, 2], [7, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [3, 0],
+                [1, 0],
+                [10, 0],
+                [2, 0],
+                [4, 0],
+                [5, 0],
+                [6, 0],
+                [7, 0],
+                [8, 0],
+                [9, 0],
+                [0, 0],
+                [11, 0],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        000
         000
         221
         ---
@@ -52,11 +123,35 @@ def test_moves():
         553
         555
         555""".strip()
+    )
 
     cube.L()
-    assert np.array_equal(cube.corners, np.array([[4, 2],[1, 0],[0, 2],[3, 1],[7, 1],[5, 0],[2, 2],[6, 1]]))
-    assert np.array_equal(cube.edges, np.array([[ 3, 0],[ 1, 0],[10, 0],[ 8, 0],[ 4, 0],[ 5, 0],[ 6, 0],[11, 0],[ 7, 0],[ 9, 0],[ 0, 0],[ 2, 0]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        400
+    assert np.array_equal(
+        cube.corners,
+        np.array([[4, 2], [1, 0], [0, 2], [3, 1], [7, 1], [5, 0], [2, 2], [6, 1]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [3, 0],
+                [1, 0],
+                [10, 0],
+                [8, 0],
+                [4, 0],
+                [5, 0],
+                [6, 0],
+                [11, 0],
+                [7, 0],
+                [9, 0],
+                [0, 0],
+                [2, 0],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        400
         400
         121
         ---
@@ -67,11 +162,35 @@ def test_moves():
         353
         255
         255""".strip()
+    )
 
     cube.D2()
-    assert np.array_equal(cube.corners, np.array([[4, 2],[1, 0],[0, 2],[3, 1],[2, 2],[6, 1],[7, 1],[5, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 3, 0],[ 1, 0],[10, 0],[ 8, 0],[ 6, 0],[11, 0],[ 4, 0],[ 5, 0],[ 7, 0],[ 9, 0],[ 0, 0],[ 2, 0]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        400
+    assert np.array_equal(
+        cube.corners,
+        np.array([[4, 2], [1, 0], [0, 2], [3, 1], [2, 2], [6, 1], [7, 1], [5, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [3, 0],
+                [1, 0],
+                [10, 0],
+                [8, 0],
+                [6, 0],
+                [11, 0],
+                [4, 0],
+                [5, 0],
+                [7, 0],
+                [9, 0],
+                [0, 0],
+                [2, 0],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        400
         400
         121
         ---
@@ -82,11 +201,35 @@ def test_moves():
         552
         552
         353""".strip()
+    )
 
     cube.Fp()
-    assert np.array_equal(cube.corners, np.array([[4, 2],[1, 0],[7, 2],[0, 1],[2, 2],[6, 1],[5, 2],[3, 2]]))
-    assert np.array_equal(cube.edges, np.array([[ 3, 0],[ 1, 0],[ 0, 1],[ 8, 0],[ 6, 0],[11, 0],[ 2, 1],[ 5, 0],[ 7, 0],[ 9, 0],[ 4, 1],[10, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        400
+    assert np.array_equal(
+        cube.corners,
+        np.array([[4, 2], [1, 0], [7, 2], [0, 1], [2, 2], [6, 1], [5, 2], [3, 2]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [3, 0],
+                [1, 0],
+                [0, 1],
+                [8, 0],
+                [6, 0],
+                [11, 0],
+                [2, 1],
+                [5, 0],
+                [7, 0],
+                [9, 0],
+                [4, 1],
+                [10, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        400
         400
         441
         ---
@@ -97,11 +240,35 @@ def test_moves():
         223
         552
         353""".strip()
+    )
 
     cube.B()
-    assert np.array_equal(cube.corners, np.array([[1, 1],[6, 0],[7, 2],[0, 1],[4, 1],[2, 0],[5, 2],[3, 2]]))
-    assert np.array_equal(cube.edges, np.array([[ 9, 1],[ 1, 0],[ 0, 1],[ 8, 0],[ 7, 1],[11, 0],[ 2, 1],[ 5, 0],[ 3, 1],[ 6, 1],[ 4, 1],[10, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        335
+    assert np.array_equal(
+        cube.corners,
+        np.array([[1, 1], [6, 0], [7, 2], [0, 1], [4, 1], [2, 0], [5, 2], [3, 2]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [9, 1],
+                [1, 0],
+                [0, 1],
+                [8, 0],
+                [7, 1],
+                [11, 0],
+                [2, 1],
+                [5, 0],
+                [3, 1],
+                [6, 1],
+                [4, 1],
+                [10, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        335
         400
         441
         ---
@@ -112,11 +279,35 @@ def test_moves():
         223
         552
         110""".strip()
+    )
 
     cube.Up()
-    assert np.array_equal(cube.corners, np.array([[6, 0],[7, 2],[0, 1],[1, 1],[4, 1],[2, 0],[5, 2],[3, 2]]))
-    assert np.array_equal(cube.edges, np.array([[ 1, 0],[ 0, 1],[ 8, 0],[ 9, 1],[ 7, 1],[11, 0],[ 2, 1],[ 5, 0],[ 3, 1],[ 6, 1],[ 4, 1],[10, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        501
+    assert np.array_equal(
+        cube.corners,
+        np.array([[6, 0], [7, 2], [0, 1], [1, 1], [4, 1], [2, 0], [5, 2], [3, 2]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [1, 0],
+                [0, 1],
+                [8, 0],
+                [9, 1],
+                [7, 1],
+                [11, 0],
+                [2, 1],
+                [5, 0],
+                [3, 1],
+                [6, 1],
+                [4, 1],
+                [10, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        501
         304
         344
         ---
@@ -127,11 +318,35 @@ def test_moves():
         223
         552
         110""".strip()
+    )
 
     cube.R2()
-    assert np.array_equal(cube.corners, np.array([[6, 0],[5, 2],[2, 0],[1, 1],[4, 1],[0, 1],[7, 2],[3, 2]]))
-    assert np.array_equal(cube.edges, np.array([[ 1, 0],[11, 0],[ 8, 0],[ 9, 1],[ 7, 1],[ 0, 1],[ 2, 1],[ 5, 0],[ 3, 1],[ 4, 1],[ 6, 1],[10, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        503
+    assert np.array_equal(
+        cube.corners,
+        np.array([[6, 0], [5, 2], [2, 0], [1, 1], [4, 1], [0, 1], [7, 2], [3, 2]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [1, 0],
+                [11, 0],
+                [8, 0],
+                [9, 1],
+                [7, 1],
+                [0, 1],
+                [2, 1],
+                [5, 0],
+                [3, 1],
+                [4, 1],
+                [6, 1],
+                [10, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        503
         302
         340
         ---
@@ -142,11 +357,35 @@ def test_moves():
         221
         554
         114""".strip()
+    )
 
     cube.Lp()
-    assert np.array_equal(cube.corners, np.array([[1, 0],[5, 2],[2, 0],[3, 0],[6, 1],[0, 1],[7, 2],[4, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 1, 0],[11, 0],[ 8, 0],[10, 1],[ 7, 1],[ 0, 1],[ 2, 1],[ 3, 1],[ 9, 1],[ 4, 1],[ 6, 1],[ 5, 0]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        003
+    assert np.array_equal(
+        cube.corners,
+        np.array([[1, 0], [5, 2], [2, 0], [3, 0], [6, 1], [0, 1], [7, 2], [4, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [1, 0],
+                [11, 0],
+                [8, 0],
+                [10, 1],
+                [7, 1],
+                [0, 1],
+                [2, 1],
+                [3, 1],
+                [9, 1],
+                [4, 1],
+                [6, 1],
+                [5, 0],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        003
         302
         040
         ---
@@ -157,12 +396,35 @@ def test_moves():
         521
         154
         314""".strip()
-    
+    )
 
     cube.F2()
-    assert np.array_equal(cube.corners, np.array([[1, 0],[5, 2],[4, 0],[7, 2],[6, 1],[0, 1],[3, 0],[2, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 1, 0],[11, 0],[ 2, 1],[10, 1],[ 7, 1],[ 0, 1],[ 8, 0],[ 3, 1],[ 9, 1],[ 4, 1],[ 5, 0],[ 6, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        003
+    assert np.array_equal(
+        cube.corners,
+        np.array([[1, 0], [5, 2], [4, 0], [7, 2], [6, 1], [0, 1], [3, 0], [2, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [1, 0],
+                [11, 0],
+                [2, 1],
+                [10, 1],
+                [7, 1],
+                [0, 1],
+                [8, 0],
+                [3, 1],
+                [9, 1],
+                [4, 1],
+                [5, 0],
+                [6, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        003
         302
         125
         ---
@@ -173,11 +435,35 @@ def test_moves():
         040
         154
         314""".strip()
+    )
 
     cube.Dp()
-    assert np.array_equal(cube.corners, np.array([[1, 0],[5,2],[4,0],[7,2],[2,0],[6,1],[0,1],[3,0]]))
-    assert np.array_equal(cube.edges, np.array([[ 1, 0],[11, 0],[ 2, 1],[10, 1],[ 3, 1],[ 7, 1],[ 0, 1],[ 8, 0],[ 9, 1],[ 4, 1],[ 5, 0],[ 6, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        003
+    assert np.array_equal(
+        cube.corners,
+        np.array([[1, 0], [5, 2], [4, 0], [7, 2], [2, 0], [6, 1], [0, 1], [3, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [1, 0],
+                [11, 0],
+                [2, 1],
+                [10, 1],
+                [3, 1],
+                [7, 1],
+                [0, 1],
+                [8, 0],
+                [9, 1],
+                [4, 1],
+                [5, 0],
+                [6, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        003
         302
         125
         ---
@@ -188,11 +474,35 @@ def test_moves():
         044
         451
         013""".strip()
+    )
 
     cube.B2()
-    assert np.array_equal(cube.corners, np.array([[6, 1],[2, 0],[4, 0],[7, 2],[5, 2],[1, 0],[0, 1],[3, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 3, 1],[11, 0],[ 2, 1],[10, 1],[ 1, 0],[ 7, 1],[ 0, 1],[ 8, 0],[ 4, 1],[ 9, 1],[ 5, 0],[ 6, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        310
+    assert np.array_equal(
+        cube.corners,
+        np.array([[6, 1], [2, 0], [4, 0], [7, 2], [5, 2], [1, 0], [0, 1], [3, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [3, 1],
+                [11, 0],
+                [2, 1],
+                [10, 1],
+                [1, 0],
+                [7, 1],
+                [0, 1],
+                [8, 0],
+                [4, 1],
+                [9, 1],
+                [5, 0],
+                [6, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        310
         302
         125
         ---
@@ -203,12 +513,35 @@ def test_moves():
         044
         451
         300""".strip()
-
+    )
 
     cube.U2()
-    assert np.array_equal(cube.corners, np.array([[4, 0],[7, 2],[6, 1],[2, 0],[5, 2],[1, 0],[0, 1],[3, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 2, 1],[10, 1],[ 3, 1],[11, 0],[ 1, 0],[ 7, 1],[ 0, 1],[ 8, 0],[ 4, 1],[ 9, 1],[ 5, 0],[ 6, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        521
+    assert np.array_equal(
+        cube.corners,
+        np.array([[4, 0], [7, 2], [6, 1], [2, 0], [5, 2], [1, 0], [0, 1], [3, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [2, 1],
+                [10, 1],
+                [3, 1],
+                [11, 0],
+                [1, 0],
+                [7, 1],
+                [0, 1],
+                [8, 0],
+                [4, 1],
+                [9, 1],
+                [5, 0],
+                [6, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        521
         203
         013
         ---
@@ -219,11 +552,35 @@ def test_moves():
         044
         451
         300""".strip()
+    )
 
     cube.L2()
-    assert np.array_equal(cube.corners, np.array([[3, 0],[7, 2],[6, 1],[5, 2],[2, 0],[1, 0],[0, 1],[4, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 2, 1],[10, 1],[ 3, 1],[ 8, 0],[ 1, 0],[ 7, 1],[ 0, 1],[11, 0],[ 6, 1],[ 9, 1],[ 5, 0],[ 4, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        021
+    assert np.array_equal(
+        cube.corners,
+        np.array([[3, 0], [7, 2], [6, 1], [5, 2], [2, 0], [1, 0], [0, 1], [4, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [2, 1],
+                [10, 1],
+                [3, 1],
+                [8, 0],
+                [1, 0],
+                [7, 1],
+                [0, 1],
+                [11, 0],
+                [6, 1],
+                [9, 1],
+                [5, 0],
+                [4, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        021
         403
         313
         ---
@@ -234,11 +591,35 @@ def test_moves():
         544
         251
         000""".strip()
+    )
 
     cube.D()
-    assert np.array_equal(cube.corners, np.array([[3, 0],[7, 2],[6, 1],[5, 2],[1, 0],[0, 1],[4, 0],[2, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 2, 1],[10, 1],[ 3, 1],[ 8, 0],[ 7, 1],[ 0, 1],[11, 0],[ 1, 0],[ 6, 1],[ 9, 1],[ 5, 0],[ 4, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        021
+    assert np.array_equal(
+        cube.corners,
+        np.array([[3, 0], [7, 2], [6, 1], [5, 2], [1, 0], [0, 1], [4, 0], [2, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [2, 1],
+                [10, 1],
+                [3, 1],
+                [8, 0],
+                [7, 1],
+                [0, 1],
+                [11, 0],
+                [1, 0],
+                [6, 1],
+                [9, 1],
+                [5, 0],
+                [4, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        021
         403
         313
         ---
@@ -249,11 +630,35 @@ def test_moves():
         025
         054
         014""".strip()
+    )
 
     cube.Bp()
-    assert np.array_equal(cube.corners, np.array([[1, 1],[3, 2],[6, 1],[5, 2],[0, 0],[7, 0],[4, 0],[2, 0]]))
-    assert np.array_equal(cube.edges, np.array([[ 6, 0],[10, 1],[ 3, 1],[ 8, 0],[ 9, 0],[ 0, 1],[11, 0],[ 1, 0],[ 7, 0],[ 2, 0],[ 5, 0],[ 4, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        352
+    assert np.array_equal(
+        cube.corners,
+        np.array([[1, 1], [3, 2], [6, 1], [5, 2], [0, 0], [7, 0], [4, 0], [2, 0]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [6, 0],
+                [10, 1],
+                [3, 1],
+                [8, 0],
+                [9, 0],
+                [0, 1],
+                [11, 0],
+                [1, 0],
+                [7, 0],
+                [2, 0],
+                [5, 0],
+                [4, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        352
         403
         313
         ---
@@ -264,11 +669,35 @@ def test_moves():
         025
         054
         045""".strip()
+    )
 
     cube.F()
-    assert np.array_equal(cube.corners, np.array([[1, 1],[3, 2],[5, 0],[2, 2],[0, 0],[7, 0],[6, 0],[4, 1]]))
-    assert np.array_equal(cube.edges, np.array([[ 6, 0],[10, 1],[ 4, 0],[ 8, 0],[ 9, 0],[ 0, 1],[ 5, 1],[ 1, 0],[ 7, 0],[ 2, 0],[ 3, 0],[11, 1]]))
-    assert cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip() == """        352
+    assert np.array_equal(
+        cube.corners,
+        np.array([[1, 1], [3, 2], [5, 0], [2, 2], [0, 0], [7, 0], [6, 0], [4, 1]]),
+    )
+    assert np.array_equal(
+        cube.edges,
+        np.array(
+            [
+                [6, 0],
+                [10, 1],
+                [4, 0],
+                [8, 0],
+                [9, 0],
+                [0, 1],
+                [5, 1],
+                [1, 0],
+                [7, 0],
+                [2, 0],
+                [3, 0],
+                [11, 1],
+            ]
+        ),
+    )
+    assert (
+        cube_to_color(cube.corners, cube.edges, cube.centers, show=True).strip()
+        == """        352
         403
         355
         ---
@@ -279,7 +708,7 @@ def test_moves():
         135
         054
         045""".strip()
-
+    )
 
 
 # def test_moves():
@@ -316,7 +745,6 @@ def test_moves():
 # def test_state_to_cube():
 
 
-
 # def test_reset():
 #     cube = Cube()
 #     cube.Lp()
@@ -331,7 +759,7 @@ def test_moves():
 #     assert np.array_equal(cube.get_cube(), np.array([[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0]]))
 #     assert cube.get_state() == state
 #     notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"
-#     cube = Cube(notation=notation)  
+#     cube = Cube(notation=notation)
 
 # def test_str():
 #     notation="B' U L' B2 R F2 L' R2 B2 U2 R2 D2 F2 D' B' U L2 B' D F"

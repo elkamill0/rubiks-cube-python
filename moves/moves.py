@@ -13,26 +13,64 @@ class Moves(MovesCorners, MovesEdges, MovesCenters, MovesUtils):
         self.centers = centers
         self.y_rotate = y_rotate
 
+
 move_names = [
-    "R", "Rp", "R2",
-    "L", "Lp", "L2",
-    "U", "Up", "U2",
-    "D", "Dp", "D2",
-    "F", "Fp", "F2",
-    "B", "Bp", "B2",
-    "E", "Ep", "E2",
-    "M", "Mp", "M2",
-    "S", "Sp", "S2",
-    "r", "rp", "r2",
-    "l", "lp", "l2",
-    "u", "up", "u2",
-    "d", "dp", "d2",
-    "f", "fp", "f2",
-    "b", "bp", "b2",
-    "y", "yp", "y2",
-    "x", "xp", "x2",
-    "z", "zp", "z2",
+    "R",
+    "Rp",
+    "R2",
+    "L",
+    "Lp",
+    "L2",
+    "U",
+    "Up",
+    "U2",
+    "D",
+    "Dp",
+    "D2",
+    "F",
+    "Fp",
+    "F2",
+    "B",
+    "Bp",
+    "B2",
+    "E",
+    "Ep",
+    "E2",
+    "M",
+    "Mp",
+    "M2",
+    "S",
+    "Sp",
+    "S2",
+    "r",
+    "rp",
+    "r2",
+    "l",
+    "lp",
+    "l2",
+    "u",
+    "up",
+    "u2",
+    "d",
+    "dp",
+    "d2",
+    "f",
+    "fp",
+    "f2",
+    "b",
+    "bp",
+    "b2",
+    "y",
+    "yp",
+    "y2",
+    "x",
+    "xp",
+    "x2",
+    "z",
+    "zp",
+    "z2",
 ]
+
 
 def make_move_function(name):
     def move(self):
@@ -40,12 +78,13 @@ def make_move_function(name):
         getattr(MovesEdges, name)(self)
         getattr(MovesCenters, name)(self)
         getattr(MovesUtils, name)(self)
+
     return move
+
 
 # Dynamicznie tworzymy metody
 for move_name in move_names:
     setattr(Moves, move_name, make_move_function(move_name))
-
 
 
 if __name__ == "__main__":
@@ -64,6 +103,4 @@ if __name__ == "__main__":
     moves.R()
     moves.U()
 
-
     print(corners)
-
