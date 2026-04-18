@@ -4,7 +4,7 @@ import sysconfig
 
 module8 = Extension(
     "cube_solver",
-    sources=["dfs_concept_wrapper.c", "dfs_concept.c"],
+    sources=["solver/dfs_concept_wrapper.c", "solver/dfs_concept.c"],
     extra_compile_args=["-O3"],
 )
 
