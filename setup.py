@@ -1,12 +1,15 @@
-from setuptools import setup, Extension
-import sysconfig
+from setuptools import Extension, setup
 
-
-module8 = Extension("cube_solver", sources=["dfs_concept_wrapper.c", "dfs_concept.c"], extra_compile_args=["-O3"])
+module8 = Extension(
+    "cube_solver",
+    sources=["solver/dfs_concept_wrapper.c", "solver/dfs_concept.c"],
+    extra_compile_args=["-O3"],
+)
 
 setup(
-    name='cross_find_c',
-    version='1.0',
-    description='Example C extension',
+    name="cross_find_c",
+    version="1.0",
+    description="Example C extension",
     ext_modules=[module8],
+    packages=[],
 )

@@ -1,104 +1,104 @@
 import numpy as np
 
+
 class MovesEdges:
     def __init__(self, edges):
         self.edges = edges
 
     def __rotate(self, element: list[int]):
-        self.edges[element,1] = 1 - self.edges[element, 1]
+        self.edges[element, 1] = 1 - self.edges[element, 1]
 
     def R(self) -> None:
-        self.edges[[1,9,5,10]] = self.edges[[10,1,9,5]]
-        
+        self.edges[[1, 9, 5, 10]] = self.edges[[10, 1, 9, 5]]
+
     def Rp(self) -> None:
-        self.edges[[1,9,5,10]] = self.edges[[9,5,10,1]]
+        self.edges[[1, 9, 5, 10]] = self.edges[[9, 5, 10, 1]]
 
     def R2(self) -> None:
-        self.edges[[1,9,5,10]] = self.edges[[5,10,1,9]]
+        self.edges[[1, 9, 5, 10]] = self.edges[[5, 10, 1, 9]]
 
     def L(self) -> None:
-        self.edges[[3,11,7,8]] = self.edges[[8,3,11,7]]
-        
+        self.edges[[3, 11, 7, 8]] = self.edges[[8, 3, 11, 7]]
+
     def Lp(self) -> None:
-        self.edges[[3,11,7,8]] = self.edges[[11,7,8,3]]
+        self.edges[[3, 11, 7, 8]] = self.edges[[11, 7, 8, 3]]
 
     def L2(self) -> None:
-        self.edges[[3,11,7,8]] = self.edges[[7,8,3,11]]
+        self.edges[[3, 11, 7, 8]] = self.edges[[7, 8, 3, 11]]
 
     def U(self) -> None:
-        self.edges[[0,1,2,3]] = self.edges[[3,0,1,2]]
-        
+        self.edges[[0, 1, 2, 3]] = self.edges[[3, 0, 1, 2]]
+
     def Up(self) -> None:
-        self.edges[[0,1,2,3]] = self.edges[[1,2,3,0]]
+        self.edges[[0, 1, 2, 3]] = self.edges[[1, 2, 3, 0]]
 
     def U2(self) -> None:
-        self.edges[[0,1,2,3]] = self.edges[[2,3,0,1]]
+        self.edges[[0, 1, 2, 3]] = self.edges[[2, 3, 0, 1]]
 
     def D(self) -> None:
-        self.edges[[4,5,6,7]] = self.edges[[5,6,7,4]]
-        
+        self.edges[[4, 5, 6, 7]] = self.edges[[5, 6, 7, 4]]
+
     def Dp(self) -> None:
-        self.edges[[4,5,6,7]] = self.edges[[7,4,5,6]]
+        self.edges[[4, 5, 6, 7]] = self.edges[[7, 4, 5, 6]]
 
     def D2(self) -> None:
-        self.edges[[4,5,6,7]] = self.edges[[6,7,4,5]]
+        self.edges[[4, 5, 6, 7]] = self.edges[[6, 7, 4, 5]]
 
     def F(self) -> None:
-        self.edges[[2,10,6,11]] = self.edges[[11,2,10,6]]
-        MovesEdges.__rotate(self, [2,10,6,11])
-        
+        self.edges[[2, 10, 6, 11]] = self.edges[[11, 2, 10, 6]]
+        MovesEdges.__rotate(self, [2, 10, 6, 11])
+
     def Fp(self) -> None:
-        self.edges[[2,10,6,11]] = self.edges[[10,6,11,2]]
-        MovesEdges.__rotate(self, [2,10,6,11])
+        self.edges[[2, 10, 6, 11]] = self.edges[[10, 6, 11, 2]]
+        MovesEdges.__rotate(self, [2, 10, 6, 11])
 
     def F2(self) -> None:
-        self.edges[[2,10,6,11]] = self.edges[[6,11,2,10]]
+        self.edges[[2, 10, 6, 11]] = self.edges[[6, 11, 2, 10]]
 
     def B(self) -> None:
-        self.edges[[0,8,4,9]] = self.edges[[9,0,8,4]]
-        MovesEdges.__rotate(self, [0,8,4,9])
-        
+        self.edges[[0, 8, 4, 9]] = self.edges[[9, 0, 8, 4]]
+        MovesEdges.__rotate(self, [0, 8, 4, 9])
+
     def Bp(self) -> None:
-        self.edges[[0,8,4,9]] = self.edges[[8,4,9,0]]
-        MovesEdges.__rotate(self, [0,8,4,9])
+        self.edges[[0, 8, 4, 9]] = self.edges[[8, 4, 9, 0]]
+        MovesEdges.__rotate(self, [0, 8, 4, 9])
 
     def B2(self) -> None:
-        self.edges[[0,8,4,9]] = self.edges[[4,9,0,8]]
-
+        self.edges[[0, 8, 4, 9]] = self.edges[[4, 9, 0, 8]]
 
     def E(self) -> None:
-        MovesEdges.__rotate(self, [8,9,10,11])
-        self.edges[[8,9,10,11]] = self.edges[[9,10,11,8]]
+        MovesEdges.__rotate(self, [8, 9, 10, 11])
+        self.edges[[8, 9, 10, 11]] = self.edges[[9, 10, 11, 8]]
 
     def Ep(self) -> None:
-        MovesEdges.__rotate(self, [8,9,10,11])
+        MovesEdges.__rotate(self, [8, 9, 10, 11])
         # MovesEdges.__rotate(self, [i for i in self.edges[:8] if i[0] >= 8])
-        self.edges[[8,9,10,11]] = self.edges[[11,8,9,10]]
+        self.edges[[8, 9, 10, 11]] = self.edges[[11, 8, 9, 10]]
 
     def E2(self) -> None:
-        self.edges[[8,9,10,11]] = self.edges[[10,11,8,9]] 
+        self.edges[[8, 9, 10, 11]] = self.edges[[10, 11, 8, 9]]
 
     def Mp(self) -> None:
-        MovesEdges.__rotate(self, [0,2,6,4])
-        self.edges[[0,2,6,4]] = self.edges[[2,6,4,0]]
+        MovesEdges.__rotate(self, [0, 2, 6, 4])
+        self.edges[[0, 2, 6, 4]] = self.edges[[2, 6, 4, 0]]
 
     def M(self) -> None:
-        MovesEdges.__rotate(self, [0,2,6,4])
-        self.edges[[0,2,6,4]] = self.edges[[4,0,2,6]]
-    
+        MovesEdges.__rotate(self, [0, 2, 6, 4])
+        self.edges[[0, 2, 6, 4]] = self.edges[[4, 0, 2, 6]]
+
     def M2(self) -> None:
-        self.edges[[0,2,4,6]] = self.edges[[6,4,2,0]]
+        self.edges[[0, 2, 4, 6]] = self.edges[[6, 4, 2, 0]]
 
     def Sp(self) -> None:
-        self.edges[[3,1,5,7]] = self.edges[[1,5,7,3]]
-        MovesEdges.__rotate(self, [3,1,5,7])
+        self.edges[[3, 1, 5, 7]] = self.edges[[1, 5, 7, 3]]
+        MovesEdges.__rotate(self, [3, 1, 5, 7])
 
     def S(self) -> None:
-        self.edges[[3,1,5,7]] = self.edges[[7,3,1,5]]
-        MovesEdges.__rotate(self, [3,1,5,7])
+        self.edges[[3, 1, 5, 7]] = self.edges[[7, 3, 1, 5]]
+        MovesEdges.__rotate(self, [3, 1, 5, 7])
 
     def S2(self) -> None:
-        self.edges[[3,1,5,7]] = self.edges[[5,7,3,1]]
+        self.edges[[3, 1, 5, 7]] = self.edges[[5, 7, 3, 1]]
 
     def r(self) -> None:
         MovesEdges.R(self)
@@ -176,12 +176,12 @@ class MovesEdges:
         MovesEdges.Mp(self)
         MovesEdges.R(self)
         MovesEdges.Lp(self)
-        
+
     def xp(self) -> None:
         MovesEdges.M(self)
         MovesEdges.Rp(self)
         MovesEdges.L(self)
-    
+
     def x2(self) -> None:
         MovesEdges.M2(self)
         MovesEdges.R2(self)
@@ -191,12 +191,12 @@ class MovesEdges:
         MovesEdges.F(self)
         MovesEdges.S(self)
         MovesEdges.Bp(self)
-        
+
     def zp(self) -> None:
         MovesEdges.Fp(self)
         MovesEdges.Sp(self)
         MovesEdges.B(self)
-    
+
     def z2(self) -> None:
         MovesEdges.F2(self)
         MovesEdges.S2(self)
@@ -217,6 +217,7 @@ class MovesEdges:
         MovesEdges.D2(self)
         MovesEdges.E2(self)
 
+
 if __name__ == "__main__":
     edges = np.zeros((12, 2), dtype=np.int8)
     edges[:, 0] = np.arange(12, dtype=np.int8)
@@ -229,6 +230,3 @@ if __name__ == "__main__":
     moves.Rp()
 
     print(edges)
-
-
-    

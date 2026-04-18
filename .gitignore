@@ -5,3 +5,5 @@ HelloWorld.egg-info/
 .vscode/
 cross_find_c.egg-info/
 dfs_concept
+*.so
+*.pyc

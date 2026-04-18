@@ -1,21 +1,35 @@
-import streamlit as st
 import random
-from cube import Cube
+
+import streamlit as st
+
 import scramble
+from cube import Cube
 
 st.set_page_config(layout="wide")
 colors = ["white", "yellow", "red", "orange", "green", "blue"]
 color_emojis = {
-    "white": "⬜", "yellow": "🟨", "red": "🟥",
-    "orange": "🟧", "green": "🟩", "blue": "🟦",
+    "white": "⬜",
+    "yellow": "🟨",
+    "red": "🟥",
+    "orange": "🟧",
+    "green": "🟩",
+    "blue": "🟦",
 }
 default_colors = {
-    "U": "white", "D": "yellow", "F": "green",
-    "B": "blue", "L": "orange", "R": "red"
+    "U": "white",
+    "D": "yellow",
+    "F": "green",
+    "B": "blue",
+    "L": "orange",
+    "R": "red",
 }
 color_numbers = {
-    "white": "0", "orange": "1", "green": "2",
-    "red": "3", "blue": "4", "yellow": "5"
+    "white": "0",
+    "orange": "1",
+    "green": "2",
+    "red": "3",
+    "blue": "4",
+    "yellow": "5",
 }
 
 if "cube" not in st.session_state:
@@ -24,8 +38,10 @@ if "cube" not in st.session_state:
         for face in ["U", "L", "F", "R", "B", "D"]
     }
 
+
 def styled_emoji(color):
     return f"<div style='text-align:center; font-size:28px; width:40px; height:40px;'>{color_emojis[color]}</div>"
+
 
 def render_face(face_key):
     st.markdown(f"#### {face_key}")
@@ -42,9 +58,10 @@ def render_face(face_key):
                     index=colors.index(current_color),
                     format_func=lambda c: color_emojis[c],
                     label_visibility="collapsed",
-                    key=key
+                    key=key,
                 )
             face[row][col] = st.session_state[key]
+
 
 def losuj_realistycznie():
     all_colors = sum([[color] * 9 for color in colors], [])
@@ -58,6 +75,7 @@ def losuj_realistycznie():
                 st.session_state[f"{face}-{row}-{col}"] = kolor
                 idx += 1
 
+
 def cube_gui_to_state_string():
     state_str = ""
     for face in ["U", "L", "F", "R", "B", "D"]:
@@ -66,8 +84,8 @@ def cube_gui_to_state_string():
                 state_str += color_numbers[color]
     return state_str
 
-with st.sidebar:
 
+with st.sidebar:
     if st.button("🔁 Reset"):
         st.session_state.cube = {
             face: [[default_colors[face]] * 3 for _ in range(3)]
@@ -76,7 +94,6 @@ with st.sidebar:
         keys_to_remove = [k for k in st.session_state if "-" in k]
         for k in keys_to_remove:
             del st.session_state[k]
-
 
     if st.button("🎲 Scramble"):
         keys_to_remove = [k for k in st.session_state if "-" in k]
@@ -96,9 +113,10 @@ with st.sidebar:
                 for col in range(3):
                     idx = i * 9 + row * 3 + col
                     val = new_state[idx]
-                    color = list(color_numbers.keys())[list(color_numbers.values()).index(val)]
+                    color = list(color_numbers.keys())[
+                        list(color_numbers.values()).index(val)
+                    ]
                     st.session_state.cube[face][row][col] = color
-
 
     if st.button("📋 Pokaż stan jako string"):
         st.code(cube_gui_to_state_string(), language="text")
