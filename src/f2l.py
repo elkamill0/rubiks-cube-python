@@ -1,8 +1,9 @@
 import json
-from src.convert import edges_to_binary, corners_to_binary
-from typing import List
-from src.tools import inverse, reduce
 from copy import deepcopy
+from typing import List
+
+from src.convert import corners_to_binary, edges_to_binary
+from src.tools import inverse, reduce
 
 
 def load_f2l_from_json(path: str):

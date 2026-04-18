@@ -1,6 +1,8 @@
-import src.convert as convert
-import cube_solver
 from typing import List
+
+import cube_solver
+
+import src.convert as convert
 
 
 class Cross:

@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class MovesCenters:
     def __init__(self, centers):
         self.centers = centers

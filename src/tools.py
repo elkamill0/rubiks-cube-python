@@ -262,5 +262,3 @@ def format_pairs_with_faces(pairs):
 
 if __name__ == "__main__":
     print(decimal_to_faces(102))
-    # notation = "L' U2 L2 U L2 U L U U U U R U' R' F R' F' R U U U U R' U' R U' R' U' R U U U L' U' L U2 L' U L"
-    # reduce(notation)

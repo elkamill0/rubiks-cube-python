@@ -1,7 +1,9 @@
-from copy import deepcopy
 import json
-from src.tools import inverse, reduce
+from copy import deepcopy
+
 import numpy as np
+
+from src.tools import inverse, reduce
 
 
 class PLL:

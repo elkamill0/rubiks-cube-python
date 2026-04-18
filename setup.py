@@ -1,6 +1,4 @@
-from setuptools import setup, Extension, find_packages
-import sysconfig
-
+from setuptools import Extension, setup
 
 module8 = Extension(
     "cube_solver",

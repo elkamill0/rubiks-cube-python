@@ -1,14 +1,10 @@
 import streamlit as st
-from cube import Cube
-from scramble import generate_scramble, remap_scramble_by_color
-from cross import Cross
-from f2l import F2L
-from oll import OLL
-from pll import PLL
-from solving_stage import Solving, Manual
-from tools import inverse
+
 import convert
-from copy import deepcopy
+from cube import Cube
+from scramble import generate_scramble
+from solving_stage import Manual, Solving
+from tools import inverse
 
 if "cube" not in st.session_state:
     st.session_state.cube = Cube()

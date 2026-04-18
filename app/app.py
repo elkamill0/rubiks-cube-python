@@ -1,7 +1,9 @@
-import streamlit as st
 import random
-from cube import Cube
+
+import streamlit as st
+
 import scramble
+from cube import Cube
 
 st.set_page_config(layout="wide")
 colors = ["white", "yellow", "red", "orange", "green", "blue"]

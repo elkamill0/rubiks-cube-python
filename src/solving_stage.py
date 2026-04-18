@@ -1,11 +1,9 @@
-from typing import List
+from copy import deepcopy
+
 from src.cross import Cross
 from src.f2l import F2L
 from src.oll import OLL
 from src.pll import PLL
-from copy import deepcopy, copy
-
-from time import time
 
 
 class Node:

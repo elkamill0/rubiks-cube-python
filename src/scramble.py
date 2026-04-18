@@ -1,5 +1,6 @@
-import src.convert as convert
 from random import randint
+
+import src.convert as convert
 from src.tools import remap_notation_by_rotation
 
 
@@ -19,7 +20,6 @@ def generate_scramble(length: int) -> list[int]:
             num = randint(0, 5)
         output.append(num)
 
-    # return convert.int_to_moves_scramble([x * 3 + randint(0,2) for x in output], convert.int_to_notation)
     return convert.int_to_moves_scramble([x * 3 + randint(0, 2) for x in output])
 
 

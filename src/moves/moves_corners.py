@@ -85,9 +85,6 @@ class MovesCorners:
     def Ep(self) -> None:
         pass
 
-    def Ep(self) -> None:
-        pass
-
     def E2(self) -> None:
         pass
 
@@ -216,21 +213,3 @@ class MovesCorners:
     def z2(self) -> None:
         MovesCorners.F2(self)
         MovesCorners.B2(self)
-
-
-if __name__ == "__main__":
-    corners = np.zeros((8, 2), dtype=np.int8)
-    corners[:, 0] = np.arange(8, dtype=np.int8)
-    corners[:, 1] = 0
-
-    edges = np.zeros((12, 2), dtype=np.int16)
-    edges[:, 0] = np.arange(12, dtype=np.int16)
-    edges[:, 1] = 0
-
-    centers = np.arange(6, dtype=np.uint8)
-
-    moves = Moves(corners, edges, centers)
-
-    moves.B2()
-
-    print(corners)

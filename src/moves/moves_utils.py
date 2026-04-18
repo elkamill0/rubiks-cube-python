@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class MovesUtils:
     def __init__(self, y_rotate):
         self.y_rotate = y_rotate

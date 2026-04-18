@@ -1,7 +1,9 @@
-from src.tools import inverse, reduce
 import json
 from copy import deepcopy
+
 import numpy as np
+
+from src.tools import inverse, reduce
 
 
 class OLL:

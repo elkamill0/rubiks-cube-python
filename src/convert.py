@@ -1,6 +1,6 @@
-from src.moves.moves import Moves
 import numpy as np
 
+from src.moves.moves import Moves
 
 notation_to_int = {
     "R": 0,
@@ -50,7 +50,7 @@ def state_to_cube(state: str):
         raise TypeError("Argument 'state' musi być napisem (str).")
 
     if len(state) != 54:
-        raise ValueError(f"Stan kostki musi mieć długość 54")
+        raise ValueError("Stan kostki musi mieć długość 54")
 
     if not all(ch.isdigit() for ch in state):
         raise ValueError("Stan kostki może zawierać tylko cyfry (0–9).")
@@ -142,13 +142,13 @@ def state_to_cube(state: str):
     def map_corners(element):
         val = color_to_corners.get(element)
         if val is None:
-            raise ValueError(f"Niepoprawny układ kolorów narożnika")
+            raise ValueError("Niepoprawny układ kolorów narożnika")
         return val
 
     def map_edges(element):
         val = color_to_edges.get(element)
         if val is None:
-            raise ValueError(f"Niepoprawny układ kolorów krawędzi")
+            raise ValueError("Niepoprawny układ kolorów krawędzi")
         return val
 
     mapped_corners = np.array([map_corners(e) for e in corners_from_state])

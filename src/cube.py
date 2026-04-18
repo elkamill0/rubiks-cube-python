@@ -1,14 +1,9 @@
 import numpy as np
+
+import src.convert as convert
 from src.moves.moves import Moves
 from src.scramble import remap_scramble_by_color
-import src.convert as convert
-from src.cross import Cross
-from src.f2l import F2L
-from src.oll import OLL
-from src.pll import PLL
-from src.solving_stage import Solving
-from src.tools import inverse, remap_notation_by_rotation
-from time import time
+from src.tools import inverse
 
 
 class Cube(Moves):
