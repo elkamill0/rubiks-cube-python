@@ -1,4 +1,4 @@
-.PHONY: run reset stop format test
+.PHONY: run reset stop format lint test
 
 run:
 	uv run streamlit run new_app.py --server.port 8501 &
@@ -16,6 +16,9 @@ stop:
 
 format:
 	uv run ruff format .
+
+lint:
+	uv run ruff check .
 
 test:
 	uv run pytest
