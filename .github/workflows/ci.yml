@@ -19,6 +19,9 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      - name: Build C extensions
+        run: uv run python setup.py build_ext --inplace
+
       - name: Run tests
         run: make test
 
