@@ -146,13 +146,11 @@ if reconstruction_button:
     def find_solution():
         if auto_cross_length:
             for length in range(8):
-                st.write(f"Trying length: {length}")
                 result = solving.build_tree(length)
                 if result:
                     return result
             return None
         else:
-            st.write(f"Cross length: {cross_length}")
             return solving.build_tree(cross_length)
 
     st.session_state.build_tree = find_solution()
