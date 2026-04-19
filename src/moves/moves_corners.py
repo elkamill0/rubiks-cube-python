@@ -1,83 +1,83 @@
 import numpy as np
+from .moves_base import MovesBase
+
+R_CORNERS = [2,1,5,6]
+L_CORNERS = [0,3,7,4]
+U_CORNERS = [0,1,2,3]
+D_CORNERS = [7,6,5,4]
+F_CORNERS = [3,2,6,7]
+B_CORNERS = [1,0,4,5]
 
 
-class MovesCorners:
+class MovesCorners(MovesBase):
     def __init__(self, corners):
         self.corners = corners
 
-    def __rotate_corner(self, element: list[int], clockwise=True):
-        operation = np.array([1, -1, 1, -1], dtype=np.int8)
-        if not clockwise:
-            operation = -operation
-        self.corners[element, 1] = self.corners[element, 1].astype(np.int8) + operation
-        self.corners[element, 1] = np.where(
-            self.corners[element, 1] < 0, 2, self.corners[element, 1]
-        )
-        self.corners[element, 1] = np.where(
-            self.corners[element, 1] > 2, 0, self.corners[element, 1]
-        )
+    def _rotate_corner(self, element: list[int]):
+        operation = np.array([-1, 1, -1, 1], dtype=np.int8)
+        self.corners[element, 1] = (self.corners[element, 1].astype(np.int8) + operation) % 3
 
     def R(self) -> None:
-        self.corners[[1, 2, 6, 5]] = self.corners[[2, 6, 5, 1]]
-        MovesCorners.__rotate_corner(self, [1, 2, 6, 5], clockwise=True)
+        self._cycle_right(self.corners, R_CORNERS)
+        self._rotate_corner(R_CORNERS)
 
     def Rp(self) -> None:
-        self.corners[[1, 2, 6, 5]] = self.corners[[5, 1, 2, 6]]
-        MovesCorners.__rotate_corner(self, [1, 2, 6, 5], clockwise=True)
+        self._cycle_left(self.corners, R_CORNERS)
+        self._rotate_corner(R_CORNERS)
 
     def R2(self) -> None:
-        self.corners[[1, 2, 6, 5]] = self.corners[[6, 5, 1, 2]]
+        self._swap_pairs(self.corners, R_CORNERS)
 
     def L(self) -> None:
-        self.corners[[0, 3, 7, 4]] = self.corners[[4, 0, 3, 7]]
-        MovesCorners.__rotate_corner(self, [0, 3, 7, 4], clockwise=False)
+        self._cycle_right(self.corners, L_CORNERS)
+        self._rotate_corner(L_CORNERS)
 
     def Lp(self) -> None:
-        self.corners[[0, 3, 7, 4]] = self.corners[[3, 7, 4, 0]]
-        MovesCorners.__rotate_corner(self, [0, 3, 7, 4], clockwise=False)
+        self._cycle_left(self.corners, L_CORNERS)
+        self._rotate_corner(L_CORNERS)
 
     def L2(self) -> None:
-        self.corners[[0, 3, 7, 4]] = self.corners[[7, 4, 0, 3]]
+        self._swap_pairs(self.corners, L_CORNERS)
 
     def U(self) -> None:
-        self.corners[[0, 1, 2, 3]] = self.corners[[3, 0, 1, 2]]
+        self._cycle_right(self.corners, U_CORNERS)
 
     def Up(self) -> None:
-        self.corners[[0, 1, 2, 3]] = self.corners[[1, 2, 3, 0]]
+        self._cycle_left(self.corners, U_CORNERS)
 
     def U2(self) -> None:
-        self.corners[[0, 1, 2, 3]] = self.corners[[2, 3, 0, 1]]
+        self._swap_pairs(self.corners, U_CORNERS)
 
     def D(self) -> None:
-        self.corners[[4, 5, 6, 7]] = self.corners[[5, 6, 7, 4]]
+        self._cycle_right(self.corners, D_CORNERS)
 
     def Dp(self) -> None:
-        self.corners[[4, 5, 6, 7]] = self.corners[[7, 4, 5, 6]]
+        self._cycle_left(self.corners, D_CORNERS)
 
     def D2(self) -> None:
-        self.corners[[4, 5, 6, 7]] = self.corners[[6, 7, 4, 5]]
+        self._swap_pairs(self.corners, D_CORNERS)
 
     def F(self) -> None:
-        self.corners[[3, 2, 6, 7]] = self.corners[[7, 3, 2, 6]]
-        MovesCorners.__rotate_corner(self, [3, 2, 6, 7], clockwise=False)
+        self._cycle_right(self.corners, F_CORNERS)
+        self._rotate_corner(F_CORNERS)
 
     def Fp(self) -> None:
-        self.corners[[3, 2, 6, 7]] = self.corners[[2, 6, 7, 3]]
-        MovesCorners.__rotate_corner(self, [3, 2, 6, 7], clockwise=False)
+        self._cycle_left(self.corners, F_CORNERS)
+        self._rotate_corner(F_CORNERS)
 
     def F2(self) -> None:
-        self.corners[[3, 2, 6, 7]] = self.corners[[6, 7, 3, 2]]
+        self._swap_pairs(self.corners, F_CORNERS)
 
     def B(self) -> None:
-        self.corners[[0, 4, 5, 1]] = self.corners[[1, 0, 4, 5]]
-        MovesCorners.__rotate_corner(self, [0, 4, 5, 1], clockwise=True)
+        self._cycle_right(self.corners, B_CORNERS)
+        self._rotate_corner(B_CORNERS)
 
     def Bp(self) -> None:
-        self.corners[[0, 4, 5, 1]] = self.corners[[4, 5, 1, 0]]
-        MovesCorners.__rotate_corner(self, [0, 4, 5, 1], clockwise=True)
+        self._cycle_left(self.corners, B_CORNERS)
+        self._rotate_corner(B_CORNERS)
 
     def B2(self) -> None:
-        self.corners[[0, 4, 5, 1]] = self.corners[[5, 1, 0, 4]]
+        self._swap_pairs(self.corners, B_CORNERS)
 
     def E(self) -> None:
         pass
