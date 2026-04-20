@@ -1,104 +1,113 @@
 import numpy as np
+from .moves_base import MovesBase
 
+R_EDGES = [ 1,  9, 5, 10]
+L_EDGES = [ 3, 11, 7, 8]
+U_EDGES = [ 0,  1, 2, 3]
+D_EDGES = [ 7,  6, 5, 4]
+F_EDGES = [ 2, 10, 6, 11]
+B_EDGES = [ 0,  8, 4, 9]
+M_EDGES = [ 6,  2, 0, 4]
+E_EDGES = [11, 10, 9, 8]
+S_EDGES = [ 5,  1, 3, 7]
 
-class MovesEdges:
+class MovesEdges(MovesBase):
     def __init__(self, edges):
         self.edges = edges
 
-    def __rotate(self, element: list[int]):
+    def _rotate(self, element: list[int]):
         self.edges[element, 1] = 1 - self.edges[element, 1]
 
     def R(self) -> None:
-        self.edges[[1, 9, 5, 10]] = self.edges[[10, 1, 9, 5]]
+        self._cycle_right(self.edges, R_EDGES)
 
     def Rp(self) -> None:
-        self.edges[[1, 9, 5, 10]] = self.edges[[9, 5, 10, 1]]
+        self._cycle_left(self.edges, R_EDGES)
 
     def R2(self) -> None:
-        self.edges[[1, 9, 5, 10]] = self.edges[[5, 10, 1, 9]]
+        self._swap_pairs(self.edges, R_EDGES)
 
     def L(self) -> None:
-        self.edges[[3, 11, 7, 8]] = self.edges[[8, 3, 11, 7]]
+        self._cycle_right(self.edges, L_EDGES)
 
     def Lp(self) -> None:
-        self.edges[[3, 11, 7, 8]] = self.edges[[11, 7, 8, 3]]
+        self._cycle_left(self.edges, L_EDGES)
 
     def L2(self) -> None:
-        self.edges[[3, 11, 7, 8]] = self.edges[[7, 8, 3, 11]]
+        self._swap_pairs(self.edges, L_EDGES)
 
     def U(self) -> None:
-        self.edges[[0, 1, 2, 3]] = self.edges[[3, 0, 1, 2]]
+        self._cycle_right(self.edges, U_EDGES)
 
     def Up(self) -> None:
-        self.edges[[0, 1, 2, 3]] = self.edges[[1, 2, 3, 0]]
+        self._cycle_left(self.edges, U_EDGES)
 
     def U2(self) -> None:
-        self.edges[[0, 1, 2, 3]] = self.edges[[2, 3, 0, 1]]
+        self._swap_pairs(self.edges, U_EDGES)
 
     def D(self) -> None:
-        self.edges[[4, 5, 6, 7]] = self.edges[[5, 6, 7, 4]]
+        self._cycle_right(self.edges, D_EDGES)
 
     def Dp(self) -> None:
-        self.edges[[4, 5, 6, 7]] = self.edges[[7, 4, 5, 6]]
+        self._cycle_left(self.edges, D_EDGES)
 
     def D2(self) -> None:
-        self.edges[[4, 5, 6, 7]] = self.edges[[6, 7, 4, 5]]
+        self._swap_pairs(self.edges, D_EDGES)
 
     def F(self) -> None:
-        self.edges[[2, 10, 6, 11]] = self.edges[[11, 2, 10, 6]]
-        MovesEdges.__rotate(self, [2, 10, 6, 11])
+        self._cycle_right(self.edges, F_EDGES)
+        self._rotate(F_EDGES)
 
     def Fp(self) -> None:
-        self.edges[[2, 10, 6, 11]] = self.edges[[10, 6, 11, 2]]
-        MovesEdges.__rotate(self, [2, 10, 6, 11])
+        self._cycle_left(self.edges, F_EDGES)
+        self._rotate(F_EDGES)
 
     def F2(self) -> None:
-        self.edges[[2, 10, 6, 11]] = self.edges[[6, 11, 2, 10]]
+        self._swap_pairs(self.edges, F_EDGES)
 
     def B(self) -> None:
-        self.edges[[0, 8, 4, 9]] = self.edges[[9, 0, 8, 4]]
-        MovesEdges.__rotate(self, [0, 8, 4, 9])
+        self._cycle_right(self.edges, B_EDGES)
+        self._rotate(B_EDGES)
 
     def Bp(self) -> None:
-        self.edges[[0, 8, 4, 9]] = self.edges[[8, 4, 9, 0]]
-        MovesEdges.__rotate(self, [0, 8, 4, 9])
+        self._cycle_left(self.edges, B_EDGES)
+        self._rotate(B_EDGES)
 
     def B2(self) -> None:
-        self.edges[[0, 8, 4, 9]] = self.edges[[4, 9, 0, 8]]
+        self._swap_pairs(self.edges, B_EDGES)
 
     def E(self) -> None:
-        MovesEdges.__rotate(self, [8, 9, 10, 11])
-        self.edges[[8, 9, 10, 11]] = self.edges[[9, 10, 11, 8]]
+        self._rotate(E_EDGES)
+        self._cycle_right(self.edges, E_EDGES)
 
     def Ep(self) -> None:
-        MovesEdges.__rotate(self, [8, 9, 10, 11])
-        # MovesEdges.__rotate(self, [i for i in self.edges[:8] if i[0] >= 8])
-        self.edges[[8, 9, 10, 11]] = self.edges[[11, 8, 9, 10]]
+        self._rotate(E_EDGES)
+        self._cycle_left(self.edges, E_EDGES)
 
     def E2(self) -> None:
-        self.edges[[8, 9, 10, 11]] = self.edges[[10, 11, 8, 9]]
-
-    def Mp(self) -> None:
-        MovesEdges.__rotate(self, [0, 2, 6, 4])
-        self.edges[[0, 2, 6, 4]] = self.edges[[2, 6, 4, 0]]
+        self._swap_pairs(self.edges, E_EDGES)
 
     def M(self) -> None:
-        MovesEdges.__rotate(self, [0, 2, 6, 4])
-        self.edges[[0, 2, 6, 4]] = self.edges[[4, 0, 2, 6]]
+        self._rotate(M_EDGES)
+        self._cycle_left(self.edges, M_EDGES)
+
+    def Mp(self) -> None:
+        self._rotate(M_EDGES)
+        self._cycle_right(self.edges, M_EDGES)
 
     def M2(self) -> None:
-        self.edges[[0, 2, 4, 6]] = self.edges[[6, 4, 2, 0]]
-
-    def Sp(self) -> None:
-        self.edges[[3, 1, 5, 7]] = self.edges[[1, 5, 7, 3]]
-        MovesEdges.__rotate(self, [3, 1, 5, 7])
+        self._swap_pairs(self.edges, M_EDGES)
 
     def S(self) -> None:
-        self.edges[[3, 1, 5, 7]] = self.edges[[7, 3, 1, 5]]
-        MovesEdges.__rotate(self, [3, 1, 5, 7])
+        self._cycle_left(self.edges, S_EDGES)
+        self._rotate(S_EDGES)
+
+    def Sp(self) -> None:
+        self._cycle_right(self.edges, S_EDGES)
+        self._rotate(S_EDGES)
 
     def S2(self) -> None:
-        self.edges[[3, 1, 5, 7]] = self.edges[[5, 7, 3, 1]]
+        self._swap_pairs(self.edges, S_EDGES)
 
     def r(self) -> None:
         MovesEdges.R(self)
