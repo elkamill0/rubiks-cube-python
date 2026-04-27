@@ -163,8 +163,16 @@ def test_remap_unknown_rotation_unchanged():
 
 
 def test_remap_unaffected_moves_unchanged():
-    assert remap_notation_by_rotation("M E S", "z") == "M E S" #TODO: napisać testy do grubych ruchów i środkowych
-
+    center_moves = "M M' M2 E E' E2 S S' S2"
+    assert remap_notation_by_rotation(center_moves, "z")  == "E' E E2 M M' M2 S S' S2"
+    assert remap_notation_by_rotation(center_moves, "z'") == "E E' E2 M' M M2 S S' S2"
+    assert remap_notation_by_rotation(center_moves, "z2") == "M' M M2 E' E E2 S S' S2"
+    assert remap_notation_by_rotation(center_moves, "x")  == "M M' M2 S S' S2 E' E E2"
+    assert remap_notation_by_rotation(center_moves, "x'") == "M M' M2 S' S S2 E E' E2"
+    assert remap_notation_by_rotation(center_moves, "x2") == "M M' M2 E' E E2 S' S S2"
+    assert remap_notation_by_rotation(center_moves, "y")  == "S' S S2 E E' E2 M M' M2"
+    assert remap_notation_by_rotation(center_moves, "y'") == "S S' S2 E E' E2 M' M M2"
+    assert remap_notation_by_rotation(center_moves, "y2") == "M' M M2 E E' E2 S' S S2"
 
 # Tests for decimal_to_faces
 def test_decimal_to_faces_zero():
