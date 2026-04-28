@@ -49,7 +49,7 @@ int_to_notation = {
 }
 
 
-def state_to_cube(state: str, cross_color: str = "b"):
+def state_to_cube(state: str, cross_color: str = "w"):
     if not isinstance(state, str):
         raise TypeError("Argument 'state' musi być napisem (str).")
 
