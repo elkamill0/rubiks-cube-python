@@ -3,6 +3,7 @@ from random import randint, choice
 import src.convert as convert
 from src.tools import remap_notation_by_rotation
 
+
 def generate_scramble(length: int, numbers: bool = False) -> list[int]:
     def next_move(last, second_last=None):
         excluded = {last}
@@ -20,7 +21,6 @@ def generate_scramble(length: int, numbers: bool = False) -> list[int]:
     return convert.int_to_moves_scramble([x * 3 + randint(0, 2) for x in output])
 
 
-
 def remap_scramble_by_color(notation: str, color: str = "y"):
     COLOR_TO_ROTATION = {
         "w": "z2",
@@ -36,5 +36,3 @@ def remap_scramble_by_color(notation: str, color: str = "y"):
     if rotation is None:
         return notation
     return remap_notation_by_rotation(notation, rotation)
-
-    

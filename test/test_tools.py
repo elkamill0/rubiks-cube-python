@@ -1,5 +1,12 @@
 import pytest
-from src.tools import reduce, inverse, remap_notation_by_rotation, decimal_to_faces, binary_to_faces, format_pairs_with_faces
+from src.tools import (
+    reduce,
+    inverse,
+    remap_notation_by_rotation,
+    decimal_to_faces,
+    binary_to_faces,
+    format_pairs_with_faces,
+)
 
 
 def test_empty_returns_empty():
@@ -113,40 +120,48 @@ def test_remap_z_rotation():
     assert remap_notation_by_rotation("R' L' U' D' F' B'", "z") == "D' U' R' L' F' B'"
     assert remap_notation_by_rotation("R2 L2 U2 D2 F2 B2", "z") == "D2 U2 R2 L2 F2 B2"
 
+
 def test_remap_z_prime_rotation():
     assert remap_notation_by_rotation("R L U D F B", "z'") == "U D L R F B"
     assert remap_notation_by_rotation("R' L' U' D' F' B'", "z'") == "U' D' L' R' F' B'"
     assert remap_notation_by_rotation("R2 L2 U2 D2 F2 B2", "z'") == "U2 D2 L2 R2 F2 B2"
+
 
 def test_remap_z2_rotation():
     assert remap_notation_by_rotation("R L U D F B", "z2") == "L R D U F B"
     assert remap_notation_by_rotation("R' L' U' D' F' B'", "z2") == "L' R' D' U' F' B'"
     assert remap_notation_by_rotation("R2 L2 U2 D2 F2 B2", "z2") == "L2 R2 D2 U2 F2 B2"
 
+
 def test_remap_x_rotation():
     assert remap_notation_by_rotation("R L U D F B", "x") == "R L B F U D"
     assert remap_notation_by_rotation("R' L' U' D' F' B'", "x") == "R' L' B' F' U' D'"
     assert remap_notation_by_rotation("R2 L2 U2 D2 F2 B2", "x") == "R2 L2 B2 F2 U2 D2"
+
 
 def test_remap_x_prime_rotation():
     assert remap_notation_by_rotation("R L U D F B", "x'") == "R L F B D U"
     assert remap_notation_by_rotation("R' L' U' D' F' B'", "x'") == "R' L' F' B' D' U'"
     assert remap_notation_by_rotation("R2 L2 U2 D2 F2 B2", "x'") == "R2 L2 F2 B2 D2 U2"
 
+
 def test_remap_x2_rotation():
     assert remap_notation_by_rotation("R L U D F B", "x2") == "R L D U B F"
     assert remap_notation_by_rotation("R' L' U' D' F' B'", "x2") == "R' L' D' U' B' F'"
     assert remap_notation_by_rotation("R2 L2 U2 D2 F2 B2", "x2") == "R2 L2 D2 U2 B2 F2"
+
 
 def test_remap_y_rotation():
     assert remap_notation_by_rotation("R L U D F B", "y") == "F B U D L R"
     assert remap_notation_by_rotation("R' L' U' D' F' B'", "y") == "F' B' U' D' L' R'"
     assert remap_notation_by_rotation("R2 L2 U2 D2 F2 B2", "y") == "F2 B2 U2 D2 L2 R2"
 
+
 def test_remap_y_prime_rotation():
     assert remap_notation_by_rotation("R L U D F B", "y'") == "B F U D R L"
     assert remap_notation_by_rotation("R' L' U' D' F' B'", "y'") == "B' F' U' D' R' L'"
     assert remap_notation_by_rotation("R2 L2 U2 D2 F2 B2", "y'") == "B2 F2 U2 D2 R2 L2"
+
 
 def test_remap_y2_rotation():
     assert remap_notation_by_rotation("R L U D F B", "y2") == "L R U D B F"
@@ -164,15 +179,16 @@ def test_remap_unknown_rotation_unchanged():
 
 def test_remap_unaffected_moves_unchanged():
     center_moves = "M M' M2 E E' E2 S S' S2"
-    assert remap_notation_by_rotation(center_moves, "z")  == "E' E E2 M M' M2 S S' S2"
+    assert remap_notation_by_rotation(center_moves, "z") == "E' E E2 M M' M2 S S' S2"
     assert remap_notation_by_rotation(center_moves, "z'") == "E E' E2 M' M M2 S S' S2"
     assert remap_notation_by_rotation(center_moves, "z2") == "M' M M2 E' E E2 S S' S2"
-    assert remap_notation_by_rotation(center_moves, "x")  == "M M' M2 S S' S2 E' E E2"
+    assert remap_notation_by_rotation(center_moves, "x") == "M M' M2 S S' S2 E' E E2"
     assert remap_notation_by_rotation(center_moves, "x'") == "M M' M2 S' S S2 E E' E2"
     assert remap_notation_by_rotation(center_moves, "x2") == "M M' M2 E' E E2 S' S S2"
-    assert remap_notation_by_rotation(center_moves, "y")  == "S' S S2 E E' E2 M M' M2"
+    assert remap_notation_by_rotation(center_moves, "y") == "S' S S2 E E' E2 M M' M2"
     assert remap_notation_by_rotation(center_moves, "y'") == "S S' S2 E E' E2 M' M M2"
     assert remap_notation_by_rotation(center_moves, "y2") == "M' M M2 E E' E2 S' S S2"
+
 
 # Tests for decimal_to_faces
 def test_decimal_to_faces_zero():

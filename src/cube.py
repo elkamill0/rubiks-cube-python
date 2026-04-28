@@ -100,8 +100,4 @@ if __name__ == "__main__":
     logging.debug(c)
     print(st[4], st[13], st[22], st[31], st[40], st[49])
 
-    
-    
-
-
     # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2

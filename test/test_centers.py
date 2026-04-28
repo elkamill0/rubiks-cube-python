@@ -21,6 +21,7 @@ def test_centers_inverse():
         start = c.centers.copy()
         for m in moves:
             from copy import deepcopy
+
             copy = deepcopy(c)
             getattr(copy, m)()
             getattr(copy, m + "p")()

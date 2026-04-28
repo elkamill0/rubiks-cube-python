@@ -1,12 +1,12 @@
 import numpy as np
 from .moves_base import MovesBase
 
-R_CORNERS = [2,1,5,6]
-L_CORNERS = [0,3,7,4]
-U_CORNERS = [0,1,2,3]
-D_CORNERS = [7,6,5,4]
-F_CORNERS = [3,2,6,7]
-B_CORNERS = [1,0,4,5]
+R_CORNERS = [2, 1, 5, 6]
+L_CORNERS = [0, 3, 7, 4]
+U_CORNERS = [0, 1, 2, 3]
+D_CORNERS = [7, 6, 5, 4]
+F_CORNERS = [3, 2, 6, 7]
+B_CORNERS = [1, 0, 4, 5]
 
 
 class MovesCorners(MovesBase):
@@ -15,7 +15,9 @@ class MovesCorners(MovesBase):
 
     def _rotate_corner(self, element: list[int]):
         operation = np.array([-1, 1, -1, 1], dtype=np.int8)
-        self.corners[element, 1] = (self.corners[element, 1].astype(np.int8) + operation) % 3
+        self.corners[element, 1] = (
+            self.corners[element, 1].astype(np.int8) + operation
+        ) % 3
 
     def R(self) -> None:
         self._cycle_right(self.corners, R_CORNERS)

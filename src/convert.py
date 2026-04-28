@@ -3,10 +3,7 @@ import logging
 
 from src.moves.moves import Moves
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(filename)s:%(lineno)d - %(message)s"
-)
+logging.basicConfig(level=logging.DEBUG, format="%(filename)s:%(lineno)d - %(message)s")
 
 
 notation_to_int = {
@@ -152,7 +149,9 @@ def state_to_cube(state: str, cross_color: str = "b"):
     )
 
     color_to_center_index = {v: i for i, v in enumerate(colors)}
-    centers_from_state = np.array([color_to_center_index[state[i]] for i in [4, 13, 22, 31, 40, 49]])
+    centers_from_state = np.array(
+        [color_to_center_index[state[i]] for i in [4, 13, 22, 31, 40, 49]]
+    )
 
     centers_from_state = np.array(
         (state[4], state[13], state[22], state[31], state[40], state[49])

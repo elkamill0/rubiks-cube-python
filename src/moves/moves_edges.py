@@ -1,15 +1,16 @@
 import numpy as np
 from .moves_base import MovesBase
 
-R_EDGES = [ 1,  9, 5, 10]
-L_EDGES = [ 3, 11, 7, 8]
-U_EDGES = [ 0,  1, 2, 3]
-D_EDGES = [ 7,  6, 5, 4]
-F_EDGES = [ 2, 10, 6, 11]
-B_EDGES = [ 0,  8, 4, 9]
-M_EDGES = [ 6,  2, 0, 4]
+R_EDGES = [1, 9, 5, 10]
+L_EDGES = [3, 11, 7, 8]
+U_EDGES = [0, 1, 2, 3]
+D_EDGES = [7, 6, 5, 4]
+F_EDGES = [2, 10, 6, 11]
+B_EDGES = [0, 8, 4, 9]
+M_EDGES = [6, 2, 0, 4]
 E_EDGES = [11, 10, 9, 8]
-S_EDGES = [ 5,  1, 3, 7]
+S_EDGES = [5, 1, 3, 7]
+
 
 class MovesEdges(MovesBase):
     def __init__(self, edges):

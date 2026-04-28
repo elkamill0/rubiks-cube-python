@@ -1,8 +1,9 @@
 from .moves_base import MovesBase
 
-E_CENTERS = [1,2,3,4]
-M_CENTERS = [5,2,0,4]
-S_CENTERS = [5,3,0,1]
+E_CENTERS = [1, 2, 3, 4]
+M_CENTERS = [5, 2, 0, 4]
+S_CENTERS = [5, 3, 0, 1]
+
 
 class MovesCenters(MovesBase):
     def __init__(self, centers):
@@ -82,7 +83,7 @@ class MovesCenters(MovesBase):
 
     def S(self) -> None:
         self._cycle_left(self.centers, S_CENTERS)
-        
+
     def Sp(self) -> None:
         self._cycle_right(self.centers, S_CENTERS)
 

@@ -39,12 +39,14 @@ def test_scramble_edge_cases(length):
     assert len(result) == length
     assert all(0 <= m <= 17 for m in result)
 
+
 @pytest.mark.parametrize("_", range(10))
 def test_no_consecutive_same_axis_numbers(_):
     scramble = generate_scramble(20, numbers=True)
     axes = [m // 3 for m in scramble]
     for a, b in zip(axes, axes[1:]):
         assert a != b, f"Niedozwolone: {a} {b}"
+
 
 @pytest.mark.parametrize("_", range(10))
 def test_no_three_same_axis_in_a_row_numbers(_):
@@ -53,6 +55,7 @@ def test_no_three_same_axis_in_a_row_numbers(_):
     for a, b, c in zip(axes, axes[1:], axes[2:]):
         if a ^ 1 == b:
             assert c != a and c != b, f"Niedozwolone: {a} {b} {c}"
+
 
 @pytest.mark.parametrize("color", ["w", "o", "r", "b", "g", "y"])
 def test_valid_colors_dont_raise(color):

@@ -3,10 +3,12 @@ import numpy as np
 from src.cube import Cube
 import random
 
+
 def random_moves(cube, n=20):
     moves = ["R", "Rp", "L", "Lp", "U", "Up", "D", "Dp", "F", "Fp", "B", "Bp"]
     for _ in range(n):
         getattr(cube, random.choice(moves))()
+
 
 def test_wide_inverse():
     moves = ["r", "l", "u", "d", "f", "b"]
@@ -18,18 +20,40 @@ def test_wide_inverse():
         start_centers = c.centers.copy()
         for m in moves:
             from copy import deepcopy
+
             copy = deepcopy(c)
             getattr(copy, m)()
             getattr(copy, m + "p")()
-            assert np.array_equal(copy.corners, start_corners), f"{m} corners inverse failed"
+            assert np.array_equal(copy.corners, start_corners), (
+                f"{m} corners inverse failed"
+            )
             assert np.array_equal(copy.edges, start_edges), f"{m} edges inverse failed"
-            assert np.array_equal(copy.centers, start_centers), f"{m} centers inverse failed"
+            assert np.array_equal(copy.centers, start_centers), (
+                f"{m} centers inverse failed"
+            )
 
 
 def test_wide_4_identity():
-    moves = ["r", "rp", "r2", "l", "lp", "l2",
-             "u", "up", "u2", "d", "dp", "d2",
-             "f", "fp", "f2", "b", "bp", "b2"]
+    moves = [
+        "r",
+        "rp",
+        "r2",
+        "l",
+        "lp",
+        "l2",
+        "u",
+        "up",
+        "u2",
+        "d",
+        "dp",
+        "d2",
+        "f",
+        "fp",
+        "f2",
+        "b",
+        "bp",
+        "b2",
+    ]
     for m in moves:
         c = Cube()
         start_corners = c.corners.copy()
@@ -43,6 +67,7 @@ def test_wide_4_identity():
 
 
 STATE = "230201445330510113331422433441534215205541100550250422"
+
 
 def test_r_move():
     c = Cube(state=STATE)
