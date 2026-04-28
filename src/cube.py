@@ -4,6 +4,9 @@ import src.convert as convert
 from src.moves.moves import Moves
 from src.scramble import remap_scramble_by_color
 from src.tools import inverse
+from src.logger import get_logger
+
+logging = get_logger(__name__)
 
 
 class Cube(Moves):
@@ -70,6 +73,6 @@ class Cube(Moves):
 
 
 if __name__ == "__main__":
-    state = "305203242215110113300222024102334534110344044453555551"
-
-    # L B R B' L U R2 D2 B2 F D2 L B2 R2 B D2 F B U' L' F2
+    notation = "R2 D L2 F2 U' F2 D2 U L2 B2 U F L' U2 B' F L' U2 B2 U L'"
+    c = Cube(notation=notation)
+    c.r()

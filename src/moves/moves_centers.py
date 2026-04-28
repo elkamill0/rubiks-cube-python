@@ -1,4 +1,11 @@
-class MovesCenters:
+from .moves_base import MovesBase
+
+E_CENTERS = [1, 2, 3, 4]
+M_CENTERS = [5, 2, 0, 4]
+S_CENTERS = [5, 3, 0, 1]
+
+
+class MovesCenters(MovesBase):
     def __init__(self, centers):
         self.centers = centers
 
@@ -57,31 +64,31 @@ class MovesCenters:
         pass
 
     def E(self) -> None:
-        self.centers[[1, 2, 3, 4]] = self.centers[[4, 1, 2, 3]]
+        self._cycle_right(self.centers, E_CENTERS)
 
     def Ep(self) -> None:
-        self.centers[[1, 2, 3, 4]] = self.centers[[2, 3, 4, 1]]
+        self._cycle_left(self.centers, E_CENTERS)
 
     def E2(self) -> None:
-        self.centers[[1, 2, 3, 4]] = self.centers[[3, 4, 1, 2]]
-
-    def Mp(self) -> None:
-        self.centers[[0, 2, 5, 4]] = self.centers[[2, 5, 4, 0]]
+        self._swap_pairs(self.centers, E_CENTERS)
 
     def M(self) -> None:
-        self.centers[[0, 2, 5, 4]] = self.centers[[4, 0, 2, 5]]
+        self._cycle_left(self.centers, M_CENTERS)
+
+    def Mp(self) -> None:
+        self._cycle_right(self.centers, M_CENTERS)
 
     def M2(self) -> None:
-        self.centers[[0, 2, 5, 4]] = self.centers[[5, 4, 0, 2]]
-
-    def Sp(self) -> None:
-        self.centers[[0, 3, 5, 1]] = self.centers[[3, 5, 1, 0]]
+        self._swap_pairs(self.centers, M_CENTERS)
 
     def S(self) -> None:
-        self.centers[[0, 3, 5, 1]] = self.centers[[1, 0, 3, 5]]
+        self._cycle_left(self.centers, S_CENTERS)
+
+    def Sp(self) -> None:
+        self._cycle_right(self.centers, S_CENTERS)
 
     def S2(self) -> None:
-        self.centers[[0, 3, 5, 1]] = self.centers[[5, 1, 0, 3]]
+        self._swap_pairs(self.centers, S_CENTERS)
 
     def r(self) -> None:
         MovesCenters.Mp(self)

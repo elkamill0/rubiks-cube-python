@@ -24,3 +24,6 @@ lint:
 
 test:
 	uv run pytest
+
+run-cube:
+	PYTHONPATH=. uv run python src/cube.py

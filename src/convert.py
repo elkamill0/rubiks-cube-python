@@ -1,6 +1,10 @@
 import numpy as np
+import logging
 
 from src.moves.moves import Moves
+
+logging.basicConfig(level=logging.DEBUG, format="%(filename)s:%(lineno)d - %(message)s")
+
 
 notation_to_int = {
     "R": 0,
@@ -45,7 +49,7 @@ int_to_notation = {
 }
 
 
-def state_to_cube(state: str):
+def state_to_cube(state: str, cross_color: str = "w"):
     if not isinstance(state, str):
         raise TypeError("Argument 'state' musi być napisem (str).")
 
@@ -53,7 +57,16 @@ def state_to_cube(state: str):
         raise ValueError("Stan kostki musi mieć długość 54")
 
     if not all(ch.isdigit() for ch in state):
-        raise ValueError("Stan kostki może zawierać tylko cyfry (0–9).")
+        raise ValueError("Stan kostki może zawierać tylko cyfry (0-9).")
+
+    colors = {
+        "y": ["0", "1", "2", "3", "4", "5"],
+        "w": ["5", "3", "2", "1", "4", "0"],
+        "r": ["1", "5", "2", "0", "4", "3"],
+        "o": ["3", "0", "2", "5", "4", "1"],
+        "g": ["4", "1", "0", "3", "5", "2"],
+        "b": ["2", "1", "5", "3", "0", "4"],
+    }[cross_color]
 
     color_to_corners = {
         ("0", "1", "4"): np.array((0, 0)),
@@ -135,9 +148,15 @@ def state_to_cube(state: str):
         (state[21], state[14]),
     )
 
+    color_to_center_index = {v: i for i, v in enumerate(colors)}
+    centers_from_state = np.array(
+        [color_to_center_index[state[i]] for i in [4, 13, 22, 31, 40, 49]]
+    )
+
     centers_from_state = np.array(
         (state[4], state[13], state[22], state[31], state[40], state[49])
     ).astype(int)
+    logging.debug(centers_from_state)
 
     def map_corners(element):
         val = color_to_corners.get(element)
@@ -224,12 +243,11 @@ def notation_to_moves(moves: str, cube):
     return cube
 
 
-def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
+def cube_to_color(cube, cross_color="y", show: bool = False) -> str:
 
     corners = cube.corners
     edges = cube.edges
     centers = cube.centers
-
     colors = {
         "y": ["0", "1", "2", "3", "4", "5"],
         "w": ["5", "3", "2", "1", "4", "0"],
@@ -280,13 +298,12 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
     )
 
     mapped_centers = np.array(colors)
-
     numbers = [
         rotated_corners[0, 0],
         rotated_edges[0, 0],
         rotated_corners[1, 0],
         rotated_edges[3, 0],
-        centers[0],
+        mapped_centers[centers[0]],
         rotated_edges[1, 0],
         rotated_corners[3, 0],
         rotated_edges[2, 0],
@@ -295,7 +312,7 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
         rotated_edges[3, 1],
         rotated_corners[3, 2],
         rotated_edges[8, 1],
-        mapped_centers[1],
+        mapped_centers[centers[1]],
         rotated_edges[11, 1],
         rotated_corners[4, 2],
         rotated_edges[7, 1],
@@ -304,7 +321,7 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
         rotated_edges[2, 1],
         rotated_corners[2, 2],
         rotated_edges[11, 0],
-        mapped_centers[2],
+        mapped_centers[centers[2]],
         rotated_edges[10, 0],
         rotated_corners[7, 2],
         rotated_edges[6, 1],
@@ -313,7 +330,7 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
         rotated_edges[1, 1],
         rotated_corners[1, 2],
         rotated_edges[10, 1],
-        mapped_centers[3],
+        mapped_centers[centers[3]],
         rotated_edges[9, 1],
         rotated_corners[6, 2],
         rotated_edges[5, 1],
@@ -322,7 +339,7 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
         rotated_edges[0, 1],
         rotated_corners[0, 2],
         rotated_edges[9, 0],
-        mapped_centers[4],
+        mapped_centers[centers[4]],
         rotated_edges[8, 0],
         rotated_corners[5, 2],
         rotated_edges[4, 1],
@@ -331,7 +348,7 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
         rotated_edges[6, 0],
         rotated_corners[6, 0],
         rotated_edges[7, 0],
-        mapped_centers[5],
+        mapped_centers[centers[5]],
         rotated_edges[5, 0],
         rotated_corners[4, 0],
         rotated_edges[4, 0],
@@ -352,7 +369,7 @@ def cube_to_color(cube, cross_color="w", show: bool = False) -> str:
             {rotated_edges[7, 0]}{centers[5]}{rotated_edges[5, 0]}
             {rotated_corners[4, 0]}{rotated_edges[4, 0]}{rotated_corners[5, 0]}"""
 
-    return "".join(numbers)
+    return "".join(str(n) for n in numbers)
 
 
 def int_to_moves_scramble(nums: list[int]) -> str:
