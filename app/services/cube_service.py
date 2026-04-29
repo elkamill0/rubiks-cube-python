@@ -4,22 +4,26 @@ from src.solving_stage import Solving
 from random import randint
 from pprint import pprint
 
+
 def _create_cube(scramble: str | None = None, color: str = "y") -> tuple:
     if scramble:
         return scramble, Cube(notation=scramble, color=color)
     generated = generate_scramble(randint(20, 21))
     return generated, Cube(notation=generated, color=color)
 
+
 def get_scramble(scramble: str | None, color: str | None) -> tuple:
     scramble, cube = _create_cube(scramble=scramble, color=color)
     return scramble, cube.get_state()
+
 
 def solve_cube(scramble: str | None, cross_color: str = "y", cross_length: int = 6):
     scramble, cube = _create_cube(scramble=scramble, color=cross_color)
     solving = Solving(cube)
     solving.build_tree(cross_length=cross_length)
-    return [{"moves": log_names, "total_moves": moves}
-            for log_names, moves in solving.shortest_path
+    return [
+        {"moves": log_names, "total_moves": moves}
+        for log_names, moves in solving.shortest_path
     ]
 
 
