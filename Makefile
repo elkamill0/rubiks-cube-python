@@ -3,8 +3,12 @@ export PYTHONPATH := src
 export PYTHONPATH := src:.
 
 run:
-	uv run streamlit run app/new_app.py --server.port 8501 &
-	uv run streamlit run app/app.py --server.port 8502 --server.headless true
+	uv run uvicorn app.main:app --reload
+
+run-streamlit:
+	uv run streamlit run streamlit_app/new_app.py --server.port 8501 &
+	uv run streamlit run streamlit_app/app.py --server.port 8502 --server.headless true
+
 
 reset:
 	@echo "Cleaning ports 8501 and 8502..."

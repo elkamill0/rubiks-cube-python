@@ -1,11 +1,10 @@
-import pytest
 from src.tools import (
-    reduce,
-    inverse,
-    remap_notation_by_rotation,
-    decimal_to_faces,
     binary_to_faces,
+    decimal_to_faces,
     format_pairs_with_faces,
+    inverse,
+    reduce,
+    remap_notation_by_rotation,
 )
 
 

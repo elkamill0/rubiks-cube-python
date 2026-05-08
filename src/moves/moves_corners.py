@@ -1,4 +1,5 @@
 import numpy as np
+
 from .moves_base import MovesBase
 
 R_CORNERS = [2, 1, 5, 6]

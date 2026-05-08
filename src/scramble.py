@@ -1,4 +1,4 @@
-from random import randint, choice
+from random import choice, randint
 
 import src.convert as convert
 from src.tools import remap_notation_by_rotation

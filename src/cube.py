@@ -1,10 +1,10 @@
 import numpy as np
 
 import src.convert as convert
+from src.logger import get_logger
 from src.moves.moves import Moves
 from src.scramble import remap_scramble_by_color
 from src.tools import inverse
-from src.logger import get_logger
 
 logging = get_logger(__name__)
 
