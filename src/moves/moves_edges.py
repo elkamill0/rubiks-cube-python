@@ -1,4 +1,5 @@
 import numpy as np
+
 from .moves_base import MovesBase
 
 R_EDGES = [1, 9, 5, 10]

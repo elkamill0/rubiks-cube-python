@@ -1,5 +1,7 @@
-import pytest
 from random import seed
+
+import pytest
+
 from src.scramble import generate_scramble, remap_scramble_by_color
 
 

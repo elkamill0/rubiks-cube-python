@@ -1,8 +1,9 @@
+from pprint import pprint
+from random import randint
+
 from src.cube import Cube
 from src.scramble import generate_scramble
 from src.solving_stage import Solving
-from random import randint
-from pprint import pprint
 
 
 def _create_cube(scramble: str | None = None, color: str = "y") -> tuple:

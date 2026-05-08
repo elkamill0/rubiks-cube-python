@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
+
 from app.dependencies import get_db
-from app.schemas.algorithm import AlgorithmResponse, AlgUpdate
-from app.models.algorithms import Algorithm
 from app.models.alg import Alg
-from sqlalchemy.orm import relationship, joinedload
+from app.models.algorithms import Algorithm
+from app.schemas.algorithm import AlgorithmResponse, AlgUpdate
 
 router = APIRouter(prefix="/algorithms", tags=["algorithms"])
 

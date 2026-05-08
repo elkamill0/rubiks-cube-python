@@ -1,8 +1,8 @@
-import pytest
-import numpy as np
-from src.cube import Cube
 import random
 
+import numpy as np
+
+from src.cube import Cube
 
 STATE = "231201341334510413034422433542534215005541101550250022"
 

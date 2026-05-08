@@ -1,8 +1,10 @@
 import json
-from app.database import SessionLocal
-from app.models.algorithms import Algorithm
-from app.models.alg import Alg
+
 from sqlalchemy import text
+
+from app.database import SessionLocal
+from app.models.alg import Alg
+from app.models.algorithms import Algorithm
 
 
 def seed():

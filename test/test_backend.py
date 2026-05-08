@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 client = TestClient(app)
@@ -34,7 +35,7 @@ def test_scramble_without_input():
     assert data["cube_state"] != ""
 
 
-def test_solve_returns_solutions():
+def test_solve_returns_any_solutions():
     response = client.post("/cube/solve", json={})
     data = response.json()
     assert len(data["solutions"]) > 0

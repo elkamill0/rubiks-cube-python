@@ -1,7 +1,8 @@
-import pytest
-import numpy as np
-from src.cube import Cube
 import random
+
+import numpy as np
+
+from src.cube import Cube
 
 
 def random_moves(cube, n=20):

@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from app.schemas.cube import (
     ScrambleRequest,
     ScrambleResponse,

@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String
-from app.database import Base
-from sqlalchemy import Boolean, ForeignKey
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+from app.database import Base
 
 
 class Alg(Base):

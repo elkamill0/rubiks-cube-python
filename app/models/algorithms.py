@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
-from app.database import Base
 from sqlalchemy.orm import relationship
-from app.models.alg import Alg
+
+from app.database import Base
 
 
 class Algorithm(Base):

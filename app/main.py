@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from app.routers.cube import router
+
 from app.routers.algorithm import router as algorithm_router
+from app.routers.cube import router
 
 app = FastAPI()
 app.include_router(router)
