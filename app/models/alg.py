@@ -3,8 +3,8 @@ from app.database import Base
 from sqlalchemy import Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 
-class Alg(Base):
 
+class Alg(Base):
     __tablename__ = "algs"
     algorithm = relationship("Algorithm", back_populates="algs")
     id = Column(Integer, primary_key=True)

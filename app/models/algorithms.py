@@ -3,6 +3,7 @@ from app.database import Base
 from sqlalchemy.orm import relationship
 from app.models.alg import Alg
 
+
 class Algorithm(Base):
     __tablename__ = "algorithms"
     algs = relationship("Alg", back_populates="algorithm")

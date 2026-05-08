@@ -7,6 +7,7 @@ from alembic import context
 
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 
 # this is the Alembic Config object, which provides
@@ -25,6 +26,7 @@ if config.config_file_name is not None:
 from app.database import Base
 from app.models.algorithms import Algorithm
 from app.models.alg import Alg
+
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
@@ -73,9 +75,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
